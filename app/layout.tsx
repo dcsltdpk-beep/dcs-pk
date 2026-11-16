@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   verification: {
     google: 'pewPU0U99OKBT9gp2PI4t2h_uS--HT4ISi200Px3K9E',
   },
+  other: {
+    'google-site-verification': 'pewPU0U99OKBT9gp2PI4t2h_uS--HT4ISi200Px3K9E',
+  },
   openGraph: {
     type: 'website',
     siteName: 'Dream Cyber Security Pakistan',
