@@ -10,6 +10,11 @@ export default function AdminSidebar() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Defense-in-depth: Never render sidebar on login page
+  if (pathname === '/admin/login') {
+    return null;
+  }
+
   const handleLogout = async () => {
     await fetch('/api/admin/logout', { method: 'POST' });
     router.push('/admin/login');
