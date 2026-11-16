@@ -1,6 +1,5 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Dream Cyber Security Pakistan | Cyber Defense & IT Solutions',
@@ -40,18 +39,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           content="pewPU0U99OKBT9gp2PI4t2h_uS--HT4ISi200Px3K9E"
         />
 
-        {/* Google Analytics / Google Tag Manager */}
-        <Script
-          src="https://www.googletagmanager.com/gtm.js?id=GTM-N72RQZVG"
-          strategy="afterInteractive"
+        {/* Google Tag Manager (Header Script) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N72RQZVG');`,
+          }}
         />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-          `}
-        </Script>
+
+        {/* Google Analytics / GTAG initialization */}
+        <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-N72RQZVG" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+            `,
+          }}
+        />
 
         <script
           type="application/ld+json"
@@ -78,7 +87,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {/* Google Tag Manager (noscript fallback) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-N72RQZVG"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
+        {children}
+      </body>
     </html>
   );
 }
