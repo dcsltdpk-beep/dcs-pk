@@ -1,0 +1,48 @@
+# Dream Cyber Security Pakistan
+
+> Premier international-standard cybersecurity firm, bespoke software engineering, AI workflow automations, and professional training academy based in Lahore, Pakistan.
+
+Dream Cyber Security (DCS) delivers fortified cyber defense architectures, zero-trust vulnerability assessments, intelligent AI business process automations, and enterprise web solutions. DCS also operates a dedicated practical training academy preparing the next generation of cybersecurity and technology professionals.
+
+## Core Corporate Services
+
+- [Web Design & Development](https://dreamcyber.pk/services/web-design-development): High-performance, secure, responsive enterprise web platforms built with zero-trust architectural foundations.
+- [E-commerce Development](https://dreamcyber.pk/services/ecommerce-development): Scalable, conversion-optimized digital commerce solutions with PCI-DSS data protection and inventory management.
+- [Cybersecurity Services](https://dreamcyber.pk/services/cybersecurity-services): Penetration testing, vulnerability assessments, security operations center (SOC) monitoring, and compliance auditing.
+- [AI Automation & Chatbot Development](https://dreamcyber.pk/services/ai-automation-chatbot-development): Custom LLM agents, automated enterprise pipelines (n8n, Make), and 24/7 intelligent customer engagement chatbots.
+- [Software & Application Development](https://dreamcyber.pk/services/software-application-development): Custom CRM, ERP, and bespoke enterprise software architectures tailored for operational scale.
+- [Video Editing & Motion Graphics](https://dreamcyber.pk/services/video-editing-motion-graphics): Corporate video productions, commercial motion graphics, and dynamic visual storytelling.
+- [Graphic Design & Branding](https://dreamcyber.pk/services/graphic-design-branding): Corporate visual identity, brand guidelines, marketing collateral, and UI/UX design.
+- [Digital Marketing & SEO](https://dreamcyber.pk/services/digital-marketing-seo): Organic technical search optimization, targeted enterprise growth campaigns, and data-driven lead funnels.
+- [Social Media Management](https://dreamcyber.pk/services/social-media-management): Brand authority development, multi-platform community management, and paid performance advertising.
+- [Domain, Hosting & IT Support](https://dreamcyber.pk/services/domain-hosting-it-support): Enterprise DNS, ultra-fast cloud hosting, automated off-site backups, and 24/7 dedicated IT infrastructure support.
+
+## Training Academy & Courses
+
+- [AI Automation & Autonomous Agents](https://dreamcyber.pk/courses/ai-automation): Hands-on training on generative AI, LLM prompting, autonomous workflows, n8n, API integrations, and chatbot deployment.
+- [Enterprise Web Development & Security](https://dreamcyber.pk/courses/web-development): Full-stack web application development, database design, server management, and OWASP Top 10 security hardening.
+- [Video Editing & Graphic Design Masterclass](https://dreamcyber.pk/courses/video-editing-graphic-design): Comprehensive creative production covering Adobe Premiere Pro, After Effects, Photoshop, Illustrator, and motion design.
+- [Computer Basics & IT Productivity](https://dreamcyber.pk/courses/computer-basics): Fundamental IT skills, operating system navigation, Microsoft Office suite, Internet security awareness, and professional productivity tools.
+
+## Company & Leadership
+
+- [About Us](https://dreamcyber.pk/about): Corporate background, mission, vision, core values, and executive leadership philosophy.
+- [Our Team](https://dreamcyber.pk/team): Profiles, certifications, and expertise of security researchers, engineers, and academy instructors.
+- [Portfolio](https://dreamcyber.pk/portfolio): Filterable portfolio of client engagements across cybersecurity, web development, video editing, and AI automation.
+- [Video Gallery](https://dreamcyber.pk/videos): Curated video showcase featuring corporate milestones, course previews, and student work.
+- [Frequently Asked Questions (FAQ)](https://dreamcyber.pk/faq): Answers to common questions regarding corporate consulting engagements and academy admissions.
+
+## Advisories & Knowledge Base
+
+- [Tech Advisories & Blog](https://dreamcyber.pk/blog): Threat advisories, cybersecurity best practices, and enterprise tech updates published by DCS analysts.
+
+## Contact & Direct Inquiries
+
+- [Contact Us](https://dreamcyber.pk/contact): Direct inquiry and consultation lead capture form with instant response protocol.
+- [Direct WhatsApp](https://wa.me/923001234567): Immediate communication channel for urgent security assessments or academy inquiries.
+
+## Technical & Legal Documentation
+
+- [XML Sitemap](https://dreamcyber.pk/sitemap.xml): Machine-readable dynamic sitemap index of all active services, courses, and pages.
+- [Privacy Policy](https://dreamcyber.pk/privacy): Corporate data handling, client confidentiality, and privacy compliance standards.
+- [Terms of Service](https://dreamcyber.pk/terms): Engagement terms, intellectual property protections, and service delivery warranties.

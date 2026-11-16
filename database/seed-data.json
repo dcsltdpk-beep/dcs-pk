@@ -1,0 +1,395 @@
+{
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@dreamcyber.pk",
+      "passwordHash": "$2y$10$64z5T4Hh9l7E.Z1qJ1KzreV6o2oM.wYh7p8L4wW1fNfG3B3sBw7l2",
+      "role": "admin"
+    }
+  ],
+  "settings": {
+    "site_name": "Dream Cyber Security Pakistan",
+    "site_tagline": "International Standard Cyber Defense, Technology & Digital Innovation",
+    "company_email": "info@dreamcyber.pk",
+    "company_phone": "+92 300 1234567",
+    "company_address": "Level 4, IT Tower, Hali Road, Gulberg III, Lahore, Pakistan",
+    "whatsapp_number": "923001234567",
+    "whatsapp_message": "Hello Dream Cyber Security Pakistan, I would like to inquire about your services.",
+    "facebook_url": "https://facebook.com/dreamcybersecurity",
+    "linkedin_url": "https://linkedin.com/company/dreamcybersecurity",
+    "twitter_url": "https://twitter.com/dreamcyberpk",
+    "youtube_url": "https://youtube.com/@dreamcybersecurity",
+    "company_intro_video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "stat_projects": "250+",
+    "stat_clients": "180+",
+    "stat_team": "35+",
+    "stat_experience": "8+ Years",
+    "meta_title": "Dream Cyber Security Pakistan | Cyber Defense & IT Solutions",
+    "meta_description": "Premier international-standard cybersecurity, software engineering, AI automation, and IT solutions firm operating in Pakistan.",
+    "meta_keywords": "cybersecurity pakistan, penetration testing lahore, web development, AI automation, IT firm pakistan, SOC monitoring",
+    "hero_tag": "Certified Enterprise Cyber Defense & Digital Engineering",
+    "hero_title_prefix": "Protecting & Empowering",
+    "hero_title_highlight": "Modern Businesses in Pakistan",
+    "hero_description": "We engineer international-grade cybersecurity architecture, bespoke software, AI workflow automations, and corporate digital services that safeguard your assets and accelerate operational efficiency.",
+    "hero_btn_1_text": "Get a Security Consultation",
+    "hero_btn_1_link": "/contact",
+    "hero_btn_2_text": "Explore All Services",
+    "hero_btn_2_link": "/services",
+    "ga4_id": "G-DCSPAK2026",
+    "gtm_id": "",
+    "meta_pixel_id": "123456789012345",
+    "site_language": "en"
+  },
+  "services": [
+    {
+      "title": "Web Design & Development",
+      "slug": "web-design-development",
+      "icon": "globe",
+      "summary": "High-performance, secure, responsive enterprise websites and modern web platforms tailored to international standards.",
+      "description": "We architect modern, robust web solutions engineered for security, speed, and conversion. From corporate business portals to custom web architectures, our systems are built with zero-trust security foundations and cutting-edge responsive interfaces.",
+      "features": "Custom UI/UX Wireframing\nPure Modern Architecture\nOWASP Top 10 Security Hardened\nSub-second Page Load Speed\nFull Cross-device Responsiveness",
+      "benefits": "Enhanced brand authority, seamless user engagement across mobile and desktop, and zero vulnerability backdoors.",
+      "order_num": 1,
+      "status": "active"
+    },
+    {
+      "title": "E-commerce Development",
+      "slug": "ecommerce-development",
+      "icon": "shopping-cart",
+      "summary": "Secure, scalable digital commerce architectures optimized for conversion, high concurrency, and automated operations.",
+      "description": "Enterprise-grade e-commerce solutions that empower high-volume transactions with fortified data protection, seamless catalog management, inventory tracking, and intuitive shopping journeys.",
+      "features": "Scalable Multi-tier Architecture\nPCI-DSS Security Compliance\nAdvanced Inventory & Order Management\nCustom Cart & Checkout Funnels\nInstant Search & Filtering",
+      "benefits": "Maximized conversion rates, dependable uptime during traffic surges, and robust transaction integrity.",
+      "order_num": 2,
+      "status": "active"
+    },
+    {
+      "title": "Video Editing & Motion Graphics",
+      "slug": "video-editing-motion-graphics",
+      "icon": "video",
+      "summary": "Cinematic post-production, corporate showreels, high-impact motion graphics, and visual storytelling.",
+      "description": "Visual storytelling designed to captivate your audience and communicate complex technological concepts clearly. We deliver broadcast-quality video editing, 2D/3D motion graphics, brand stingers, and promotional campaigns.",
+      "features": "4K & 8K Color Grading & Mastering\nDynamic Kinetic Typography\nExplainer & Corporate Promo Videos\nSound Design & Audio Engineering\nPlatform-optimized Aspect Ratios",
+      "benefits": "Unforgettable corporate presentations, higher retention on social channels, and premium brand prestige.",
+      "order_num": 3,
+      "status": "active"
+    },
+    {
+      "title": "Graphic Design & Branding",
+      "slug": "graphic-design-branding",
+      "icon": "palette",
+      "summary": "Distinct corporate identities, visual guidelines, vector assets, and brand collateral that stand out globally.",
+      "description": "We create cohesive corporate brand identities that communicate strength, technological mastery, and trust. Every asset from vector logos to executive brand books is crafted with rigorous attention to detail.",
+      "features": "Complete Brand Identity Kits\nCorporate Stationery & Presentation Decks\nVector Illustrations & Iconography\nMarketing Collateral & Print Materials\nStrict Brand Guidelines Manuals",
+      "benefits": "Instantly recognizable market presence, cohesive touchpoints across all client media, and investor-ready assets.",
+      "order_num": 4,
+      "status": "active"
+    },
+    {
+      "title": "AI Automation & Chatbot Development",
+      "slug": "ai-automation-chatbot-development",
+      "icon": "cpu",
+      "summary": "Autonomous enterprise workflows, intelligent LLM agents, cognitive automation, and smart 24/7 customer assistants.",
+      "description": "Transform manual company bottlenecks into automated intelligence. We deploy tailored workflow automations, predictive algorithmic engines, and natural conversational AI agents integrated with your existing business systems.",
+      "features": "Autonomous Workflow Pipelines\nCustom LLM Chatbot Integration\nCRM & Database Automation\nLead Qualification Agents\nDocument & Data Parsing Bots",
+      "benefits": "Reduced operational overhead by up to 60%, instant 24/7 customer lead response, and error-free execution.",
+      "order_num": 5,
+      "status": "active"
+    },
+    {
+      "title": "Cybersecurity Services",
+      "slug": "cybersecurity-services",
+      "icon": "shield-lock",
+      "summary": "Vulnerability assessments, penetration testing, SOC monitoring, zero-trust audits, and compliance readiness.",
+      "description": "Comprehensive defensive and offensive cybersecurity consulting designed to shield your business assets from state-sponsored and cybercrime threats. We audit, harden, and defend enterprise infrastructures.",
+      "features": "Network & Web Penetration Testing (VAPT)\nZero-Trust Infrastructure Hardening\nISO 27001 & Compliance Consulting\nIncident Response & Forensics\nEmployee Threat Awareness Training",
+      "benefits": "Comprehensive peace of mind, continuous compliance with international regulations, and mitigation of catastrophic breaches.",
+      "order_num": 6,
+      "status": "active"
+    },
+    {
+      "title": "Digital Marketing & SEO",
+      "slug": "digital-marketing-seo",
+      "icon": "trending-up",
+      "summary": "Organic search engine dominance, technical SEO audits, data-backed conversion optimization, and authority building.",
+      "description": "Strategic search optimization tailored to elevate your corporate visibility for high-intent business keywords. We implement technical on-page architectures, rich snippets, schema markup, and authoritative backlink profiles.",
+      "features": "Technical SEO Audits & Core Web Vitals Fixes\nHigh-Intent Keyword Strategy\nStructured Schema.org Data Integration\nContent Strategy & On-page Optimization\nRank Tracking & Analytics Reporting",
+      "benefits": "Sustainable organic traffic pipeline, top rankings on competitive regional and global terms, and lower client acquisition costs.",
+      "order_num": 7,
+      "status": "active"
+    },
+    {
+      "title": "Social Media Management",
+      "slug": "social-media-management",
+      "icon": "share-2",
+      "summary": "Strategic corporate presence across LinkedIn, X/Twitter, Meta, and YouTube with targeted B2B content pipelines.",
+      "description": "Cultivate executive authority and community trust. We design and execute data-backed social communication schedules, tech-focused thought leadership, and interactive engagement strategies.",
+      "features": "B2B Thought Leadership Publishing\nMulti-platform Content Calendars\nCustom Tech Infographics & Visuals\nAudience Growth & Engagement Monitoring\nMonthly ROI Analytics & Sentiment Reports",
+      "benefits": "Consistent brand reputation, executive reach across B2B decision makers, and organic brand advocacy.",
+      "order_num": 8,
+      "status": "active"
+    },
+    {
+      "title": "Software & Application Development",
+      "slug": "software-application-development",
+      "icon": "code",
+      "summary": "Bespoke enterprise software, secure backends, high-throughput microservices, and desktop/cloud platforms.",
+      "description": "Engineering custom software architectures solving demanding industry challenges. Built with scalable design patterns, rigorous automated testing, and secure data pipelines.",
+      "features": "Custom Enterprise ERP & CRM Modules\nRobust RESTful API Gateways\nHigh-Performance Database Architectures\nRole-Based Access Control (RBAC)\nModular & Extensible Codebases",
+      "benefits": "Tailored fit to your unique operational workflow, complete IP ownership, and zero monthly recurring license fees.",
+      "order_num": 9,
+      "status": "active"
+    },
+    {
+      "title": "Domain, Hosting & IT Support",
+      "slug": "domain-hosting-it-support",
+      "icon": "server",
+      "summary": "Hardened cloud server management, 99.99% uptime, DNS protection, SSL deployment, and 24/7 dedicated support.",
+      "description": "Mission-critical hosting and proactive IT maintenance. We manage dedicated servers, automated off-site backups, DDoS mitigation, and swift 24/7 engineering helpdesk resolution.",
+      "features": "DDoS Protected Enterprise Hosting\nDaily Encrypted Cloud Backups\nSSL/TLS & DNSSEC Deployment\n24/7 Server Health Monitoring\nOn-call IT Technical Support Desk",
+      "benefits": "Uninterrupted business continuity, rapid disaster recovery capabilities, and swift emergency resolutions.",
+      "order_num": 10,
+      "status": "active"
+    }
+  ],
+  "courses": [
+    {
+      "title": "Video Editing & Graphic Design",
+      "slug": "video-editing-graphic-design",
+      "duration": "12 Weeks (Comprehensive Hands-on)",
+      "target_audience": "Aspiring creative designers, media professionals, marketing specialists, and content creators aiming for international freelance and corporate careers.",
+      "overview": "A rigorous, industry-aligned training program covering modern post-production video editing, color science, motion graphics, and corporate brand design standards.",
+      "syllabus": "Module 1: Principles of Design, Color Theory & Visual Hierarchy\nModule 2: Adobe Photoshop & Illustrator Vector Graphics\nModule 3: Corporate Brand Identity, Logo & Social Collateral Design\nModule 4: Adobe Premiere Pro Timeline & Audio Engineering\nModule 5: Adobe After Effects Motion Graphics & Kinetic Typography\nModule 6: 4K Color Grading & Cinematic Pacing\nModule 7: Client Project Portfolio & International Freelance Workflows",
+      "what_you_will_learn": "Industry-standard graphic design mastery\nProfessional video timeline management and cutting\nKinetic typography and 2D motion graphics\nAudio enhancement and color grading pipelines\nFull client portfolio with real corporate case studies",
+      "instructor_name": "Ahmed Raza",
+      "instructor_designation": "Creative Director & Senior Motion Designer",
+      "instructor_bio": "Over 10 years of international post-production experience leading branding and motion design for global digital agencies.",
+      "intro_video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "order_num": 1,
+      "status": "active"
+    },
+    {
+      "title": "AI Automation",
+      "slug": "ai-automation",
+      "duration": "10 Weeks (Applied Enterprise Automation)",
+      "target_audience": "IT professionals, systems administrators, business analysts, and developers looking to deploy autonomous AI agents and enterprise workflows.",
+      "overview": "Master the deployment of generative AI models, autonomous workflow pipelines, cognitive bots, and smart business process automations.",
+      "syllabus": "Module 1: Foundations of Generative AI, LLMs & Prompt Engineering\nModule 2: Workflow Automation with n8n, Make & Zapier\nModule 3: API Integration & Webhooks Architecture\nModule 4: Custom AI Assistants & RAG (Retrieval-Augmented Generation)\nModule 5: WhatsApp & Web Chatbot Deployment\nModule 6: Automated Data Scraping & CRM Ingestion\nModule 7: Deploying Secure Production Automations",
+      "what_you_will_learn": "Build and deploy autonomous multi-step automations\nIntegrate LLMs with company databases and webhooks\nDeploy 24/7 intelligent customer engagement chatbots\nAutomate lead qualification and sales pipelines\nZero-code and low-code enterprise automation architectures",
+      "instructor_name": "Tariq Mehmood",
+      "instructor_designation": "Principal AI Solutions Architect",
+      "instructor_bio": "Specialist in enterprise RPA and generative AI architectures with a background in deploying automated systems across telecommunications and fintech.",
+      "intro_video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "order_num": 2,
+      "status": "active"
+    },
+    {
+      "title": "Web Development",
+      "slug": "web-development",
+      "duration": "14 Weeks (Full-Stack Engineering)",
+      "target_audience": "Students, career changers, and junior developers seeking full-stack web engineering competence with modern clean architecture.",
+      "overview": "A structured engineering pathway starting from semantic web standards to secure server-side programming, database architecture, and security hardening.",
+      "syllabus": "Module 1: Semantic HTML5, Modern CSS3 Flexbox & Grid Systems\nModule 2: Responsive Design & Mobile-First Best Practices\nModule 3: Server-side Architecture with Modern Next.js\nModule 4: Database Design with MongoDB & Relational MySQL\nModule 5: Security Hardening: OWASP Top 10, Injection, XSS & CSRF Defense\nModule 6: RESTful API Development & JSON Endpoints\nModule 7: Git Version Control, Deployment & Production Server Setup",
+      "what_you_will_learn": "Build fast, secure server-rendered web applications\nDesign and query normalized databases\nImplement robust authentication and role-based permissions\nProtect systems against common web vulnerabilities\nDeploy and maintain production servers",
+      "instructor_name": "Shahid Khan",
+      "instructor_designation": "Senior Lead Full-Stack Architect",
+      "instructor_bio": "Full-stack engineer with 12+ years of experience delivering robust web platforms for international clients.",
+      "intro_video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "order_num": 3,
+      "status": "active"
+    },
+    {
+      "title": "Computer Basics",
+      "slug": "computer-basics",
+      "duration": "6 Weeks (Foundational IT Skills)",
+      "target_audience": "Beginners, office administrators, and individuals seeking solid, professional computer literacy and IT foundational skills.",
+      "overview": "A practical, empowering course focused on modern computing fundamentals, operating system mastery, professional office productivity, digital security hygiene, and internet tools.",
+      "syllabus": "Module 1: Computer Hardware, Architecture & Operating Systems (Windows/Linux)\nModule 2: File Management, Data Organization & Cloud Storage\nModule 3: Microsoft Office Suite (Word, Excel & PowerPoint Essentials)\nModule 4: Safe Internet Browsing, Digital Privacy & Cyber Hygiene\nModule 5: Email Communication, Netiquette & Professional Documentation\nModule 6: Basic Troubleshooting, Backups & System Maintenance",
+      "what_you_will_learn": "Confidently operate modern operating systems and hardware\nCreate professional spreadsheets, formulas, and presentations\nProtect personal and office data against malware and phishing\nEffectively use cloud drives, collaboration tools, and email\nPerform foundational IT maintenance and troubleshooting",
+      "instructor_name": "Fatima Noor",
+      "instructor_designation": "IT Education Specialist & Technical Trainer",
+      "instructor_bio": "Passionate computing educator with 7+ years of experience training corporate employees and students in essential computing literacy.",
+      "intro_video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "order_num": 4,
+      "status": "active"
+    }
+  ],
+  "team": [
+    {
+      "name": "Muhammad Shahriar",
+      "designation": "Chief Executive Officer (CEO)",
+      "bio": "Visionary technology leader with extensive background in cyber defense, enterprise IT architecture, and digital transformation initiatives.",
+      "photo": "",
+      "linkedin": "https://linkedin.com",
+      "twitter": "https://twitter.com",
+      "github": "https://github.com",
+      "email": "ceo@dreamcyber.pk",
+      "order_num": 1
+    },
+    {
+      "name": "Hamza Ali",
+      "designation": "Head of Cybersecurity & Threat Intelligence",
+      "bio": "CISSP certified security veteran specializing in proactive threat detection, vulnerability assessments, and enterprise zero-trust audits.",
+      "photo": "",
+      "linkedin": "https://linkedin.com",
+      "twitter": "https://twitter.com",
+      "github": "https://github.com",
+      "email": "hamza@dreamcyber.pk",
+      "order_num": 2
+    },
+    {
+      "name": "Zainab Bukhari",
+      "designation": "Director of Software Engineering",
+      "bio": "Over 9 years of architecting scalable cloud platforms, database optimization, and high-performance server architectures.",
+      "photo": "",
+      "linkedin": "https://linkedin.com",
+      "twitter": "https://twitter.com",
+      "github": "https://github.com",
+      "email": "zainab@dreamcyber.pk",
+      "order_num": 3
+    },
+    {
+      "name": "Bilal Farooq",
+      "designation": "Lead AI & Automation Specialist",
+      "bio": "Expert in large language model pipelines, cognitive automation workflows, and machine learning integration for enterprise clients.",
+      "photo": "",
+      "linkedin": "https://linkedin.com",
+      "twitter": "https://twitter.com",
+      "github": "https://github.com",
+      "email": "bilal@dreamcyber.pk",
+      "order_num": 4
+    }
+  ],
+  "portfolio": [
+    {
+      "title": "National Cyber Defense Portal",
+      "category": "Web Development",
+      "client_name": "GovTech Security Initiative",
+      "cover_image": "",
+      "video_url": "",
+      "description": "Secure, high-concurrency web portal engineered with fortified authentication, role-based authorization, and real-time security alerting.",
+      "order_num": 1
+    },
+    {
+      "title": "Corporate Threat Explainer 3D Reel",
+      "category": "Video Editing",
+      "client_name": "FinSecure Bank Ltd",
+      "cover_image": "",
+      "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "description": "Cinematic 3D motion graphics showreel explaining modern ransomware attack vectors and organizational prevention protocols.",
+      "order_num": 2
+    },
+    {
+      "title": "Zero-Trust Identity Brand Kit",
+      "category": "Graphic Design",
+      "client_name": "Apex Cyber Defense",
+      "cover_image": "",
+      "video_url": "",
+      "description": "Comprehensive corporate visual identity, including vector brand identity, typography, corporate stationary, and security badges.",
+      "order_num": 3
+    },
+    {
+      "title": "Autonomous Lead & SOC Intake Bot",
+      "category": "AI Automation",
+      "client_name": "Global Telecom Provider",
+      "cover_image": "",
+      "video_url": "",
+      "description": "Multi-channel autonomous AI agent providing instant lead triaging, customer onboarding, and initial technical incident logging 24/7.",
+      "order_num": 4
+    }
+  ],
+  "videos": [
+    {
+      "title": "Dream Cyber Security Corporate Overview 2026",
+      "category": "Company Videos",
+      "video_type": "embed",
+      "video_source": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "description": "An executive introduction to our mission, core cyber defense capabilities, and international technology standards.",
+      "order_num": 1
+    },
+    {
+      "title": "Academy Showcase: AI Automation in Practice",
+      "category": "Course Introduction Videos",
+      "video_type": "embed",
+      "video_source": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "description": "Discover how our Academy trains professionals to deploy real-world enterprise automations and intelligent bots.",
+      "order_num": 2
+    },
+    {
+      "title": "Student Project: Cloud Incident Detection System",
+      "category": "Student Projects and Work",
+      "video_type": "embed",
+      "video_source": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "description": "Demonstration of an automated anomaly detection script built by our web and security batch students.",
+      "order_num": 3
+    },
+    {
+      "title": "Educational Guide: Defending Against Social Engineering",
+      "category": "Tutorials and Educational Videos",
+      "video_type": "embed",
+      "video_source": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "description": "Essential guidelines and proactive measures for corporate teams to safeguard credentials against phishing.",
+      "order_num": 4
+    }
+  ],
+  "posts": [
+    {
+      "title": "Dream Cyber Security Expands Operations Across Pakistan",
+      "slug": "dream-cyber-security-expands-pakistan",
+      "category": "Company News",
+      "tags": "expansion, cybersecurity, pakistan, technology",
+      "excerpt": "We are proud to announce the expansion of our enterprise cyber defense and technology consulting services to support growing businesses across Pakistan.",
+      "content": "<p>As digital adoption accelerates throughout Pakistan, the need for international-standard cyber resilience and dependable technology engineering has never been greater. Dream Cyber Security is expanding its enterprise consulting footprint to provide local organizations with world-class defenses against emerging threats.</p><p>Our dedicated team of certified engineers offers continuous monitoring, vulnerability assessments, and bespoke digital automation solutions tailored to corporate clients, financial institutions, and fast-growing enterprises.</p>",
+      "is_published": true
+    },
+    {
+      "title": "Top 5 Cybersecurity Essentials Every Business Must Implement in 2026",
+      "slug": "top-5-cybersecurity-essentials-2026",
+      "category": "Cybersecurity Tips",
+      "tags": "cyber hygiene, security tips, best practices",
+      "excerpt": "Discover the critical security controls and organizational hygiene required to protect your business against modern ransomware and data exfiltration.",
+      "content": "<p>In modern corporate networks, perimeter defense alone is no longer sufficient. Organizations must transition to a zero-trust model where every access request is verified and inspected.</p><p>Key steps include multi-factor authentication (MFA), strict role-based access control, automated offsite encrypted backups, continuous vulnerability scanning, and employee phishing awareness drills.</p>",
+      "is_published": true
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What cybersecurity services does Dream Cyber Security provide in Pakistan?",
+      "answer": "We provide comprehensive vulnerability assessment and penetration testing (VAPT), zero-trust architecture hardening, ISO 27001 readiness, incident response, and continuous security audits for enterprise infrastructures.",
+      "category": "Services",
+      "order_num": 1
+    },
+    {
+      "question": "Can we enroll or purchase courses directly online?",
+      "answer": "Our Academy section is strictly for showcase and informational purposes. We do not sell courses online or process online admissions. To inquire about curriculum, schedules, or corporate training, please click \"Contact for Details\" or message us via WhatsApp.",
+      "category": "Academy",
+      "order_num": 2
+    },
+    {
+      "question": "Do you provide custom software and web development?",
+      "answer": "Yes, we design and build bespoke enterprise web applications, corporate websites, custom CRM/ERP modules, and secure API architectures adhering to international performance and security standards.",
+      "category": "Services",
+      "order_num": 3
+    },
+    {
+      "question": "How quickly can your team respond to security inquiries or project requests?",
+      "answer": "Our team reviews all incoming inquiries within 2 to 4 business hours. For urgent inquiries, you can reach out directly via our official WhatsApp button for immediate assistance.",
+      "category": "General",
+      "order_num": 4
+    }
+  ],
+  "landingPages": [
+    {
+      "slug": "enterprise-cyber-defense",
+      "title": "Enterprise Cyber Defense & Threat Mitigation in Pakistan",
+      "meta_title": "Enterprise Cyber Defense Solutions | Dream Cyber Security",
+      "meta_description": "Protect your organization against advanced ransomware, APTs, and corporate espionage with zero-trust defense architectures.",
+      "headline": "Zero-Trust Cybersecurity Architecture For Pakistani Enterprises",
+      "subheadline": "Proactive vulnerability management, penetration testing, and round-the-clock defense consulting.",
+      "body_content": "<p>In today's interconnected corporate landscape, data breaches can compromise financial stability and corporate goodwill. Dream Cyber Security provides international-grade defense consulting tailored to Pakistani corporate institutions.</p><p>Our audits adhere strictly to ISO 27001, NIST, and OWASP standards to ensure maximum compliance and resilience.</p>",
+      "cta_text": "Request Confidential Consultation",
+      "cta_link": "/contact",
+      "is_active": true
+    }
+  ]
+}
