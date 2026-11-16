@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --bg-primary: #050b14;
   --bg-secondary: #0b1526;
@@ -28,6 +32,53 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 242, 254, 0.45) #050b14;
+}
+
+/* Custom Cyber Scrollbars (Desktop & Mobile) */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050b14;
+  border-left: 1px solid rgba(0, 242, 254, 0.08);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00f2fe 0%, #4facfe 100%);
+  border-radius: 9999px;
+  border: 2px solid #050b14;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.35);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00f2fe 0%, #00c6ff 100%);
+  box-shadow: 0 0 16px rgba(0, 242, 254, 0.7);
+}
+
+::-webkit-scrollbar-corner {
+  background: #050b14;
+}
+
+/* Themed Text Selection matching Cyber Palette */
+::selection {
+  background: rgba(0, 242, 254, 0.35);
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.8);
+}
+
+::-moz-selection {
+  background: rgba(0, 242, 254, 0.35);
+  color: #ffffff;
+}
+
+/* Scrollable containers in Admin and Tables */
+.admin-sidebar, .admin-main, .table-responsive, pre, code {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 242, 254, 0.35) #050b14;
 }
 
 body {
@@ -567,11 +618,63 @@ details.faq-item[open] {
   color: var(--text-muted);
 }
 
+/* Admin Login Layout & Card */
+.admin-login-layout {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 20%, #0d1a33 0%, var(--bg-primary) 70%);
+  padding: 1.5rem;
+}
+
+.login-card-wrapper {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.login-card {
+  padding: 2.75rem 2.25rem;
+  border-radius: var(--radius-lg);
+  background: rgba(15, 28, 51, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 242, 254, 0.12);
+}
+
+.login-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(0, 242, 254, 0.1);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  color: var(--accent-cyan);
+  margin-bottom: 1rem;
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
+}
+
+.login-hint-box {
+  background: rgba(0, 242, 254, 0.05);
+  border: 1px dashed rgba(0, 242, 254, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 1.5rem;
+}
+
 /* Admin Dashboard Layout Styles */
 .admin-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
   min-height: 100vh;
+  width: 100%;
 }
 
 .admin-sidebar {
@@ -581,6 +684,21 @@ details.faq-item[open] {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.admin-drawer-close-btn {
+  display: none;
+}
+
+.admin-mobile-header {
+  display: none;
+}
+
+.admin-mobile-backdrop {
+  display: none;
 }
 
 .admin-nav-item {
@@ -606,6 +724,7 @@ details.faq-item[open] {
 .admin-content {
   padding: 2.5rem 3rem;
   overflow-y: auto;
+  max-width: 100%;
 }
 
 .table-responsive {
@@ -646,9 +765,84 @@ tr:hover td {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
   .hero-title { font-size: 2.75rem; }
-  .admin-layout { grid-template-columns: 1fr; }
-  .admin-sidebar { display: none; }
-  .admin-content { padding: 1.5rem; }
+
+  /* Admin Mobile Layout */
+  .admin-layout {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.25rem;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: -290px;
+    width: 280px;
+    height: 100vh;
+    z-index: 1000;
+    background: #091122;
+    transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
+    display: flex;
+  }
+
+  .admin-sidebar.mobile-open {
+    left: 0;
+  }
+
+  .admin-drawer-close-btn {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.75rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+  }
+
+  .admin-drawer-close-btn:hover {
+    color: var(--accent-cyan);
+  }
+
+  .admin-mobile-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+  }
+
+  .admin-content {
+    padding: 1.5rem 1.25rem;
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-login-layout {
+    padding: 1rem;
+  }
+
+  .login-card {
+    padding: 2rem 1.25rem;
+  }
+
+  .hidden-xs {
+    display: none !important;
+  }
 }
 
 @media (max-width: 768px) {

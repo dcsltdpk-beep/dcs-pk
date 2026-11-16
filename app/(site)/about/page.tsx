@@ -11,7 +11,7 @@ export const metadata = {
 export default async function AboutPage() {
   const settings = await getSettings();
 
-  const introVideo = settings.company_intro_video || 'https://www.youtube.com/embed/dQw4w9WgXcQ';
+  const introVideo = settings.company_intro_video || 'https://www.youtube.com/embed/inWWhr5tnEA';
 
   return (
     <div style={{ paddingTop: '3rem' }}>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { verifyAdminToken } from '@/lib/auth';
 import AdminSidebar from './AdminSidebar';
 
@@ -18,14 +17,18 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     session = await verifyAdminToken(token);
   }
 
-  // If unauthenticated, allow login page through, else redirect
-  // Note: /admin/login handles its own unauthenticated view
+  // If unauthenticated (e.g. /admin/login), render in clean centered full-width layout
+  if (!session) {
+    return <main className="admin-login-layout">{children}</main>;
+  }
+
+  // If authenticated, render full responsive dashboard shell
   return (
     <div className="admin-layout">
-      {session && <AdminSidebar />}
-      <div className="admin-content" style={{ width: '100%', minHeight: '100vh' }}>
+      <AdminSidebar />
+      <main className="admin-content">
         {children}
-      </div>
+      </main>
     </div>
   );
 }

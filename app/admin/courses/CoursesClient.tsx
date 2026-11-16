@@ -35,7 +35,7 @@ export default function CoursesClient({ initialCourses }: { initialCourses: Cour
     instructor_name: '',
     instructor_designation: '',
     instructor_bio: '',
-    intro_video_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    intro_video_url: '',
     order_num: courses.length + 1,
     status: 'active',
   };

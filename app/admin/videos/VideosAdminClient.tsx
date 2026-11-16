@@ -25,7 +25,7 @@ export default function VideosAdminClient({ initialVideos }: { initialVideos: Vi
     title: '',
     category: 'Company Videos',
     video_type: 'embed',
-    video_source: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    video_source: '',
     description: '',
     order_num: videos.length + 1,
   };

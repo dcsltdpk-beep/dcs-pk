@@ -34,7 +34,7 @@ export default async function HomePage() {
   const statClients = settings.stat_clients || '180+';
   const statTeam = settings.stat_team || '35+';
   const statExperience = settings.stat_experience || '8+ Years';
-  const introVideo = settings.company_intro_video || 'https://www.youtube.com/embed/dQw4w9WgXcQ';
+  const introVideo = settings.company_intro_video || 'https://www.youtube.com/embed/inWWhr5tnEA';
 
   // Fallback services if db empty
   const displayServices = services.length > 0 ? services : [
