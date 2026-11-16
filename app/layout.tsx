@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Dream Cyber Security Pakistan | Cyber Defense & IT Solutions',
@@ -7,6 +8,9 @@ export const metadata: Metadata = {
     'Premier international-standard cybersecurity firm, bespoke software engineering, AI workflow automations, and training academy in Pakistan.',
   keywords: 'cybersecurity pakistan, penetration testing lahore, web development, AI automation, IT firm pakistan, SOC monitoring',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  verification: {
+    google: 'pewPU0U99OKBT9gp2PI4t2h_uS--HT4ISi200Px3K9E',
+  },
   openGraph: {
     type: 'website',
     siteName: 'Dream Cyber Security Pakistan',
@@ -27,6 +31,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        {/* Google Search Console Verification */}
+        <meta
+          name="google-site-verification"
+          content="pewPU0U99OKBT9gp2PI4t2h_uS--HT4ISi200Px3K9E"
+        />
+
+        {/* Google Analytics / Google Tag Manager */}
+        <Script
+          src="https://www.googletagmanager.com/gtm.js?id=GTM-N72RQZVG"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          `}
+        </Script>
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
