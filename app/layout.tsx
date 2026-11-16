@@ -33,24 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        {/* Google Search Console Verification */}
-        <meta
-          name="google-site-verification"
-          content="pewPU0U99OKBT9gp2PI4t2h_uS--HT4ISi200Px3K9E"
-        />
-
-        {/* Google Tag Manager (Header Script) */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-N72RQZVG');`,
-          }}
-        />
-
-        {/* Google Analytics / GTAG initialization */}
+        {/* Google Analytics / Google tag (gtag.js) immediately after <head> */}
         <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-N72RQZVG" />
         <script
           dangerouslySetInnerHTML={{
@@ -60,6 +43,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               gtag('js', new Date());
             `,
           }}
+        />
+
+        {/* Google Search Console verification meta tag in <head> before <body> */}
+        <meta
+          name="google-site-verification"
+          content="pewPU0U99OKBT9gp2PI4t2h_uS--HT4ISi200Px3K9E"
         />
 
         <script
@@ -88,15 +77,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
       </head>
       <body>
-        {/* Google Tag Manager (noscript fallback) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-N72RQZVG"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
         {children}
       </body>
     </html>
