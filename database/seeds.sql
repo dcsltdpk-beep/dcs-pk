@@ -4,7 +4,7 @@ USE `dcs_pakistan`;
 
 -- 1. Default Admin User: admin / admin123 (bcrypt hash: $2y$10$WqT81WsmKz6QhG6wEre7y.kGg0U6Nn5iG9yL8G771Z02Yf241aE2S)
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`) VALUES
-(1, 'admin', 'admin@dreamcyber.pk', '$2y$10$64z5T4Hh9l7E.Z1qJ1KzreV6o2oM.wYh7p8L4wW1fNfG3B3sBw7l2', 'admin')
+(1, 'admin', 'admin@dreamcyber.pk', '$2a$12$6EZZKgEDG4FNDgZS0KEyEOCkL3nKsn/7KRHr.Unla6Tjn5qb387dO', 'admin')
 ON DUPLICATE KEY UPDATE `id`=`id`;
 
 -- 2. Initial Settings
