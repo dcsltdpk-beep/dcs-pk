@@ -12,11 +12,11 @@ interface FooterProps {
 }
 
 export default function Footer({
-  whatsappNumber = '923001234567',
+  whatsappNumber = '923165478855',
   whatsappMessage = 'Hello Dream Cyber Security Pakistan, I have an inquiry.',
-  companyEmail = 'info@dreamcyber.pk',
-  companyPhone = '+92 300 1234567',
-  companyAddress = 'Level 4, IT Tower, Hali Road, Gulberg III, Lahore, Pakistan',
+  companyEmail = 'dcsltd.pk@gmail.com',
+  companyPhone = '0316 5478855',
+  companyAddress = 'Lahore, Pakistan',
   services = [
     { title: 'Web Design & Development', slug: 'web-design-development' },
     { title: 'E-commerce Development', slug: 'ecommerce-development' },
@@ -59,13 +59,13 @@ export default function Footer({
                 <span className="brand-badge">Pakistan</span>
               </div>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
-                International-standard cyber defense, custom software engineering, AI workflow automations, and enterprise technology solutions for forward-looking organizations.
+                Your premier technology and security solutions provider, empowering businesses and cultivating next-generation digital leaders.
               </p>
               <div style={{ display: 'flex', gap: '10px' }}>
-                <a href="https://facebook.com/dreamcybersecurity" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>FB</a>
-                <a href="https://linkedin.com/company/dreamcybersecurity" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>IN</a>
-                <a href="https://twitter.com/dreamcyberpk" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>X</a>
-                <a href="https://youtube.com/@dreamcybersecurity" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>YT</a>
+                <a href="https://www.facebook.com/profile.php?id=61595891767697" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>FB</a>
+                <a href="https://www.instagram.com/dreamcybersecurityltd/" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>IG</a>
+                <a href="https://www.linkedin.com/company/dream-cyber-security-ltd/" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>IN</a>
+                <a href="https://wa.me/923165478855" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>WA</a>
               </div>
             </div>
 

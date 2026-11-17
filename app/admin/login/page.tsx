@@ -69,7 +69,7 @@ export default function AdminLoginPage() {
       <div className="card login-card">
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div className="login-icon-badge" style={{ padding: '6px', background: 'rgba(0, 242, 254, 0.08)' }}>
+          <div className="login-icon-badge" style={{ padding: '6px', background: 'rgba(251, 174, 68, 0.12)' }}>
             <img
               src="/logo.png"
               alt="Dream Cyber Security Pakistan"

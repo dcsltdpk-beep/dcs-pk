@@ -1,5 +1,19 @@
 import './globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import { Poppins } from 'next/font/google';
+
+const poppins = Poppins({
+  weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-poppins',
+});
+
+export const viewport: Viewport = {
+  themeColor: '#28245F',
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: 'Dream Cyber Security Pakistan | Cyber Defense & IT Solutions',
@@ -92,7 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body>
+      <body className={`${poppins.variable} font-sans`}>
         {children}
       </body>
     </html>

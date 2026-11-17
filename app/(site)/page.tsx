@@ -251,7 +251,7 @@ export default async function HomePage() {
       </section>
 
       {/* CTA Banner */}
-      <section className="section" style={{ background: 'linear-gradient(135deg, rgba(0, 242, 254, 0.08) 0%, rgba(79, 172, 254, 0.03) 100%)', borderTop: '1px solid var(--border-color)' }}>
+      <section className="section" style={{ background: 'linear-gradient(135deg, rgba(251, 174, 68, 0.08) 0%, rgba(62, 56, 135, 0.15) 100%)', borderTop: '1px solid var(--border-color)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '850px' }}>
           <span className="badge badge-cyan" style={{ marginBottom: '1rem' }}>Get In Touch</span>
           <h2 style={{ fontSize: '2.5rem', marginBottom: '1.25rem' }}>

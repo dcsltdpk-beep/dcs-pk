@@ -122,7 +122,7 @@ export default async function CourseDetailPage({ params }: Props) {
 
             {/* Instructor Card */}
             <div className="card" style={{ padding: '1.5rem', border: '1px solid var(--border-color)', display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-              <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(0, 242, 254, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-cyan)' }}>
+              <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(251, 174, 68, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-cyan)' }}>
                 <Icon name="user" size={30} />
               </div>
               <div>

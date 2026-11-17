@@ -77,7 +77,7 @@ export default async function BlogPostPage({ params }: Props) {
           style={{
             padding: '2rem',
             textAlign: 'center',
-            background: 'linear-gradient(135deg, rgba(0, 242, 254, 0.08), rgba(79, 172, 254, 0.03))',
+            background: 'linear-gradient(135deg, rgba(251, 174, 68, 0.08), rgba(62, 56, 135, 0.15))',
           }}
         >
           <h3 style={{ marginBottom: '0.5rem' }}>Protect Your Infrastructure Against These Threats</h3>

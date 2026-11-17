@@ -60,7 +60,7 @@ export default async function AdminDashboardPage() {
       <div className="grid grid-4" style={{ marginBottom: '3rem' }}>
         <div className="card">
           <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase' }}>Unread Inquiries</span>
-          <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#00f2fe', marginTop: '0.25rem' }}>
+          <div style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--accent-gold, #FBAE44)', marginTop: '0.25rem' }}>
             {unreadInquiries} <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>/ {totalInquiries} total</span>
           </div>
           <Link href="/admin/inquiries" style={{ fontSize: '0.85rem', fontWeight: 600, display: 'inline-block', marginTop: '0.5rem' }}>

@@ -53,7 +53,7 @@ export default async function ServicesPage() {
             marginTop: '4rem',
             textAlign: 'center',
             padding: '3rem 2rem',
-            background: 'linear-gradient(135deg, rgba(0, 242, 254, 0.08), rgba(79, 172, 254, 0.02))',
+            background: 'linear-gradient(135deg, rgba(251, 174, 68, 0.08), rgba(62, 56, 135, 0.15))',
           }}
         >
           <h3 style={{ fontSize: '1.8rem', marginBottom: '0.75rem' }}>Need a Tailored Custom Enterprise Solution?</h3>

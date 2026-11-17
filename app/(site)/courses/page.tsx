@@ -32,7 +32,7 @@ export default async function CoursesPage() {
           style={{
             marginBottom: '3rem',
             borderLeft: '4px solid var(--accent-cyan)',
-            background: 'rgba(0, 242, 254, 0.04)',
+            background: 'rgba(251, 174, 68, 0.06)',
             display: 'flex',
             alignItems: 'center',
             gap: '15px',
