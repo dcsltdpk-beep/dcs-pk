@@ -404,7 +404,8 @@ async function runProcessTests() {
     const data = await res.json();
     assert(
       res.status === 200 && data.success === true,
-      'PRC-09: Public Inquiry Lead Generation API accepts and processes sanitized lead'
+      'PRC-09: Public Inquiry Lead Generation API accepts and processes sanitized lead',
+      `Status: ${res.status}, Data: ${JSON.stringify(data)}`
     );
   } catch (err) {
     assert(false, 'PRC-09: Public Inquiry API process failed', err.message);
@@ -420,7 +421,8 @@ async function runProcessTests() {
     const authData = await authRes.json();
     assert(
       authRes.status === 200 && authData.success === true && authData.username === 'admin',
-      'PRC-10: Admin Login Process validates credentials and returns secure token session'
+      'PRC-10: Admin Login Process validates credentials and returns secure token session',
+      `Status: ${authRes.status}, Data: ${JSON.stringify(authData)}`
     );
   } catch (err) {
     assert(false, 'PRC-10: Admin Login Process failed', err.message);

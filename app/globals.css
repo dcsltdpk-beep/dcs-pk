@@ -1767,6 +1767,15 @@ tr:hover td {
   }
 }
 
+/* ==========================================================================
+   Mobile & Responsive Architecture (Tablets, Phones, Safe-Area-Insets)
+   ========================================================================== */
+
+/* Bottom Nav is hidden on desktop by default */
+.mobile-bottom-nav {
+  display: none;
+}
+
 @media (max-width: 1100px) {
   .desktop-nav {
     display: none !important;
@@ -1782,14 +1791,239 @@ tr:hover td {
   }
 }
 
+/* Tablet & Mobile Screens (<= 1024px) */
+@media (max-width: 1024px) {
+  /* Ensure page content never gets cut off under fixed bottom bar */
+  body {
+    padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* App-Style Floating Bottom Nav */
+  .mobile-bottom-nav {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    background: rgba(26, 24, 69, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(251, 174, 67, 0.25);
+    box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.55);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .mobile-bottom-nav-inner {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    height: 62px;
+    max-width: 540px;
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  .bottom-nav-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    height: 100%;
+    color: #B9DDEB;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 4px 2px;
+    transition: color 0.18s ease, transform 0.18s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .bottom-nav-item:active {
+    transform: scale(0.93);
+  }
+
+  .bottom-nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  }
+
+  .bottom-nav-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    font-family: var(--font-manrope, 'Manrope', sans-serif);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .bottom-nav-item.active {
+    color: #FBAE43;
+  }
+
+  .bottom-nav-item.active .bottom-nav-icon {
+    transform: translateY(-2px);
+    color: #FBAE43;
+  }
+
+  .bottom-nav-indicator {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 3px;
+    background: #FBAE43;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 0 10px rgba(251, 174, 67, 0.85);
+  }
+
+  /* WhatsApp shifts smoothly above bottom nav */
+  .floating-whatsapp {
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 18px !important;
+    padding: 10px 16px !important;
+    font-size: 0.88rem !important;
+    z-index: 1040 !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Mobile drawer content clearance for bottom bar */
+  .mobile-drawer-content {
+    padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* Smartphone Screens (<= 768px) */
 @media (max-width: 768px) {
   .grid-4, .grid-3, .grid-2 {
     grid-template-columns: 1fr;
   }
-  .hero-title {
-    font-size: 2.2rem;
+
+  /* Stats bar displays as clean 2x2 grid on phones instead of long single column */
+  .stats-bar .grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem 1rem !important;
   }
+
+  .stat-number {
+    font-size: 2.15rem !important;
+  }
+
+  .hero-title {
+    font-size: clamp(1.85rem, 6.5vw, 2.45rem) !important;
+    line-height: 1.18 !important;
+  }
+
+  .hero-desc {
+    font-size: 0.96rem !important;
+    line-height: 1.55 !important;
+  }
+
   .header-cta-btn {
+    display: none !important;
+  }
+
+  .hero-ctas {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .hero-ctas .btn {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 48px !important;
+    font-size: 0.95rem !important;
+  }
+
+  .hero-trust-bar {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 10px 16px !important;
+  }
+
+  .executive-nameplate-frame {
+    min-height: 340px !important;
+    border-radius: 14px !important;
+  }
+
+  .wood-slats-bg {
+    width: 28px !important;
+  }
+
+  .center-navy-plaque {
+    margin: 0 28px !important;
+    padding: 1.25rem 0.75rem !important;
+  }
+
+  .seal-golden-ring {
+    width: 135px !important;
+    height: 135px !important;
+  }
+
+  .seal-inner-ring {
+    width: 110px !important;
+    height: 110px !important;
+  }
+
+  .seal-fox-img {
+    width: 88px !important;
+    height: 88px !important;
+  }
+
+  .seal-outer-glow {
+    width: 145px !important;
+    height: 145px !important;
+  }
+
+  .nameplate-brand-cinzel {
+    font-size: 1rem !important;
+    letter-spacing: 2.5px !important;
+  }
+
+  .nameplate-subtitle-mono {
+    font-size: 8.5px !important;
+    letter-spacing: 1.8px !important;
+  }
+}
+
+/* Extra Small Phone Screens (<= 480px) */
+@media (max-width: 480px) {
+  .container {
+    width: 100% !important;
+    padding: 0 0.85rem !important;
+  }
+
+  .brand-badge {
+    display: none !important;
+  }
+
+  .wood-slats-bg {
+    width: 16px !important;
+  }
+
+  .center-navy-plaque {
+    margin: 0 16px !important;
+  }
+
+  .floating-whatsapp {
+    padding: 12px !important;
+    border-radius: 50% !important;
+    bottom: calc(74px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 14px !important;
+    width: 48px !important;
+    height: 48px !important;
+    justify-content: center !important;
+  }
+
+  .floating-whatsapp span {
     display: none !important;
   }
 }

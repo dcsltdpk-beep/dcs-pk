@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
+  Home,
+  LayoutGrid,
   ChevronDown,
   Shield,
   Code2,
@@ -517,7 +519,11 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
 
             <div className="mobile-drawer-body">
               {/* Home */}
-              <Link href="/" className={`mobile-nav-link ${pathname === '/' ? 'active' : ''}`}>
+              <Link
+                href="/"
+                className={`mobile-nav-link ${pathname === '/' ? 'active' : ''}`}
+                onClick={() => setMobileOpen(false)}
+              >
                 Home
               </Link>
 
@@ -533,14 +539,14 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
                 </button>
                 {mobileAccordion === 'services' && (
                   <div className="mobile-accordion-content">
-                    <Link href="/services/cybersecurity-services">Cybersecurity Services</Link>
-                    <Link href="/services/web-design-development">Web Design & Development</Link>
-                    <Link href="/services/software-application-development">Software & App Development</Link>
-                    <Link href="/services/ai-automation-chatbot-development">AI Automation & Chatbots</Link>
-                    <Link href="/services/ecommerce-development">E-Commerce Development</Link>
-                    <Link href="/services/video-editing-motion-graphics">Video & Motion Graphics</Link>
-                    <Link href="/services/graphic-design-branding">Graphic Design & Branding</Link>
-                    <Link href="/services" className="mobile-view-all">View All 10 Services &rarr;</Link>
+                    <Link href="/services/cybersecurity-services" onClick={() => setMobileOpen(false)}>Cybersecurity Services</Link>
+                    <Link href="/services/web-design-development" onClick={() => setMobileOpen(false)}>Web Design & Development</Link>
+                    <Link href="/services/software-application-development" onClick={() => setMobileOpen(false)}>Software & App Development</Link>
+                    <Link href="/services/ai-automation-chatbot-development" onClick={() => setMobileOpen(false)}>AI Automation & Chatbots</Link>
+                    <Link href="/services/ecommerce-development" onClick={() => setMobileOpen(false)}>E-Commerce Development</Link>
+                    <Link href="/services/video-editing-motion-graphics" onClick={() => setMobileOpen(false)}>Video & Motion Graphics</Link>
+                    <Link href="/services/graphic-design-branding" onClick={() => setMobileOpen(false)}>Graphic Design & Branding</Link>
+                    <Link href="/services" className="mobile-view-all" onClick={() => setMobileOpen(false)}>View All 10 Services &rarr;</Link>
                   </div>
                 )}
               </div>
@@ -557,11 +563,11 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
                 </button>
                 {mobileAccordion === 'academy' && (
                   <div className="mobile-accordion-content">
-                    <Link href="/courses/ai-automation">AI Automation & Agents (10 Wks)</Link>
-                    <Link href="/courses/web-development">Enterprise Web Development (14 Wks)</Link>
-                    <Link href="/courses/video-editing-graphic-design">Video Editing & Motion (8 Wks)</Link>
-                    <Link href="/courses/computer-basics">Computer Basics & Office (6 Wks)</Link>
-                    <Link href="/courses" className="mobile-view-all">View All Academy Courses &rarr;</Link>
+                    <Link href="/courses/ai-automation" onClick={() => setMobileOpen(false)}>AI Automation & Agents (10 Wks)</Link>
+                    <Link href="/courses/web-development" onClick={() => setMobileOpen(false)}>Enterprise Web Development (14 Wks)</Link>
+                    <Link href="/courses/video-editing-graphic-design" onClick={() => setMobileOpen(false)}>Video Editing & Motion (8 Wks)</Link>
+                    <Link href="/courses/computer-basics" onClick={() => setMobileOpen(false)}>Computer Basics & Office (6 Wks)</Link>
+                    <Link href="/courses" className="mobile-view-all" onClick={() => setMobileOpen(false)}>View All Academy Courses &rarr;</Link>
                   </div>
                 )}
               </div>
@@ -578,8 +584,8 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
                 </button>
                 {mobileAccordion === 'company' && (
                   <div className="mobile-accordion-content">
-                    <Link href="/about">About Us</Link>
-                    <Link href="/team">Leadership & Team</Link>
+                    <Link href="/about" onClick={() => setMobileOpen(false)}>About Us</Link>
+                    <Link href="/team" onClick={() => setMobileOpen(false)}>Leadership & Team</Link>
                   </div>
                 )}
               </div>
@@ -596,22 +602,31 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
                 </button>
                 {mobileAccordion === 'insights' && (
                   <div className="mobile-accordion-content">
-                    <Link href="/portfolio">Delivered Portfolio</Link>
-                    <Link href="/videos">Video Showcase</Link>
-                    <Link href="/blog">Threat Advisories & Blog</Link>
-                    <Link href="/faq">Knowledgebase & FAQ</Link>
+                    <Link href="/portfolio" onClick={() => setMobileOpen(false)}>Delivered Portfolio</Link>
+                    <Link href="/videos" onClick={() => setMobileOpen(false)}>Video Showcase</Link>
+                    <Link href="/blog" onClick={() => setMobileOpen(false)}>Threat Advisories & Blog</Link>
+                    <Link href="/faq" onClick={() => setMobileOpen(false)}>Knowledgebase & FAQ</Link>
                   </div>
                 )}
               </div>
 
               {/* Contact */}
-              <Link href="/contact" className={`mobile-nav-link ${pathname === '/contact' ? 'active' : ''}`}>
+              <Link
+                href="/contact"
+                className={`mobile-nav-link ${pathname === '/contact' ? 'active' : ''}`}
+                onClick={() => setMobileOpen(false)}
+              >
                 Contact Us
               </Link>
 
               {/* Mobile CTA */}
               <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(63, 57, 131, 0.5)' }}>
-                <Link href="/contact" className="btn btn-primary" style={{ width: '100%' }}>
+                <Link
+                  href="/contact"
+                  className="btn btn-primary"
+                  style={{ width: '100%' }}
+                  onClick={() => setMobileOpen(false)}
+                >
                   <Phone size={16} />
                   <span>Get Security Consultation</span>
                 </Link>
@@ -620,6 +635,77 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
           </div>
         </div>
       )}
+
+      {/* Modern App-Style Mobile Bottom Navigation Bar */}
+      <nav className="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <div className="mobile-bottom-nav-inner">
+          <Link
+            href="/"
+            className={`bottom-nav-item ${pathname === '/' && !mobileOpen ? 'active' : ''}`}
+            onClick={() => setMobileOpen(false)}
+          >
+            <span className="bottom-nav-icon">
+              <Home size={20} />
+            </span>
+            <span className="bottom-nav-label">Home</span>
+            {pathname === '/' && !mobileOpen && <span className="bottom-nav-indicator" />}
+          </Link>
+
+          <Link
+            href="/services"
+            className={`bottom-nav-item ${(pathname === '/services' || pathname.startsWith('/services/')) && !mobileOpen ? 'active' : ''}`}
+            onClick={() => setMobileOpen(false)}
+          >
+            <span className="bottom-nav-icon">
+              <Shield size={20} />
+            </span>
+            <span className="bottom-nav-label">Services</span>
+            {(pathname === '/services' || pathname.startsWith('/services/')) && !mobileOpen && (
+              <span className="bottom-nav-indicator" />
+            )}
+          </Link>
+
+          <Link
+            href="/courses"
+            className={`bottom-nav-item ${(pathname === '/courses' || pathname.startsWith('/courses/')) && !mobileOpen ? 'active' : ''}`}
+            onClick={() => setMobileOpen(false)}
+          >
+            <span className="bottom-nav-icon">
+              <GraduationCap size={20} />
+            </span>
+            <span className="bottom-nav-label">Academy</span>
+            {(pathname === '/courses' || pathname.startsWith('/courses/')) && !mobileOpen && (
+              <span className="bottom-nav-indicator" />
+            )}
+          </Link>
+
+          <Link
+            href="/contact"
+            className={`bottom-nav-item ${pathname === '/contact' && !mobileOpen ? 'active' : ''}`}
+            onClick={() => setMobileOpen(false)}
+          >
+            <span className="bottom-nav-icon">
+              <Phone size={20} />
+            </span>
+            <span className="bottom-nav-label">Contact</span>
+            {pathname === '/contact' && !mobileOpen && <span className="bottom-nav-indicator" />}
+          </Link>
+
+          <button
+            type="button"
+            className={`bottom-nav-item bottom-nav-menu-btn ${mobileOpen ? 'active' : ''}`}
+            onClick={toggleMobileMenu}
+            aria-label={mobileOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
+            aria-expanded={mobileOpen}
+          >
+            <span className="bottom-nav-icon">
+              {mobileOpen ? <X size={20} /> : <LayoutGrid size={20} />}
+            </span>
+            <span className="bottom-nav-label">{mobileOpen ? 'Close' : 'Menu'}</span>
+            {mobileOpen && <span className="bottom-nav-indicator" />}
+          </button>
+        </div>
+      </nav>
     </header>
   );
 }
