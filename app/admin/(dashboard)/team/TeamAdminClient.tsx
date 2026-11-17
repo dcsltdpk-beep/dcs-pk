@@ -398,16 +398,16 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
       )}
 
       {/* Table */}
-      <div className="table-responsive">
-        <table>
+      <div className="table-responsive" style={{ width: '100%', overflowX: 'auto' }}>
+        <table style={{ width: '100%', minWidth: '680px' }}>
           <thead>
             <tr>
               <th style={{ width: '60px' }}>Order</th>
-              <th style={{ width: '80px' }}>Photo</th>
+              <th style={{ width: '70px' }}>Photo</th>
               <th>Member Name</th>
               <th>Designation</th>
               <th>Email</th>
-              <th style={{ width: '220px' }}>Actions</th>
+              <th style={{ width: '210px' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -419,8 +419,8 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                     onClick={() => setQrMember(member)}
                     title="Click to view QR code"
                     style={{
-                      width: '42px',
-                      height: '42px',
+                      width: '38px',
+                      height: '38px',
                       borderRadius: '50%',
                       background: 'var(--bg-secondary)',
                       border: '2px solid var(--border-color)',
@@ -441,7 +441,7 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                     ) : (
-                      <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>👤</span>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>👤</span>
                     )}
                   </div>
                 </td>
@@ -449,26 +449,26 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                 <td style={{ color: 'var(--accent-cyan)' }}>{member.designation}</td>
                 <td>{member.email || '—'}</td>
                 <td>
-                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
                     <button
                       onClick={() => setQrMember(member)}
                       className="btn btn-outline"
                       title="Generate Scannable QR Code / vCard"
-                      style={{ padding: '4px 10px', fontSize: '0.8rem', color: 'var(--accent-cyan)', borderColor: 'rgba(0, 240, 255, 0.4)' }}
+                      style={{ padding: '3px 8px', fontSize: '0.78rem', color: 'var(--accent-cyan)', borderColor: 'rgba(0, 240, 255, 0.4)' }}
                     >
                       📱 QR Code
                     </button>
                     <button
                       onClick={() => { setEditing(member); setUploadError(null); }}
                       className="btn btn-outline"
-                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                      style={{ padding: '3px 8px', fontSize: '0.78rem' }}
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => member._id && handleDelete(member._id)}
                       className="btn btn-danger"
-                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                      style={{ padding: '3px 8px', fontSize: '0.78rem' }}
                     >
                       Delete
                     </button>
@@ -481,35 +481,39 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
       </div>
 
       {/* ================================================================== */}
-      {/* TEAM MEMBER QR CODE MODAL POPUP */}
+      {/* TEAM MEMBER QR CODE MODAL POPUP (COMPACT & SCREEN-FITTED) */}
       {/* ================================================================== */}
       {qrMember && (
         <div
           style={{
             position: 'fixed',
             inset: 0,
-            background: 'rgba(0, 0, 0, 0.82)',
+            background: 'rgba(5, 7, 18, 0.88)',
             backdropFilter: 'blur(8px)',
             zIndex: 100000,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '1rem',
+            padding: '16px',
+            overflowY: 'auto',
           }}
           onClick={() => setQrMember(null)}
         >
           <div
             className="card"
             style={{
-              maxWidth: '460px',
+              maxWidth: '380px',
               width: '100%',
-              padding: '2rem',
+              maxHeight: 'calc(100vh - 32px)',
+              overflowY: 'auto',
+              padding: '1.25rem',
               borderRadius: '16px',
               border: '1px solid var(--accent-cyan)',
               background: '#0d1124',
-              boxShadow: '0 20px 50px rgba(0, 240, 255, 0.15)',
+              boxShadow: '0 16px 40px rgba(0, 240, 255, 0.2)',
               position: 'relative',
               textAlign: 'center',
+              margin: 'auto',
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -518,39 +522,49 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
               onClick={() => setQrMember(null)}
               style={{
                 position: 'absolute',
-                top: '16px',
-                right: '16px',
+                top: '10px',
+                right: '10px',
                 background: 'rgba(255, 255, 255, 0.08)',
                 border: 'none',
                 color: '#fff',
-                width: '32px',
-                height: '32px',
+                width: '26px',
+                height: '26px',
                 borderRadius: '50%',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1rem',
+                fontSize: '0.85rem',
+                zIndex: 10,
               }}
             >
               ✕
             </button>
 
-            {/* Header with Photo & Name */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1.25rem' }}>
+            {/* Header: Avatar + Name + Designation in a neat row */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                textAlign: 'left',
+                paddingRight: '28px',
+                marginBottom: '0.85rem',
+              }}
+            >
               <div
                 style={{
-                  width: '72px',
-                  height: '72px',
+                  width: '46px',
+                  height: '46px',
                   borderRadius: '50%',
                   background: 'var(--bg-secondary)',
-                  border: '3px solid var(--accent-cyan)',
+                  border: '2px solid var(--accent-cyan)',
                   overflow: 'hidden',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginBottom: '0.75rem',
-                  boxShadow: '0 4px 16px rgba(0, 240, 255, 0.25)',
+                  flexShrink: 0,
+                  boxShadow: '0 2px 8px rgba(0, 240, 255, 0.3)',
                 }}
               >
                 {qrMember.photo ? (
@@ -561,27 +575,49 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 ) : (
-                  <span style={{ fontSize: '1.8rem' }}>👤</span>
+                  <span style={{ fontSize: '1.2rem' }}>👤</span>
                 )}
               </div>
 
-              <h3 style={{ margin: '0 0 0.25rem 0', fontSize: '1.3rem', color: '#fff' }}>{qrMember.name}</h3>
-              <p style={{ margin: 0, color: 'var(--accent-cyan)', fontSize: '0.88rem', fontWeight: 600 }}>
-                {qrMember.designation}
-              </p>
-              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                Dream Cyber Security Pakistan
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <h4
+                  style={{
+                    margin: '0 0 2px 0',
+                    fontSize: '1rem',
+                    color: '#fff',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {qrMember.name}
+                </h4>
+                <div
+                  style={{
+                    color: 'var(--accent-cyan)',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {qrMember.designation}
+                </div>
+                <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>
+                  Dream Cyber Security
+                </div>
               </div>
             </div>
 
-            {/* QR Type Switcher */}
+            {/* Switcher Pills */}
             <div
               style={{
                 display: 'inline-flex',
                 background: 'rgba(255, 255, 255, 0.05)',
-                padding: '4px',
-                borderRadius: '8px',
-                marginBottom: '1.25rem',
+                padding: '3px',
+                borderRadius: '6px',
+                marginBottom: '0.75rem',
                 border: '1px solid var(--border-color)',
               }}
             >
@@ -589,29 +625,29 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                 type="button"
                 onClick={() => setQrType('vcard')}
                 style={{
-                  padding: '5px 14px',
-                  borderRadius: '6px',
+                  padding: '3px 10px',
+                  borderRadius: '4px',
                   border: 'none',
                   background: qrType === 'vcard' ? 'var(--accent-cyan)' : 'transparent',
                   color: qrType === 'vcard' ? '#0a0e1a' : 'var(--text-muted)',
                   fontWeight: qrType === 'vcard' ? 700 : 500,
-                  fontSize: '0.82rem',
+                  fontSize: '0.72rem',
                   cursor: 'pointer',
                 }}
               >
-                📇 Contact vCard (Scan to Save)
+                📇 vCard (Save Contact)
               </button>
               <button
                 type="button"
                 onClick={() => setQrType('url')}
                 style={{
-                  padding: '5px 14px',
-                  borderRadius: '6px',
+                  padding: '3px 10px',
+                  borderRadius: '4px',
                   border: 'none',
                   background: qrType === 'url' ? 'var(--accent-cyan)' : 'transparent',
                   color: qrType === 'url' ? '#0a0e1a' : 'var(--text-muted)',
                   fontWeight: qrType === 'url' ? 700 : 500,
-                  fontSize: '0.82rem',
+                  fontSize: '0.72rem',
                   cursor: 'pointer',
                 }}
               >
@@ -619,15 +655,15 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
               </button>
             </div>
 
-            {/* QR Code Canvas / Image Display */}
+            {/* QR Code Canvas */}
             <div
               style={{
                 background: '#ffffff',
-                padding: '16px',
-                borderRadius: '12px',
+                padding: '8px',
+                borderRadius: '10px',
                 display: 'inline-block',
-                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.5)',
-                marginBottom: '1.25rem',
+                boxShadow: '0 6px 20px rgba(0, 0, 0, 0.4)',
+                marginBottom: '0.65rem',
               }}
             >
               {qrDataUrl ? (
@@ -635,41 +671,41 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                 <img
                   src={qrDataUrl}
                   alt={`QR Code for ${qrMember.name}`}
-                  style={{ width: '220px', height: '220px', display: 'block' }}
+                  style={{ width: '150px', height: '150px', display: 'block' }}
                 />
               ) : (
-                <div style={{ width: '220px', height: '220px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
+                <div style={{ width: '150px', height: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '0.75rem' }}>
                   Generating QR...
                 </div>
               )}
             </div>
 
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: '0 0 1.25rem 0', lineHeight: '1.4' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.72rem', margin: '0 0 0.85rem 0', lineHeight: '1.3' }}>
               {qrType === 'vcard'
-                ? '📱 Scan with any smartphone camera to instantly save contact details (Name, Title, Org, Email & Link).'
-                : '🌐 Scan to open public profile / LinkedIn.'}
+                ? '📱 Scan with smartphone camera to instantly save to contacts.'
+                : '🌐 Scan to open official team profile.'}
             </p>
 
-            {/* Actions: Download PNG & Copy Text */}
-            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            {/* Action Buttons */}
+            <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
               <button
                 onClick={handleDownloadQr}
                 className="btn btn-primary"
-                style={{ padding: '8px 18px', fontSize: '0.85rem' }}
+                style={{ padding: '6px 14px', fontSize: '0.78rem' }}
               >
-                📥 Download QR (PNG)
+                📥 Download PNG
               </button>
               <button
                 onClick={handleCopyText}
                 className="btn btn-outline"
-                style={{ padding: '8px 16px', fontSize: '0.85rem' }}
+                style={{ padding: '6px 12px', fontSize: '0.78rem' }}
               >
-                {copied ? '✓ Copied!' : '📋 Copy Info'}
+                {copied ? '✓ Copied' : '📋 Copy'}
               </button>
               <button
                 onClick={() => setQrMember(null)}
                 className="btn btn-outline"
-                style={{ padding: '8px 16px', fontSize: '0.85rem' }}
+                style={{ padding: '6px 12px', fontSize: '0.78rem' }}
               >
                 Done
               </button>
