@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -31,7 +33,7 @@
   --glow-blue: 0 0 40px rgba(251, 174, 68, 0.35);
   --glow-gold: 0 0 25px rgba(251, 174, 68, 0.30);
 
-  --font-family: var(--font-poppins), 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+  --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
@@ -42,6 +44,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: inherit;
 }
 
 html {
@@ -49,6 +52,7 @@ html {
   font-size: 16px;
   scrollbar-width: thin;
   scrollbar-color: rgba(251, 174, 68, 0.6) #141133;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 /* Custom Scrollbars matching dcs-card */
@@ -99,7 +103,7 @@ html {
 body {
   background-color: var(--bg-primary);
   color: var(--text-main);
-  font-family: var(--font-family);
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
   line-height: 1.6;
   overflow-x: hidden;
   background-image: 
@@ -318,6 +322,10 @@ img {
 }
 
 /* Typography & Headings */
+h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: #fff;
   line-height: 1.3;

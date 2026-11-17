@@ -49,7 +49,8 @@ const config: Config = {
         card: '0 20px 50px -10px rgba(10, 8, 30, 0.65)',
       },
       fontFamily: {
-        sans: ['var(--font-poppins)', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['Poppins', 'var(--font-poppins)', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        poppins: ['Poppins', 'var(--font-poppins)', 'sans-serif'],
       },
     },
   },
