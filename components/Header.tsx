@@ -82,7 +82,8 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
   }, []);
 
   return (
-    <header className="site-header">
+    <>
+      <header className="site-header">
       <div className="container header-inner">
         {/* Brand Logo */}
         <Link href="/" className="brand-logo" aria-label={siteName}>
@@ -97,6 +98,7 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
           <div className="brand-text-wrap">
             <span className="brand-dream">DREAM</span>
             <span className="brand-cyber">CYBER</span>
+            <span className="brand-security">SECURITY</span>
             <span className="brand-badge">Pakistan</span>
           </div>
         </Link>
@@ -490,6 +492,7 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
           </button>
         </div>
       </div>
+    </header>
 
       {/* Mobile Slide-Over Drawer Navigation */}
       {mobileOpen && (
@@ -506,6 +509,7 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
                 />
                 <span className="brand-dream">DREAM</span>
                 <span className="brand-cyber">CYBER</span>
+                <span className="brand-security">SECURITY</span>
               </div>
               <button
                 type="button"
@@ -542,10 +546,14 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
                     <Link href="/services/cybersecurity-services" onClick={() => setMobileOpen(false)}>Cybersecurity Services</Link>
                     <Link href="/services/web-design-development" onClick={() => setMobileOpen(false)}>Web Design & Development</Link>
                     <Link href="/services/software-application-development" onClick={() => setMobileOpen(false)}>Software & App Development</Link>
+                    <Link href="/services/cloud-devops-solutions" onClick={() => setMobileOpen(false)}>Cloud & DevOps Solutions</Link>
+                    <Link href="/services/domain-hosting-it-support" onClick={() => setMobileOpen(false)}>Domain, Hosting & IT Support</Link>
                     <Link href="/services/ai-automation-chatbot-development" onClick={() => setMobileOpen(false)}>AI Automation & Chatbots</Link>
                     <Link href="/services/ecommerce-development" onClick={() => setMobileOpen(false)}>E-Commerce Development</Link>
                     <Link href="/services/video-editing-motion-graphics" onClick={() => setMobileOpen(false)}>Video & Motion Graphics</Link>
                     <Link href="/services/graphic-design-branding" onClick={() => setMobileOpen(false)}>Graphic Design & Branding</Link>
+                    <Link href="/services/digital-marketing-seo" onClick={() => setMobileOpen(false)}>Digital Marketing & SEO</Link>
+                    <Link href="/services/social-media-management" onClick={() => setMobileOpen(false)}>Social Media Management</Link>
                     <Link href="/services" className="mobile-view-all" onClick={() => setMobileOpen(false)}>View All 10 Services &rarr;</Link>
                   </div>
                 )}
@@ -706,6 +714,6 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
           </button>
         </div>
       </nav>
-    </header>
+    </>
   );
 }

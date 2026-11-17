@@ -1,5 +1,7 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
+import { Suspense } from 'react';
+import TopProgressBar from '@/components/TopProgressBar';
 
 export const viewport: Viewport = {
   themeColor: '#28245F',
@@ -108,6 +110,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="font-sans">
+        <Suspense fallback={null}>
+          <TopProgressBar />
+        </Suspense>
         {children}
       </body>
     </html>

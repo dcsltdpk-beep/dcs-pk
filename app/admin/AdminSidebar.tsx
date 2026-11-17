@@ -89,44 +89,46 @@ export default function AdminSidebar() {
 
       {/* Desktop & Mobile Drawer Sidebar */}
       <aside className={`admin-sidebar ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflowY: 'auto' }}>
-          {/* Brand Logo Header */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.75rem', padding: '0 0.5rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <img
-                src="/logo.png"
-                alt="DCS Control"
-                style={{ width: '28px', height: '28px', objectFit: 'contain', borderRadius: '50%' }}
-              />
-              <span style={{ fontWeight: 800, color: '#fff', fontSize: '1.15rem', letterSpacing: '0.5px' }}>DCS CONTROL</span>
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100%', justifyContent: 'space-between' }}>
+          <div>
+            {/* Brand Logo Header */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.75rem', padding: '0 0.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <img
+                  src="/logo.png"
+                  alt="DCS Control"
+                  style={{ width: '28px', height: '28px', objectFit: 'contain', borderRadius: '50%' }}
+                />
+                <span style={{ fontWeight: 800, color: '#fff', fontSize: '1.15rem', letterSpacing: '0.5px' }}>DCS CONTROL</span>
+              </div>
+              {/* Close button inside mobile drawer */}
+              <button
+                className="admin-drawer-close-btn"
+                onClick={closeMobileMenu}
+                aria-label="Close Drawer"
+              >
+                &times;
+              </button>
             </div>
-            {/* Close button inside mobile drawer */}
-            <button
-              className="admin-drawer-close-btn"
-              onClick={closeMobileMenu}
-              aria-label="Close Drawer"
-            >
-              &times;
-            </button>
-          </div>
 
-          {/* Navigation Items */}
-          <nav style={{ flex: 1 }}>
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={closeMobileMenu}
-                  className={`admin-nav-item ${isActive ? 'active' : ''}`}
-                >
-                  <Icon name={item.icon} size={18} />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
+            {/* Navigation Items */}
+            <nav>
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={closeMobileMenu}
+                    className={`admin-nav-item ${isActive ? 'active' : ''}`}
+                  >
+                    <Icon name={item.icon} size={18} />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
 
           {/* Bottom Actions */}
           <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.25rem', marginTop: '1.5rem' }}>

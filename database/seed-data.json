@@ -151,6 +151,17 @@
       "benefits": "Uninterrupted business continuity, rapid disaster recovery capabilities, and swift emergency resolutions.",
       "order_num": 10,
       "status": "active"
+    },
+    {
+      "title": "Cloud & DevOps Solutions",
+      "slug": "cloud-devops-solutions",
+      "icon": "cloud",
+      "summary": "Zero-trust cloud infrastructure, enterprise Kubernetes, automated CI/CD pipelines, and 24/7 high-availability cloud architecture.",
+      "description": "Accelerate release velocity and harden multi-cloud infrastructure. Dream Cyber Security engineers resilient AWS, Azure, and Google Cloud environments built on zero-trust security boundaries, automated GitOps CI/CD pipelines, container orchestration, and continuous compliance monitoring.",
+      "features": "Zero-Trust Multi-Cloud Architecture (AWS, Azure, GCP)\nAutomated GitOps & CI/CD Pipeline Hardening\nKubernetes (K8s) Cluster Orchestration & Ingress\nInfrastructure as Code (Terraform & Ansible)\n24/7 Cloud Threat Detection & Auto-Scaling Mitigation",
+      "benefits": "99.999% system availability, sub-minute automated deployments, absolute zero-trust credential isolation, and substantial cloud expenditure efficiency.",
+      "order_num": 11,
+      "status": "active"
     }
   ],
   "courses": [

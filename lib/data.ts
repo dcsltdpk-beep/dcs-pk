@@ -42,17 +42,36 @@ export async function getServices(): Promise<any[]> {
   return seedData.services;
 }
 
+const SERVICE_ALIASES: Record<string, string> = {
+  'cloud-devops': 'cloud-devops-solutions',
+  'devops-solutions': 'cloud-devops-solutions',
+  'cloud-hosting': 'domain-hosting-it-support',
+  'it-support': 'domain-hosting-it-support',
+};
+
+const COURSE_ALIASES: Record<string, string> = {
+  'ai-automation-agents': 'ai-automation',
+  'video-editing': 'video-editing-graphic-design',
+  'graphic-design': 'video-editing-graphic-design',
+  'web-dev': 'web-development',
+  'computer-basics-office': 'computer-basics',
+};
+
 export async function getServiceBySlug(slug: string): Promise<any | null> {
+  const resolvedSlug = SERVICE_ALIASES[slug] || slug;
   try {
     const conn = await connectDB();
     if (conn) {
-      const item = await Service.findOne({ slug, status: 'active' }).lean();
+      const item = await Service.findOne({
+        $or: [{ slug: resolvedSlug }, { slug }],
+        status: 'active',
+      }).lean();
       if (item) return item;
     }
   } catch (err) {
     console.warn(`Using fallback service for slug: ${slug}`);
   }
-  return seedData.services.find((s) => s.slug === slug) || null;
+  return seedData.services.find((s) => s.slug === resolvedSlug || s.slug === slug) || null;
 }
 
 export async function getCourses(): Promise<any[]> {
@@ -69,16 +88,20 @@ export async function getCourses(): Promise<any[]> {
 }
 
 export async function getCourseBySlug(slug: string): Promise<any | null> {
+  const resolvedSlug = COURSE_ALIASES[slug] || slug;
   try {
     const conn = await connectDB();
     if (conn) {
-      const item = await Course.findOne({ slug, status: 'active' }).lean();
+      const item = await Course.findOne({
+        $or: [{ slug: resolvedSlug }, { slug }],
+        status: 'active',
+      }).lean();
       if (item) return item;
     }
   } catch (err) {
     console.warn(`Using fallback course for slug: ${slug}`);
   }
-  return seedData.courses.find((c) => c.slug === slug) || null;
+  return seedData.courses.find((c) => c.slug === resolvedSlug || c.slug === slug) || null;
 }
 
 export async function getTeam(): Promise<any[]> {

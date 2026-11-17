@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.11.0",
     "jose": "^5.9.6",
     "lucide-react": "^1.73.0",
     "mongoose": "^8.8.2",

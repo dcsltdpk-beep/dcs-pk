@@ -46,25 +46,28 @@ export default function Footer({
       {/* Main Site Footer */}
       <footer className="site-footer">
         <div className="container">
-          <div className="grid grid-4">
+          <div className="footer-main-grid">
             {/* Col 1: About Firm */}
-            <div>
-              <div className="brand-logo" style={{ marginBottom: '1.25rem' }}>
+            <div className="footer-col footer-col-brand">
+              <div className="brand-logo footer-brand-logo">
                 <img
                   src="/logo.png"
                   alt="Dream Cyber Security Pakistan"
-                  style={{ width: '36px', height: '36px', objectFit: 'contain', borderRadius: '50%' }}
+                  style={{ width: '38px', height: '38px', objectFit: 'contain', borderRadius: '50%' }}
                 />
-                <span style={{ color: 'var(--accent-cyan)', fontWeight: 900, marginLeft: '6px' }}>DREAM</span>
-                <span>CYBER</span>
-                <span className="brand-badge">Pakistan</span>
+                <div className="brand-text-wrap">
+                  <span className="brand-dream">DREAM</span>
+                  <span className="brand-cyber">CYBER</span>
+                  <span className="brand-security">SECURITY</span>
+                  <span className="brand-badge">Pakistan</span>
+                </div>
               </div>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>
-                Your premier technology and security solutions provider, empowering businesses and cultivating next-generation digital leaders.
+              <p className="footer-brand-desc">
+                Premier technology and security solutions provider in Pakistan, empowering modern enterprises and cultivating next-generation digital leaders.
               </p>
               
               {/* Proper Lucide & Brand Social Media Icons */}
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <div className="footer-social-wrap">
                 <a
                   href="https://www.facebook.com/profile.php?id=61595891767697"
                   target="_blank"
@@ -108,71 +111,74 @@ export default function Footer({
               </div>
             </div>
 
-            {/* Col 2: Core Services */}
-            <div>
-              <h4 style={{ marginBottom: '1.25rem', color: '#fff', fontSize: '1.15rem' }}>Corporate Services</h4>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {services.map((s) => (
-                  <li key={s.slug}>
-                    <Link href={`/services/${s.slug}`} style={{ color: 'var(--text-muted)', fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ color: 'var(--accent-cyan)', fontSize: '0.75rem' }}>▸</span> {s.title}
+            {/* Nav Columns Group: Services & Academy */}
+            <div className="footer-nav-columns">
+              {/* Col 2: Core Services */}
+              <div className="footer-col footer-col-services">
+                <h4 className="footer-heading">Corporate Services</h4>
+                <ul className="footer-link-list">
+                  {services.map((s) => (
+                    <li key={s.slug}>
+                      <Link href={`/services/${s.slug}`} className="footer-nav-link">
+                        <span className="footer-bullet">▸</span> {s.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Col 3: Academy Training */}
+              <div className="footer-col footer-col-academy">
+                <h4 className="footer-heading">Training Academy</h4>
+                <ul className="footer-link-list">
+                  <li>
+                    <Link href="/courses/ai-automation" className="footer-nav-link">
+                      <span className="footer-bullet">▸</span> AI Automation
                     </Link>
                   </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Col 3: Academy Training */}
-            <div>
-              <h4 style={{ marginBottom: '1.25rem', color: '#fff', fontSize: '1.15rem' }}>Training Academy</h4>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <li>
-                  <Link href="/courses/ai-automation" style={{ color: 'var(--text-muted)', fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ color: 'var(--accent-cyan)', fontSize: '0.75rem' }}>▸</span> AI Automation & Agents
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/courses/web-development" style={{ color: 'var(--text-muted)', fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ color: 'var(--accent-cyan)', fontSize: '0.75rem' }}>▸</span> Full-Stack Web Engineering
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/courses/video-editing-graphic-design" style={{ color: 'var(--text-muted)', fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ color: 'var(--accent-cyan)', fontSize: '0.75rem' }}>▸</span> Video Editing & Graphic Design
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/courses/computer-basics" style={{ color: 'var(--text-muted)', fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ color: 'var(--accent-cyan)', fontSize: '0.75rem' }}>▸</span> Computer Basics & Productivity
-                  </Link>
-                </li>
-                <li style={{ marginTop: '0.25rem' }}>
-                  <Link href="/courses" style={{ color: 'var(--accent-cyan)', fontSize: '0.9rem', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                    View All Academy Courses <ArrowRight size={14} />
-                  </Link>
-                </li>
-              </ul>
+                  <li>
+                    <Link href="/courses/web-development" className="footer-nav-link">
+                      <span className="footer-bullet">▸</span> Web Engineering
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/courses/video-editing-graphic-design" className="footer-nav-link">
+                      <span className="footer-bullet">▸</span> Video & Design
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/courses/computer-basics" className="footer-nav-link">
+                      <span className="footer-bullet">▸</span> Computer Basics
+                    </Link>
+                  </li>
+                  <li style={{ marginTop: '0.35rem' }}>
+                    <Link href="/courses" className="footer-view-all-link">
+                      View All Courses <ArrowRight size={13} />
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
 
             {/* Col 4: Contact & Location */}
-            <div>
-              <h4 style={{ marginBottom: '1.25rem', color: '#fff', fontSize: '1.15rem' }}>Contact & Headquarters</h4>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.85rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                  <span style={{ color: 'var(--accent-cyan)', marginTop: '3px' }}><MapPin size={17} /></span>
+            <div className="footer-col footer-col-contact">
+              <h4 className="footer-heading">Headquarters & Desk</h4>
+              <ul className="footer-contact-list">
+                <li className="footer-contact-item">
+                  <span className="footer-contact-icon text-sky"><MapPin size={16} /></span>
                   <span>{companyAddress}</span>
                 </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ color: 'var(--accent-cyan)' }}><Mail size={17} /></span>
-                  <a href={`mailto:${companyEmail}`} style={{ color: 'var(--text-muted)' }}>{companyEmail}</a>
+                <li className="footer-contact-item">
+                  <span className="footer-contact-icon text-sky"><Mail size={16} /></span>
+                  <a href={`mailto:${companyEmail}`}>{companyEmail}</a>
                 </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ color: 'var(--accent-cyan)' }}><Phone size={17} /></span>
-                  <a href={`tel:${companyPhone.replace(/\s+/g, '')}`} style={{ color: 'var(--text-muted)' }}>{companyPhone}</a>
+                <li className="footer-contact-item">
+                  <span className="footer-contact-icon text-sky"><Phone size={16} /></span>
+                  <a href={`tel:${companyPhone.replace(/\s+/g, '')}`}>{companyPhone}</a>
                 </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ color: '#25d366' }}><MessageCircle size={17} /></span>
-                  <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" style={{ color: '#25d366', fontWeight: 600 }}>
+                <li className="footer-contact-item footer-whatsapp-item">
+                  <span className="footer-contact-icon text-green"><MessageCircle size={16} /></span>
+                  <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
                     Official WhatsApp Desk
                   </a>
                 </li>
@@ -182,14 +188,17 @@ export default function Footer({
 
           {/* Footer Bottom */}
           <div className="footer-bottom">
-            <div>
-              &copy; {new Date().getFullYear()} Dream Cyber Security Pakistan. All Rights Reserved. Built to International Standards.
+            <div className="footer-copyright">
+              &copy; {new Date().getFullYear()} Dream Cyber Security Pakistan. All Rights Reserved. Built to Enterprise Standards.
             </div>
-            <div style={{ display: 'flex', gap: '1.5rem' }}>
-              <Link href="/privacy" style={{ color: 'var(--text-muted)' }}>Privacy Policy</Link>
-              <Link href="/terms" style={{ color: 'var(--text-muted)' }}>Terms of Service</Link>
-              <Link href="/faq" style={{ color: 'var(--text-muted)' }}>FAQ</Link>
-              <Link href="/admin" style={{ color: 'var(--text-muted)' }}>Admin Portal</Link>
+            <div className="footer-legal-links">
+              <Link href="/privacy">Privacy Policy</Link>
+              <span className="footer-legal-sep">&bull;</span>
+              <Link href="/terms">Terms of Service</Link>
+              <span className="footer-legal-sep">&bull;</span>
+              <Link href="/faq">FAQ</Link>
+              <span className="footer-legal-sep">&bull;</span>
+              <Link href="/admin">Admin Portal</Link>
             </div>
           </div>
         </div>

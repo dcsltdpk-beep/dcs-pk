@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Icon from '@/components/Icon';
-import { ShieldCheck, ArrowRight, Terminal, Lock, Activity, CheckCircle2, Shield } from 'lucide-react';
+import { ShieldCheck, ArrowRight, Terminal, Shield, GraduationCap, Phone } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa6';
 import { getSettings, getServices, getCourses, getPortfolio, getPosts } from '@/lib/data';
 
@@ -63,11 +63,6 @@ export default async function HomePage() {
           <div className="hero-layout-grid">
             {/* Left Column: Authoritative Brand Typography & CTAs */}
             <div className="hero-content-col">
-              <div className="hero-tech-badge">
-                <span className="tech-pulse-dot" />
-                <span>{heroTag}</span>
-              </div>
-
               <h1 className="hero-title">
                 {heroTitlePrefix} <br />
                 <span className="text-gradient-amber">{heroTitleHighlight}</span>
@@ -80,15 +75,16 @@ export default async function HomePage() {
               <p className="hero-desc">{heroDesc}</p>
 
               <div className="hero-ctas">
-                <Link href="/contact" className="btn btn-primary hero-btn-cta">
-                  <ShieldCheck size={19} />
-                  <span>Get Security Consultation</span>
-                  <ArrowRight size={16} />
+                <Link href="/contact" className="btn btn-primary hero-btn-cta" title="Get Security Consultation">
+                  <ShieldCheck size={18} className="hero-btn-icon" />
+                  <span className="btn-text-full">Get Security Consultation</span>
+                  <span className="btn-text-short">Consult</span>
                 </Link>
 
-                <Link href="/services" className="btn btn-outline hero-btn-cta">
-                  <Terminal size={18} />
-                  <span>Explore Capabilities</span>
+                <Link href="/services" className="btn btn-outline hero-btn-cta" title="Explore Capabilities">
+                  <Terminal size={18} className="hero-btn-icon" />
+                  <span className="btn-text-full">Explore Capabilities</span>
+                  <span className="btn-text-short">Explore</span>
                 </Link>
 
                 <a
@@ -98,26 +94,12 @@ export default async function HomePage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-whatsapp hero-btn-cta"
+                  title="WhatsApp Hotline"
                 >
-                  <FaWhatsapp size={19} />
-                  <span>WhatsApp Hotline</span>
+                  <FaWhatsapp size={18} className="hero-btn-icon" />
+                  <span className="btn-text-full">WhatsApp Hotline</span>
+                  <span className="btn-text-short">WhatsApp</span>
                 </a>
-              </div>
-
-              {/* Trust Badges Row */}
-              <div className="hero-trust-bar">
-                <div className="trust-pill">
-                  <CheckCircle2 size={14} className="text-amber" />
-                  <span>ISO-Aligned Standards</span>
-                </div>
-                <div className="trust-pill">
-                  <Lock size={14} className="text-sky" />
-                  <span>Zero-Trust Protocols</span>
-                </div>
-                <div className="trust-pill">
-                  <Activity size={14} className="text-amber" />
-                  <span>24/7 Rapid Response</span>
-                </div>
               </div>
             </div>
 
@@ -132,14 +114,8 @@ export default async function HomePage() {
                 <div className="spotlight-cone spotlight-left" />
                 <div className="spotlight-cone spotlight-right" />
 
-                {/* Center Midnight Navy Emblem Plaque */}
+                {/* Center Midnight Navy Emblem Plaque (Clean, Real-Life Office Plaque) */}
                 <div className="center-navy-plaque">
-                  {/* Floating Live Telemetry Status Chip */}
-                  <div className="telemetry-chip telemetry-top">
-                    <span className="status-blinking-dot" />
-                    <span>SYS_INTEGRITY: 100% OPERATIONAL</span>
-                  </div>
-
                   {/* Golden Concentric Emblem Ring */}
                   <div className="seal-emblem-container">
                     <div className="seal-outer-glow" />
@@ -161,12 +137,6 @@ export default async function HomePage() {
                   <div className="nameplate-lettering">
                     <div className="nameplate-brand-cinzel">DREAM CYBER SECURITY</div>
                     <div className="nameplate-subtitle-mono">ENTERPRISE SECURITY &amp; ENGINEERING</div>
-                  </div>
-
-                  {/* Active Threat Monitoring Pill */}
-                  <div className="telemetry-chip telemetry-bottom">
-                    <Shield size={13} className="text-sky" />
-                    <span>SOC DEFENSE &bull; 24/7 CONTINUOUS AUDIT</span>
                   </div>
                 </div>
 
@@ -204,8 +174,8 @@ export default async function HomePage() {
                 <div className="stat-label">Security &amp; Tech Experts</div>
               </div>
               <div className="stat-item">
-                <div className="stat-number">{statExperience}</div>
-                <div className="stat-label">Industry Experience</div>
+                <div className="stat-number">{statExperience.replace(/\s*years?/i, '').trim() || '8+'}</div>
+                <div className="stat-label">Years Experience</div>
               </div>
             </div>
           </div>
@@ -288,10 +258,12 @@ export default async function HomePage() {
             {displayCourses.map((c: any) => (
               <div key={c.slug} className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                  <div className="card-meta-header">
                     <span className="badge badge-cyan">Featured Program</span>
-                    <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                      <Icon name="clock" size={14} /> {c.duration}
+                    <span className="card-duration-badge">
+                      <Icon name="clock" size={13} className="duration-icon" />
+                      <span className="duration-text-full">{c.duration}</span>
+                      <span className="duration-text-short">{c.duration ? c.duration.split('(')[0].trim() : ''}</span>
                     </span>
                   </div>
                   <h3 style={{ marginBottom: '0.75rem' }}>{c.title}</h3>
@@ -305,12 +277,19 @@ export default async function HomePage() {
                     </span>
                   </div>
                 </div>
-                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                  <Link href={`/courses/${c.slug}`} className="btn btn-outline" style={{ flex: 1 }}>
-                    View Course Syllabus
+                <div className="card-actions-row">
+                  <Link href={`/courses/${c.slug}`} className="btn btn-outline card-action-btn">
+                    <GraduationCap size={15} />
+                    <span className="card-btn-text-full">View Course Syllabus</span>
+                    <span className="card-btn-text-short">Syllabus</span>
                   </Link>
-                  <Link href={`/contact?inquiry_type=course_inquiry&target=${encodeURIComponent(c.title)}`} className="btn btn-primary" style={{ flex: 1 }}>
-                    Inquire for Details
+                  <Link
+                    href={`/contact?inquiry_type=course_inquiry&target=${encodeURIComponent(c.title)}`}
+                    className="btn btn-primary card-action-btn"
+                  >
+                    <Phone size={14} />
+                    <span className="card-btn-text-full">Inquire for Details</span>
+                    <span className="card-btn-text-short">Inquire</span>
                   </Link>
                 </div>
               </div>

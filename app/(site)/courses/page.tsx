@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import { GraduationCap, Phone } from 'lucide-react';
 import { getCourses } from '@/lib/data';
 
 export const metadata = {
@@ -48,10 +49,12 @@ export default async function CoursesPage() {
           {courses.map((c) => (
             <div key={c.slug} className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <div className="card-meta-header">
                   <span className="badge badge-cyan">Academy Program</span>
-                  <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                    <Icon name="clock" size={14} /> {c.duration}
+                  <span className="card-duration-badge">
+                    <Icon name="clock" size={13} className="duration-icon" />
+                    <span className="duration-text-full">{c.duration}</span>
+                    <span className="duration-text-short">{c.duration ? c.duration.split('(')[0].trim() : ''}</span>
                   </span>
                 </div>
                 <h3 style={{ marginBottom: '0.75rem', fontSize: '1.4rem' }}>{c.title}</h3>
@@ -66,16 +69,19 @@ export default async function CoursesPage() {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                <Link href={`/courses/${c.slug}`} className="btn btn-outline" style={{ flex: 1 }}>
-                  View Full Syllabus
+              <div className="card-actions-row">
+                <Link href={`/courses/${c.slug}`} className="btn btn-outline card-action-btn">
+                  <GraduationCap size={15} />
+                  <span className="card-btn-text-full">View Full Syllabus</span>
+                  <span className="card-btn-text-short">Syllabus</span>
                 </Link>
                 <Link
                   href={`/contact?inquiry_type=course_inquiry&target=${encodeURIComponent(c.title)}`}
-                  className="btn btn-primary"
-                  style={{ flex: 1 }}
+                  className="btn btn-primary card-action-btn"
                 >
-                  Inquire for Details
+                  <Phone size={14} />
+                  <span className="card-btn-text-full">Inquire for Details</span>
+                  <span className="card-btn-text-short">Inquire</span>
                 </Link>
               </div>
             </div>
