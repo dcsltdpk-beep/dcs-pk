@@ -24,9 +24,9 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // QR Code Generation State
+  // QR Code Generation State (100% Client-Side, Strictly Public Destination)
   const [qrMember, setQrMember] = useState<TeamMember | null>(null);
-  const [qrType, setQrType] = useState<'vcard' | 'url'>('vcard');
+  const [qrType, setQrType] = useState<'portal' | 'vcard' | 'linkedin'>('portal');
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copied, setCopied] = useState(false);
 
@@ -42,7 +42,10 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
     order_num: team.length + 1,
   };
 
-  // Generate QR Code whenever qrMember or qrType changes
+  // Strictly Public Website URL (Never links to backend/admin)
+  const publicSiteUrl = 'https://www.dreamcybersecurity.pk/team';
+
+  // Generate QR Code purely in the browser (No backend API calls)
   useEffect(() => {
     if (!qrMember) {
       setQrDataUrl('');
@@ -50,7 +53,11 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
     }
 
     let payload = '';
-    if (qrType === 'vcard') {
+    if (qrType === 'portal') {
+      // 100% Public Portal Team Page
+      payload = publicSiteUrl;
+    } else if (qrType === 'vcard') {
+      // Offline Digital Business Card (Saves to Phone Contacts)
       payload = [
         'BEGIN:VCARD',
         'VERSION:3.0',
@@ -59,14 +66,16 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
         'ORG:Dream Cyber Security Pakistan',
         `TITLE:${qrMember.designation}`,
         qrMember.email ? `EMAIL;TYPE=INTERNET,WORK:${qrMember.email}` : '',
-        qrMember.linkedin ? `URL:${qrMember.linkedin}` : 'URL:https://www.dreamcybersecurity.pk/team',
+        `URL:${publicSiteUrl}`,
+        qrMember.linkedin && qrMember.linkedin !== 'https://linkedin.com' ? `X-SOCIALPROFILE;TYPE=linkedin:${qrMember.linkedin}` : '',
         qrMember.bio ? `NOTE:${qrMember.bio.replace(/(\r\n|\n|\r)/gm, ' ')}` : '',
         'END:VCARD',
       ]
         .filter(Boolean)
         .join('\n');
     } else {
-      payload = qrMember.linkedin || 'https://www.dreamcybersecurity.pk/team';
+      // Public LinkedIn Profile
+      payload = qrMember.linkedin && qrMember.linkedin.startsWith('http') ? qrMember.linkedin : publicSiteUrl;
     }
 
     QRCode.toDataURL(payload, {
@@ -86,15 +95,17 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
     if (!qrDataUrl || !qrMember) return;
     const link = document.createElement('a');
     link.href = qrDataUrl;
-    link.download = `QR_${qrMember.name.toLowerCase().replace(/[^a-z0-9]+/g, '_')}_dcs.png`;
+    link.download = `QR_${qrMember.name.toLowerCase().replace(/[^a-z0-9]+/g, '_')}_public.png`;
     link.click();
   };
 
   const handleCopyText = () => {
     if (!qrMember) return;
-    const text = qrType === 'vcard'
-      ? `${qrMember.name}\n${qrMember.designation}\nDream Cyber Security Pakistan\nEmail: ${qrMember.email || 'dcsltd.pk@gmail.com'}\n${qrMember.linkedin || ''}`
-      : (qrMember.linkedin || 'https://www.dreamcybersecurity.pk/team');
+    const text = qrType === 'portal'
+      ? publicSiteUrl
+      : qrType === 'vcard'
+      ? `${qrMember.name}\n${qrMember.designation}\nDream Cyber Security Pakistan\nEmail: ${qrMember.email || 'dcsltd.pk@gmail.com'}\nWebsite: ${publicSiteUrl}`
+      : (qrMember.linkedin || publicSiteUrl);
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -610,17 +621,34 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
               </div>
             </div>
 
-            {/* Switcher Pills */}
+            {/* Switcher Pills (Strictly Public) */}
             <div
               style={{
                 display: 'inline-flex',
                 background: 'rgba(255, 255, 255, 0.05)',
                 padding: '3px',
                 borderRadius: '6px',
-                marginBottom: '0.75rem',
+                marginBottom: '0.65rem',
                 border: '1px solid var(--border-color)',
+                gap: '2px',
               }}
             >
+              <button
+                type="button"
+                onClick={() => setQrType('portal')}
+                style={{
+                  padding: '3px 10px',
+                  borderRadius: '4px',
+                  border: 'none',
+                  background: qrType === 'portal' ? 'var(--accent-cyan)' : 'transparent',
+                  color: qrType === 'portal' ? '#0a0e1a' : 'var(--text-muted)',
+                  fontWeight: qrType === 'portal' ? 700 : 500,
+                  fontSize: '0.72rem',
+                  cursor: 'pointer',
+                }}
+              >
+                🌐 Public Website (/team)
+              </button>
               <button
                 type="button"
                 onClick={() => setQrType('vcard')}
@@ -637,22 +665,42 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
               >
                 📇 vCard (Save Contact)
               </button>
-              <button
-                type="button"
-                onClick={() => setQrType('url')}
-                style={{
-                  padding: '3px 10px',
-                  borderRadius: '4px',
-                  border: 'none',
-                  background: qrType === 'url' ? 'var(--accent-cyan)' : 'transparent',
-                  color: qrType === 'url' ? '#0a0e1a' : 'var(--text-muted)',
-                  fontWeight: qrType === 'url' ? 700 : 500,
-                  fontSize: '0.72rem',
-                  cursor: 'pointer',
-                }}
-              >
-                🌐 Profile Link
-              </button>
+              {qrMember.linkedin && qrMember.linkedin !== 'https://linkedin.com' && (
+                <button
+                  type="button"
+                  onClick={() => setQrType('linkedin')}
+                  style={{
+                    padding: '3px 10px',
+                    borderRadius: '4px',
+                    border: 'none',
+                    background: qrType === 'linkedin' ? 'var(--accent-cyan)' : 'transparent',
+                    color: qrType === 'linkedin' ? '#0a0e1a' : 'var(--text-muted)',
+                    fontWeight: qrType === 'linkedin' ? 700 : 500,
+                    fontSize: '0.72rem',
+                    cursor: 'pointer',
+                  }}
+                >
+                  💼 LinkedIn
+                </button>
+              )}
+            </div>
+
+            {/* Target Destination URL Box */}
+            <div
+              style={{
+                padding: '4px 8px',
+                background: 'rgba(0, 240, 255, 0.06)',
+                borderRadius: '4px',
+                marginBottom: '0.65rem',
+                fontSize: '0.68rem',
+                color: 'var(--accent-cyan)',
+                fontFamily: 'var(--font-mono, monospace)',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              🔒 Scans to: {qrType === 'portal' ? publicSiteUrl : qrType === 'vcard' ? 'Phone Contacts (vCard)' : (qrMember.linkedin || publicSiteUrl)}
             </div>
 
             {/* QR Code Canvas */}
@@ -680,10 +728,12 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
               )}
             </div>
 
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.72rem', margin: '0 0 0.85rem 0', lineHeight: '1.3' }}>
-              {qrType === 'vcard'
-                ? '📱 Scan with smartphone camera to instantly save to contacts.'
-                : '🌐 Scan to open official team profile.'}
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.7rem', margin: '0 0 0.75rem 0', lineHeight: '1.3' }}>
+              {qrType === 'portal'
+                ? '🌐 Scans to open public website: www.dreamcybersecurity.pk/team (Never opens admin panel).'
+                : qrType === 'vcard'
+                ? '📱 Scans to instantly add contact info to mobile address book.'
+                : '💼 Scans to open member\'s official LinkedIn profile.'}
             </p>
 
             {/* Action Buttons */}
