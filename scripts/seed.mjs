@@ -182,7 +182,7 @@ async function seed() {
     const hashedPassword = await bcrypt.hash('admin123', 10);
     await User.create({
       username: 'admin',
-      email: 'admin@dreamcyber.pk',
+      email: 'dcsltd.pk@gmail.com',
       password: hashedPassword,
       role: 'admin',
     });

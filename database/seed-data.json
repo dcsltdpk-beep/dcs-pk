@@ -2,7 +2,7 @@
   "users": [
     {
       "username": "admin",
-      "email": "admin@dreamcyber.pk",
+      "email": "dcsltd.pk@gmail.com",
       "passwordHash": "$2y$10$64z5T4Hh9l7E.Z1qJ1KzreV6o2oM.wYh7p8L4wW1fNfG3B3sBw7l2",
       "role": "admin"
     }
@@ -224,7 +224,7 @@
       "linkedin": "https://linkedin.com",
       "twitter": "https://twitter.com",
       "github": "https://github.com",
-      "email": "ceo@dreamcyber.pk",
+      "email": "dcsltd.pk@gmail.com",
       "order_num": 1
     },
     {
@@ -235,7 +235,7 @@
       "linkedin": "https://linkedin.com",
       "twitter": "https://twitter.com",
       "github": "https://github.com",
-      "email": "hamza@dreamcyber.pk",
+      "email": "dcsltd.pk@gmail.com",
       "order_num": 2
     },
     {
@@ -246,7 +246,7 @@
       "linkedin": "https://linkedin.com",
       "twitter": "https://twitter.com",
       "github": "https://github.com",
-      "email": "zainab@dreamcyber.pk",
+      "email": "dcsltd.pk@gmail.com",
       "order_num": 3
     },
     {
@@ -257,7 +257,7 @@
       "linkedin": "https://linkedin.com",
       "twitter": "https://twitter.com",
       "github": "https://github.com",
-      "email": "bilal@dreamcyber.pk",
+      "email": "dcsltd.pk@gmail.com",
       "order_num": 4
     }
   ],

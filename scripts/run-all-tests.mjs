@@ -239,7 +239,7 @@ async function runSecurityTests() {
   // Test 23: Strict Email Address RFC Validation (Valid corporate email)
   const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
   assert(
-    emailRegex.test('security@dreamcyber.pk') === true,
+    emailRegex.test('dcsltd.pk@gmail.com') === true,
     'SEC-23: Standard enterprise email format passes RFC validation'
   );
 
@@ -389,7 +389,7 @@ async function runProcessTests() {
   try {
     const testInquiry = {
       name: 'Security Test Bot Checker',
-      email: 'test@dreamcyber.pk',
+      email: 'lead.test@gmail.com',
       phone: '+923001234567',
       subject: 'Security Audit Verification',
       message: 'Automated test inquiry verifying pipeline resilience.',

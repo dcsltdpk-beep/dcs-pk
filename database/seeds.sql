@@ -4,7 +4,7 @@ USE `dcs_pakistan`;
 
 -- 1. Default Admin User: admin / admin123 (bcrypt hash: $2y$10$WqT81WsmKz6QhG6wEre7y.kGg0U6Nn5iG9yL8G771Z02Yf241aE2S)
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`) VALUES
-(1, 'admin', 'admin@dreamcyber.pk', '$2a$12$6EZZKgEDG4FNDgZS0KEyEOCkL3nKsn/7KRHr.Unla6Tjn5qb387dO', 'admin')
+(1, 'admin', 'dcsltd.pk@gmail.com', '$2a$12$6EZZKgEDG4FNDgZS0KEyEOCkL3nKsn/7KRHr.Unla6Tjn5qb387dO', 'admin')
 ON DUPLICATE KEY UPDATE `id`=`id`;
 
 -- 2. Initial Settings
@@ -212,10 +212,10 @@ INSERT INTO `courses` (`title`, `slug`, `duration`, `target_audience`, `overview
 
 -- 5. Team Members (Sample corporate profiles)
 INSERT INTO `team` (`name`, `designation`, `bio`, `photo`, `linkedin`, `twitter`, `github`, `email`, `order_num`) VALUES
-('Muhammad Shahriar', 'Chief Executive Officer (CEO)', 'Visionary technology leader with extensive background in cyber defense, enterprise IT architecture, and digital transformation initiatives.', 'assets/img/team-1.jpg', 'https://linkedin.com', 'https://twitter.com', 'https://github.com', 'ceo@dreamcyber.pk', 1),
-('Hamza Ali', 'Head of Cybersecurity & Threat Intelligence', 'CISSP certified security veteran specializing in proactive threat detection, vulnerability assessments, and enterprise zero-trust audits.', 'assets/img/team-2.jpg', 'https://linkedin.com', 'https://twitter.com', 'https://github.com', 'hamza@dreamcyber.pk', 2),
-('Zainab Bukhari', 'Director of Software Engineering', 'Over 9 years of architecting scalable cloud platforms, database optimization, and high-performance server architectures.', 'assets/img/team-3.jpg', 'https://linkedin.com', 'https://twitter.com', 'https://github.com', 'zainab@dreamcyber.pk', 3),
-('Bilal Farooq', 'Lead AI & Automation Specialist', 'Expert in large language model pipelines, cognitive automation workflows, and machine learning integration for enterprise clients.', 'assets/img/team-4.jpg', 'https://linkedin.com', 'https://twitter.com', 'https://github.com', 'bilal@dreamcyber.pk', 4);
+('Muhammad Shahriar', 'Chief Executive Officer (CEO)', 'Visionary technology leader with extensive background in cyber defense, enterprise IT architecture, and digital transformation initiatives.', 'assets/img/team-1.jpg', 'https://linkedin.com', 'https://twitter.com', 'https://github.com', 'dcsltd.pk@gmail.com', 1),
+('Hamza Ali', 'Head of Cybersecurity & Threat Intelligence', 'CISSP certified security veteran specializing in proactive threat detection, vulnerability assessments, and enterprise zero-trust audits.', 'assets/img/team-2.jpg', 'https://linkedin.com', 'https://twitter.com', 'https://github.com', 'dcsltd.pk@gmail.com', 2),
+('Zainab Bukhari', 'Director of Software Engineering', 'Over 9 years of architecting scalable cloud platforms, database optimization, and high-performance server architectures.', 'assets/img/team-3.jpg', 'https://linkedin.com', 'https://twitter.com', 'https://github.com', 'dcsltd.pk@gmail.com', 3),
+('Bilal Farooq', 'Lead AI & Automation Specialist', 'Expert in large language model pipelines, cognitive automation workflows, and machine learning integration for enterprise clients.', 'assets/img/team-4.jpg', 'https://linkedin.com', 'https://twitter.com', 'https://github.com', 'dcsltd.pk@gmail.com', 4);
 
 -- 6. Initial Portfolio Items (Across the 4 categories)
 INSERT INTO `portfolio` (`title`, `category`, `client_name`, `cover_image`, `video_url`, `description`, `order_num`) VALUES
