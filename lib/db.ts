@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/dcs_pakistan';
+const MONGODB_URI = process.env.MONGODB_URI || '';
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -26,6 +26,10 @@ if (!global.mongooseCache) {
 }
 
 export async function connectDB(): Promise<typeof mongoose | null> {
+  if (!MONGODB_URI) {
+    return null;
+  }
+
   if (cached.conn && cached.conn.connection.readyState === 1) {
     return cached.conn;
   }

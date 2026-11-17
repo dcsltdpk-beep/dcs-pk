@@ -21,8 +21,26 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const envPath = path.resolve(__dirname, '../.env.local');
+if (fs.existsSync(envPath)) {
+  const content = fs.readFileSync(envPath, 'utf8');
+  for (const line of content.split('\n')) {
+    const trimmed = line.trim();
+    if (trimmed && !trimmed.startsWith('#')) {
+      const eqIdx = trimmed.indexOf('=');
+      if (eqIdx !== -1) {
+        const key = trimmed.slice(0, eqIdx).trim();
+        const val = trimmed.slice(eqIdx + 1).trim().replace(/^["']|["']$/g, '');
+        if (!process.env[key]) {
+          process.env[key] = val;
+        }
+      }
+    }
+  }
+}
+
 const SECRET_KEY = new TextEncoder().encode(
-  process.env.JWT_SECRET || '111222445599_dcs_pakistan_jwt_auth_super_secret_token_secure_key_2026'
+  process.env.JWT_SECRET || 'unit_test_mock_secret_key_00000000000000000000000000000000'
 );
 
 async function signAdminToken(payload) {

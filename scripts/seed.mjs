@@ -7,7 +7,32 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const targetUri = process.argv[2] || process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/dcs_pakistan';
+const envPath = path.resolve(__dirname, '../.env.local');
+if (fs.existsSync(envPath)) {
+  const content = fs.readFileSync(envPath, 'utf8');
+  for (const line of content.split('\n')) {
+    const trimmed = line.trim();
+    if (trimmed && !trimmed.startsWith('#')) {
+      const eqIdx = trimmed.indexOf('=');
+      if (eqIdx !== -1) {
+        const key = trimmed.slice(0, eqIdx).trim();
+        const val = trimmed.slice(eqIdx + 1).trim().replace(/^["']|["']$/g, '');
+        if (!process.env[key]) {
+          process.env[key] = val;
+        }
+      }
+    }
+  }
+}
+
+const targetUri = process.argv[2] || process.env.MONGODB_URI;
+
+if (!targetUri) {
+  console.error('\n❌ MONGODB_URI is not defined.');
+  console.error('Please configure MONGODB_URI in .env.local or pass it as an argument:');
+  console.error('  node scripts/seed.mjs "mongodb+srv://user:pass@cluster.mongodb.net/dbname"\n');
+  process.exit(1);
+}
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
@@ -117,7 +142,8 @@ const landingPageSchema = new mongoose.Schema({
 async function seed() {
   console.log('----------------------------------------------------');
   console.log('🛡️ Dream Cyber Security Pakistan - Database Seeder');
-  console.log(`Connecting to MongoDB at: ${targetUri}`);
+  const maskedUri = targetUri.replace(/:\/\/([^:]+):([^@]+)@/, '://$1:****@');
+  console.log(`Connecting to MongoDB at: ${maskedUri}`);
   console.log('----------------------------------------------------');
 
   try {
