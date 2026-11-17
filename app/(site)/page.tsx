@@ -1,6 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Icon from '@/components/Icon';
+import { ShieldCheck, ArrowRight, Terminal, Lock, Activity, CheckCircle2, Shield } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa6';
 import { getSettings, getServices, getCourses, getPortfolio, getPosts } from '@/lib/data';
 
 export const revalidate = 60; // ISR cache
@@ -54,33 +57,135 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section with Official DCS Brand Identity & Executive Nameplate Display */}
       <section className="hero-section">
         <div className="container">
-          <div className="hero-tag">
-            <Icon name="shield-check" size={16} /> {heroTag}
-          </div>
-          <h1 className="hero-title">
-            {heroTitlePrefix} <br />
-            <span className="text-gradient">{heroTitleHighlight}</span>
-          </h1>
-          <p className="hero-desc">{heroDesc}</p>
-          <div className="hero-ctas">
-            <Link href="/contact" className="btn btn-primary" style={{ padding: '0.85rem 2rem', fontSize: '1.05rem' }}>
-              Get a Security Consultation
-            </Link>
-            <Link href="/services" className="btn btn-outline" style={{ padding: '0.85rem 2rem', fontSize: '1.05rem' }}>
-              Explore All Services
-            </Link>
-            <a
-              href={`https://wa.me/${settings.whatsapp_number || '923001234567'}?text=${encodeURIComponent(settings.whatsapp_message || 'Hello Dream Cyber Security Pakistan')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-whatsapp"
-              style={{ padding: '0.85rem 2rem', fontSize: '1.05rem' }}
-            >
-              <Icon name="whatsapp" size={18} /> Chat on WhatsApp
-            </a>
+          <div className="hero-layout-grid">
+            {/* Left Column: Authoritative Brand Typography & CTAs */}
+            <div className="hero-content-col">
+              <div className="hero-tech-badge">
+                <span className="tech-pulse-dot" />
+                <span>{heroTag}</span>
+              </div>
+
+              <h1 className="hero-title">
+                {heroTitlePrefix} <br />
+                <span className="text-gradient-amber">{heroTitleHighlight}</span>
+              </h1>
+
+              <h2 className="hero-h2-subtitle">
+                Resilient Application Design &amp; Proactive Zero-Trust Architecture
+              </h2>
+
+              <p className="hero-desc">{heroDesc}</p>
+
+              <div className="hero-ctas">
+                <Link href="/contact" className="btn btn-primary hero-btn-cta">
+                  <ShieldCheck size={19} />
+                  <span>Get Security Consultation</span>
+                  <ArrowRight size={16} />
+                </Link>
+
+                <Link href="/services" className="btn btn-outline hero-btn-cta">
+                  <Terminal size={18} />
+                  <span>Explore Capabilities</span>
+                </Link>
+
+                <a
+                  href={`https://wa.me/${settings.whatsapp_number || '923165478855'}?text=${encodeURIComponent(
+                    settings.whatsapp_message || 'Hello Dream Cyber Security Pakistan, I require assistance.'
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-whatsapp hero-btn-cta"
+                >
+                  <FaWhatsapp size={19} />
+                  <span>WhatsApp Hotline</span>
+                </a>
+              </div>
+
+              {/* Trust Badges Row */}
+              <div className="hero-trust-bar">
+                <div className="trust-pill">
+                  <CheckCircle2 size={14} className="text-amber" />
+                  <span>ISO-Aligned Standards</span>
+                </div>
+                <div className="trust-pill">
+                  <Lock size={14} className="text-sky" />
+                  <span>Zero-Trust Protocols</span>
+                </div>
+                <div className="trust-pill">
+                  <Activity size={14} className="text-amber" />
+                  <span>24/7 Rapid Response</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Executive Corporate Nameplate & Emblem Plaque (Matching Real-Life Nameplate) */}
+            <div className="hero-visual-col">
+              <div className="executive-nameplate-frame">
+                {/* Acoustic Wood Slats Background Accents */}
+                <div className="wood-slats-bg wood-slats-left" />
+                <div className="wood-slats-bg wood-slats-right" />
+
+                {/* Overhead Spotlight Cones */}
+                <div className="spotlight-cone spotlight-left" />
+                <div className="spotlight-cone spotlight-right" />
+
+                {/* Center Midnight Navy Emblem Plaque */}
+                <div className="center-navy-plaque">
+                  {/* Floating Live Telemetry Status Chip */}
+                  <div className="telemetry-chip telemetry-top">
+                    <span className="status-blinking-dot" />
+                    <span>SYS_INTEGRITY: 100% OPERATIONAL</span>
+                  </div>
+
+                  {/* Golden Concentric Emblem Ring */}
+                  <div className="seal-emblem-container">
+                    <div className="seal-outer-glow" />
+                    <div className="seal-golden-ring">
+                      <div className="seal-inner-ring">
+                        <Image
+                          src="/logo.png"
+                          alt="Dream Cyber Security Official Fox Crest"
+                          width={140}
+                          height={140}
+                          className="seal-fox-img"
+                          priority
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Prestige Brand Lettering */}
+                  <div className="nameplate-lettering">
+                    <div className="nameplate-brand-cinzel">DREAM CYBER SECURITY</div>
+                    <div className="nameplate-subtitle-mono">ENTERPRISE SECURITY &amp; ENGINEERING</div>
+                  </div>
+
+                  {/* Active Threat Monitoring Pill */}
+                  <div className="telemetry-chip telemetry-bottom">
+                    <Shield size={13} className="text-sky" />
+                    <span>SOC DEFENSE &bull; 24/7 CONTINUOUS AUDIT</span>
+                  </div>
+                </div>
+
+                {/* Ivory Reception Desk Plinth with Miniature Fox Accent */}
+                <div className="nameplate-ivory-plinth">
+                  <div className="plinth-surface">
+                    <div className="plinth-fox-emblem">
+                      <Image
+                        src="/logo.png"
+                        alt="Fox Mark"
+                        width={22}
+                        height={22}
+                        style={{ width: '22px', height: '22px', objectFit: 'contain' }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* STATS COUNTER BAR */}
@@ -96,7 +201,7 @@ export default async function HomePage() {
               </div>
               <div className="stat-item">
                 <div className="stat-number">{statTeam}</div>
-                <div className="stat-label">Security & Tech Experts</div>
+                <div className="stat-label">Security &amp; Tech Experts</div>
               </div>
               <div className="stat-item">
                 <div className="stat-number">{statExperience}</div>

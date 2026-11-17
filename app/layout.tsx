@@ -1,12 +1,26 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Poppins } from 'next/font/google';
+import { Cinzel, Manrope, JetBrains_Mono } from 'next/font/google';
 
-const poppins = Poppins({
-  weight: ['300', '400', '500', '600', '700', '800'],
+const cinzel = Cinzel({
   subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-cinzel',
   display: 'swap',
-  variable: '--font-poppins',
+});
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-manrope',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-mono',
+  display: 'swap',
 });
 
 export const viewport: Viewport = {
@@ -56,14 +70,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${poppins.className}`}>
+    <html
+      lang="en"
+      className={`${cinzel.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
+    >
       <head>
-        {/* Google Fonts Poppins */}
+        {/* Google Fonts: Cinzel (Display), Manrope (Text), JetBrains Mono (Technical) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap"
         />
 
         {/* Favicons */}
@@ -115,7 +132,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className={`${poppins.className} font-sans`}>
+      <body className={`${manrope.className} font-sans`}>
         {children}
       </body>
     </html>

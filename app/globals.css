@@ -1,39 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Dream Cyber Security Pakistan - Official Brand Palette from dcs-card */
-  --bg-primary: #141133;
-  --bg-secondary: #1D194B;
-  --bg-card: #221E53;
-  --bg-card-hover: #2D2969;
-  --color-navy: #28245F;
-  --color-navy-surface: #2D2969;
-  --color-navy-border: #3F3983;
+  /* ========================================================
+     OFFICIAL BRAND PALETTE (Dream Cyber Security Pakistan)
+     Ratio: Navy 55% · Ivory 25% · Amber 12% · Sky 5% · Red 3%
+     ======================================================== */
+  --color-navy: #272460;        /* Midnight Navy: Primary ground, backgrounds, headings */
+  --color-amber: #FBAE43;       /* Shield Amber: Brand accent, Fox mark, rules, highlights */
+  --color-deep-ink: #1A1845;    /* Deep Ink: Depth, shadows, dark print */
+  --color-ivory: #F7F4EE;       /* Ivory Paper: Light ground, readable copy */
+  --color-sky: #B9DDEB;         /* Ring Sky: Fine lines, the logo ring, cyan badges */
+  --color-alert-red: #EE3944;   /* Alert Red: Tiny accents, live badges, stars */
 
-  --text-main: #ffffff;
-  --text-muted: rgba(255, 255, 255, 0.75);
+  /* Surface mapping */
+  --bg-primary: #1A1845;        /* Deep Ink ground */
+  --bg-secondary: #272460;      /* Midnight Navy */
+  --bg-card: rgba(39, 36, 96, 0.85);
+  --bg-card-hover: rgba(45, 41, 105, 0.95);
+  --color-navy-surface: #272460;
+  --color-navy-border: rgba(185, 221, 235, 0.25);
 
-  /* Gold Brand Accents */
-  --accent-cyan: #FBAE44;
-  --accent-gold: #FBAE44;
+  --text-main: #F7F4EE;         /* Ivory Paper for ultra-sharp readability */
+  --text-muted: rgba(247, 244, 238, 0.72);
+  --text-sky: #B9DDEB;
+
+  /* Accents */
+  --accent-cyan: #B9DDEB;       /* Ring Sky */
+  --accent-gold: #FBAE43;       /* Shield Amber */
   --accent-gold-light: #FCCD7B;
   --accent-gold-dark: #E39527;
-  --accent-blue: #E39527;
-  --accent-electric: #FCCD7B;
+  --accent-orange: #FBAE43;
+  --accent-blue: #272460;
+  --accent-electric: #B9DDEB;
 
   --border-color: rgba(63, 57, 131, 0.7);
-  --border-gold: rgba(251, 174, 68, 0.30);
-  --border-focus: rgba(251, 174, 68, 0.6);
+  --border-gold: rgba(251, 174, 67, 0.35);
+  --border-sky: rgba(185, 221, 235, 0.25);
+  --border-focus: rgba(251, 174, 67, 0.65);
 
-  --glow-cyan: 0 0 25px rgba(251, 174, 68, 0.25);
-  --glow-blue: 0 0 40px rgba(251, 174, 68, 0.35);
-  --glow-gold: 0 0 25px rgba(251, 174, 68, 0.30);
+  --glow-cyan: 0 0 25px rgba(185, 221, 235, 0.25);
+  --glow-gold: 0 0 25px rgba(251, 174, 67, 0.30);
+  --glow-amber: 0 0 35px rgba(251, 174, 67, 0.35);
 
-  --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* Fonts Specification */
+  --font-display: 'Cinzel', var(--font-cinzel), Georgia, serif;
+  --font-body: 'Manrope', var(--font-manrope), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-tech: 'JetBrains Mono', var(--font-mono), monospace;
+
+  --font-family: var(--font-body);
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
@@ -51,8 +69,8 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   scrollbar-width: thin;
-  scrollbar-color: rgba(251, 174, 68, 0.6) #141133;
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+  scrollbar-color: var(--color-amber) var(--color-deep-ink);
+  font-family: var(--font-body) !important;
 }
 
 /* Custom Scrollbars matching dcs-card */
@@ -107,14 +125,14 @@ html {
 body {
   background-color: var(--bg-primary);
   color: var(--text-main);
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
-  line-height: 1.6;
+  font-family: var(--font-body) !important;
+  line-height: 1.65;
   overflow-x: hidden;
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(251, 174, 68, 0.12) 0%, transparent 55%),
-    radial-gradient(circle at 85% 95%, rgba(62, 56, 135, 0.28) 0%, transparent 50%),
-    radial-gradient(circle at 15% 80%, rgba(40, 36, 95, 0.40) 0%, transparent 45%),
-    linear-gradient(rgba(20, 17, 51, 0.96), rgba(20, 17, 51, 0.96));
+    radial-gradient(circle at 50% 0%, rgba(251, 174, 67, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 85% 95%, rgba(39, 36, 96, 0.45) 0%, transparent 50%),
+    radial-gradient(circle at 15% 80%, rgba(26, 24, 69, 0.60) 0%, transparent 45%),
+    linear-gradient(rgba(26, 24, 69, 0.98), rgba(26, 24, 69, 0.98));
   min-height: 100vh;
 }
 
@@ -777,20 +795,19 @@ img {
 }
 
 /* Typography & Headings */
-h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+h1, .section-title, .brand-dream {
+  font-family: var(--font-display) !important;
+  color: var(--color-ivory);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #fff;
-  line-height: 1.3;
-  font-weight: 700;
+h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label {
+  font-family: var(--font-body);
 }
 
-h1 { font-size: 2.75rem; }
-h2 { font-size: 2.1rem; }
-h3 { font-size: 1.5rem; }
-h4 { font-size: 1.25rem; }
+h1 { font-size: 2.875rem; line-height: 1.1; font-weight: 500; }
+h2 { font-size: 1.5rem; line-height: 1.3; font-weight: 600; color: var(--color-sky); }
+h3 { font-family: var(--font-display) !important; font-size: 1.35rem; line-height: 1.3; font-weight: 600; color: var(--color-ivory); }
+h4 { font-size: 1.15rem; line-height: 1.35; font-weight: 600; color: var(--color-ivory); }
 
 .text-gradient {
   background: linear-gradient(135deg, #ffffff 30%, #FCCD7B 70%, #FBAE44 100%);
@@ -856,56 +873,394 @@ h4 { font-size: 1.25rem; }
   background: var(--bg-card-hover);
 }
 
-/* Hero Section */
-.hero-section {
-  padding: 6rem 0 5rem 0;
-  position: relative;
-  text-align: center;
+/* ========================================================
+   TYPOGRAPHY HIERARCHY (Cinzel, Manrope, JetBrains Mono)
+   H1 · Cinzel Medium 46 / 1.1
+   H2 · Manrope SemiBold 24 / 1.3
+   Body · Manrope Regular 15 / 1.65
+   Label · JetBrains Mono, tracked 11 / +3
+   ======================================================== */
+h1, .font-cinzel, .section-title, .brand-dream, .nameplate-brand-cinzel {
+  font-family: var(--font-display) !important;
 }
 
-.hero-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 16px;
-  background: rgba(251, 174, 68, 0.10);
-  border: 1px solid rgba(251, 174, 68, 0.30);
-  border-radius: 50px;
-  font-size: 0.85rem;
-  color: var(--accent-cyan);
-  margin-bottom: 1.5rem;
-  box-shadow: 0 0 20px rgba(251, 174, 68, 0.12);
+h1 {
+  font-size: 2.875rem; /* 46px */
+  line-height: 1.1;
+  font-weight: 500;    /* Cinzel Medium */
+  color: var(--color-ivory);
+  letter-spacing: 0.5px;
 }
 
-.hero-title {
-  font-size: 3.5rem;
-  margin-bottom: 1.25rem;
-  letter-spacing: -0.5px;
+h2, .hero-h2-subtitle {
+  font-family: var(--font-body) !important;
+  font-size: 1.5rem;   /* 24px */
+  line-height: 1.3;
+  font-weight: 600;    /* Manrope SemiBold */
+  color: var(--color-sky);
+}
+
+h3 {
+  font-family: var(--font-display) !important;
+  font-size: 1.35rem;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--color-ivory);
+}
+
+h4 {
+  font-family: var(--font-body) !important;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--color-ivory);
+}
+
+body, p, .hero-desc, span, a, button, input, textarea, select {
+  font-family: var(--font-body);
 }
 
 .hero-desc {
-  font-size: 1.2rem;
-  color: var(--text-muted);
-  max-width: 800px;
-  margin: 0 auto 2.5rem auto;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: rgba(247, 244, 238, 0.88);
+}
+
+/* Technical Font (JetBrains Mono) for Badges, Telemetry, Labels */
+.font-mono, .badge-tech, .hero-tech-badge, .stat-label, .section-subtitle, .nameplate-subtitle-mono, .telemetry-chip, .trust-pill {
+  font-family: var(--font-tech) !important;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.text-gradient-amber {
+  background: linear-gradient(135deg, #FCCD7B 0%, #FBAE43 50%, #E39527 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-amber {
+  color: #FBAE43 !important;
+}
+
+.text-sky {
+  color: #B9DDEB !important;
+}
+
+/* ========================================================
+   HERO SECTION & EXECUTIVE ARCHITECTURAL NAMEPLATE
+   ======================================================== */
+.hero-section {
+  padding: 5rem 0 4.5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-layout-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3.5rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.hero-content-col {
+  text-align: left;
+}
+
+.hero-tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  background: rgba(39, 36, 96, 0.75);
+  border: 1px solid var(--color-amber);
+  border-radius: 50px;
+  color: var(--color-sky);
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 20px rgba(251, 174, 67, 0.2);
+}
+
+.tech-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #25d366;
+  box-shadow: 0 0 10px #25d366;
+  display: inline-block;
+  animation: techPulse 2s infinite ease-in-out;
+}
+
+@keyframes techPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.hero-title {
+  font-size: 2.875rem; /* 46px */
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.hero-h2-subtitle {
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.2px;
 }
 
 .hero-ctas {
   display: flex;
   gap: 1rem;
-  justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 3.5rem;
+  align-items: center;
+  margin-bottom: 2.5rem;
 }
 
-/* Stats Counter Grid */
+.hero-btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0.85rem 1.6rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.hero-trust-bar {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(185, 221, 235, 0.15);
+}
+
+.trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-ivory);
+  opacity: 0.85;
+}
+
+/* ========================================================
+   RIGHT COLUMN: EXECUTIVE REAL-LIFE NAMEPLATE DISPLAY
+   Echoing official corporate reception plaque
+   ======================================================== */
+.hero-visual-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.executive-nameplate-frame {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  min-height: 480px;
+  border-radius: 20px;
+  background: #141133;
+  border: 1px solid rgba(251, 174, 67, 0.35);
+  box-shadow: 0 25px 60px -15px rgba(10, 8, 30, 0.95), 0 0 35px rgba(251, 174, 67, 0.18);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Acoustic Wood Slats Background Accents on Left & Right */
+.wood-slats-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  z-index: 1;
+  background: repeating-linear-gradient(
+    90deg,
+    #3b2316 0px,
+    #3b2316 8px,
+    #24150d 8px,
+    #24150d 16px
+  );
+  opacity: 0.75;
+}
+
+.wood-slats-left {
+  left: 0;
+  border-right: 2px solid rgba(251, 174, 67, 0.3);
+}
+
+.wood-slats-right {
+  right: 0;
+  border-left: 2px solid rgba(251, 174, 67, 0.3);
+}
+
+/* Overhead Downlight Spotlight Cones */
+.spotlight-cone {
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 200px;
+  background: radial-gradient(ellipse at top, rgba(251, 174, 67, 0.35) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.spotlight-left { left: 40px; }
+.spotlight-right { right: 40px; }
+
+/* Center Midnight Navy Emblem Plaque (#272460) */
+.center-navy-plaque {
+  position: relative;
+  z-index: 3;
+  margin: 0 60px;
+  padding: 1.5rem 1.25rem;
+  background: linear-gradient(180deg, #272460 0%, #1A1845 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+/* Floating Telemetry Chip */
+.telemetry-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 10px;
+  border-radius: 50px;
+  background: rgba(26, 24, 69, 0.85);
+  border: 1px solid rgba(185, 221, 235, 0.3);
+  color: var(--color-sky);
+  font-size: 9px !important;
+  letter-spacing: 2px !important;
+  margin-bottom: 0.75rem;
+}
+
+.status-blinking-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #25d366;
+  box-shadow: 0 0 8px #25d366;
+  animation: techPulse 1.5s infinite;
+}
+
+/* Golden Seal Emblem Container */
+.seal-emblem-container {
+  position: relative;
+  margin: 0.75rem 0 1.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seal-outer-glow {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 174, 67, 0.45) 0%, transparent 70%);
+  animation: sealGlow 3s infinite alternate ease-in-out;
+}
+
+@keyframes sealGlow {
+  from { transform: scale(0.95); opacity: 0.6; }
+  to { transform: scale(1.08); opacity: 1; }
+}
+
+.seal-golden-ring {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #272460 55%, #1A1845 100%);
+  border: 4px solid #FBAE43;
+  outline: 2px solid #B9DDEB;
+  outline-offset: -8px;
+  box-shadow: 0 0 35px rgba(251, 174, 67, 0.45), inset 0 0 25px rgba(251, 174, 67, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.seal-inner-ring {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seal-fox-img {
+  width: 110px !important;
+  height: 110px !important;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(251, 174, 67, 0.6));
+}
+
+/* Nameplate Lettering underneath seal */
+.nameplate-lettering {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.nameplate-brand-cinzel {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  color: #FCCD7B;
+  text-shadow: 0 0 14px rgba(251, 174, 67, 0.65);
+  margin-bottom: 4px;
+}
+
+.nameplate-subtitle-mono {
+  font-size: 9.5px !important;
+  letter-spacing: 2.5px !important;
+  color: #B9DDEB;
+  opacity: 0.9;
+}
+
+/* Ivory Reception Desk Plinth at base */
+.nameplate-ivory-plinth {
+  position: relative;
+  z-index: 4;
+  background: linear-gradient(180deg, #F7F4EE 0%, #e5dfd2 100%);
+  border-top: 3px solid #FBAE43;
+  padding: 14px 20px;
+  text-align: center;
+  box-shadow: 0 -4px 15px rgba(10, 8, 30, 0.4);
+}
+
+.plinth-surface {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plinth-fox-emblem {
+  display: inline-flex;
+  padding: 4px;
+  background: rgba(39, 36, 96, 0.1);
+  border-radius: 50%;
+  border: 1px solid rgba(251, 174, 67, 0.4);
+}
+
+/* ========================================================
+   STATS COUNTER BAR
+   ======================================================== */
 .stats-bar {
-  background: rgba(34, 30, 83, 0.85);
-  border: 1px solid rgba(251, 174, 68, 0.25);
+  background: rgba(39, 36, 96, 0.85);
+  border: 1px solid rgba(251, 174, 67, 0.35);
   border-radius: var(--radius-lg);
   padding: 2.5rem 1.5rem;
-  margin-top: 2rem;
-  box-shadow: 0 20px 50px -10px rgba(10, 8, 30, 0.7);
+  box-shadow: 0 20px 50px -10px rgba(10, 8, 30, 0.7), 0 0 25px rgba(251, 174, 67, 0.12);
   backdrop-filter: blur(12px);
 }
 
@@ -914,19 +1269,53 @@ h4 { font-size: 1.25rem; }
 }
 
 .stat-number {
-  font-size: 2.75rem;
-  font-weight: 800;
-  color: var(--accent-cyan);
+  font-family: var(--font-display) !important;
+  font-size: 2.85rem;
+  font-weight: 700;
+  color: #FBAE43;
   line-height: 1.1;
-  margin-bottom: 0.25rem;
-  text-shadow: 0 0 25px rgba(251, 174, 68, 0.35);
+  margin-bottom: 0.35rem;
+  text-shadow: 0 0 25px rgba(251, 174, 67, 0.35);
 }
 
 .stat-label {
-  color: var(--text-muted);
-  font-size: 0.9rem;
+  color: #B9DDEB;
+  font-size: 11px !important;
+  letter-spacing: 2.5px !important;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .hero-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .hero-content-col {
+    text-align: center;
+  }
+  .hero-desc {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-ctas {
+    justify-content: center;
+  }
+  .hero-trust-bar {
+    justify-content: center;
+  }
+  .hero-title {
+    font-size: 2.35rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  .executive-nameplate-frame {
+    min-height: 400px;
+  }
 }
 
 /* Floating WhatsApp button */
