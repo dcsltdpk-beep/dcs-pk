@@ -109,6 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 '@type': 'ContactPoint',
                 telephone: '+92 300 1234567',
                 contactType: 'Customer Support',
+                email: 'dcsltd.pk@gmail.com',
               },
             }),
           }}
