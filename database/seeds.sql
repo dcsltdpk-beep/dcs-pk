@@ -11,7 +11,7 @@ ON DUPLICATE KEY UPDATE `id`=`id`;
 INSERT INTO `settings` (`key_name`, `key_value`) VALUES
 ('site_name', 'Dream Cyber Security Pakistan'),
 ('site_tagline', 'International Standard Cyber Defense, Technology & Digital Innovation'),
-('company_email', 'info@dreamcyber.pk'),
+('company_email', 'dcsltd.pk@gmail.com'),
 ('company_phone', '+92 300 1234567'),
 ('company_address', 'Level 4, IT Tower, Hali Road, Gulberg III, Lahore, Pakistan'),
 ('whatsapp_number', '923001234567'),

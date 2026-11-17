@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import Icon from '@/components/Icon';
+import { Mail, Phone, MapPin } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 
 interface ContactClientProps {
   initialType: string;
@@ -211,7 +213,7 @@ export default function ContactClient({
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span style={{ color: '#25d366' }}><Icon name="whatsapp" size={24} /></span>
+                  <span style={{ color: '#25d366', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><FaWhatsapp size={24} /></span>
                   <div>
                     <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Instant WhatsApp Support</span>
                     <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block', color: '#fff', fontWeight: 700, fontSize: '1.1rem' }}>
@@ -221,7 +223,7 @@ export default function ContactClient({
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span style={{ color: 'var(--accent-cyan)' }}><Icon name="phone" size={24} /></span>
+                  <span style={{ color: 'var(--accent-orange, #FBAE44)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Phone size={22} /></span>
                   <div>
                     <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Phone Call Line</span>
                     <a href={`tel:${companyPhone.replace(/\s+/g, '')}`} style={{ display: 'block', color: '#fff', fontWeight: 700, fontSize: '1.1rem' }}>
@@ -231,7 +233,7 @@ export default function ContactClient({
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span style={{ color: 'var(--accent-cyan)' }}><Icon name="mail" size={24} /></span>
+                  <span style={{ color: 'var(--accent-orange, #FBAE44)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Mail size={22} /></span>
                   <div>
                     <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Inquiry Email</span>
                     <a href={`mailto:${companyEmail}`} style={{ display: 'block', color: '#fff', fontWeight: 700, fontSize: '1.1rem' }}>
@@ -241,7 +243,7 @@ export default function ContactClient({
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                  <span style={{ color: 'var(--accent-cyan)' }}><Icon name="server" size={24} /></span>
+                  <span style={{ color: 'var(--accent-orange, #FBAE44)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}><MapPin size={22} /></span>
                   <div>
                     <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Corporate Headquarters</span>
                     <span style={{ display: 'block', color: 'var(--text-main)', fontSize: '0.95rem' }}>

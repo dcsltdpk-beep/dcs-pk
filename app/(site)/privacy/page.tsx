@@ -45,7 +45,7 @@ export default function PrivacyPage() {
           <h3 style={{ color: '#fff' }}>5. Inquiries & Contact</h3>
           <p>
             If you have questions regarding this Privacy Policy, please contact our data governance team at{' '}
-            <a href="mailto:info@dreamcyber.pk">info@dreamcyber.pk</a>.
+            <a href="mailto:dcsltd.pk@gmail.com">dcsltd.pk@gmail.com</a>.
           </p>
         </div>
       </div>

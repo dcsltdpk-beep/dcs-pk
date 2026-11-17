@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db';
 import { Inquiry } from '@/lib/models/Inquiry';
 import { checkRateLimit, getClientIp, sanitizeString } from '@/lib/security';
+import { sendContactNotification } from '@/lib/mailer';
 
 export async function POST(req: Request) {
   try {
@@ -64,6 +65,20 @@ export async function POST(req: Request) {
       message: message,
       status: 'unread',
     });
+
+    // Send email notification asynchronously via nodemailer
+    try {
+      await sendContactNotification({
+        name,
+        email,
+        phone,
+        subject: subject || `New ${inquiry_type.toUpperCase()} Inquiry from ${name}`,
+        projectType: target_name || inquiry_type,
+        message,
+      });
+    } catch (mailErr: any) {
+      console.error('Failed to send inquiry email notification:', mailErr?.message);
+    }
 
     return NextResponse.json({ success: true, id: newInquiry._id });
   } catch (error: any) {

@@ -18,7 +18,7 @@ export default async function ContactPage({
     <ContactClient
       initialType={searchParams?.inquiry_type || 'contact'}
       initialTarget={searchParams?.target || ''}
-      companyEmail={settings.company_email || 'info@dreamcyber.pk'}
+      companyEmail={settings.company_email || 'dcsltd.pk@gmail.com'}
       companyPhone={settings.company_phone || '+92 300 1234567'}
       companyAddress={settings.company_address || 'Level 4, IT Tower, Hali Road, Gulberg III, Lahore, Pakistan'}
       whatsappNumber={settings.whatsapp_number || '923001234567'}

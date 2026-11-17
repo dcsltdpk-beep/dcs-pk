@@ -42,7 +42,7 @@ export default function TermsPage() {
           <h3 style={{ color: '#fff' }}>5. Contact Information</h3>
           <p>
             For legal inquiries or corporate contracts, reach out to our legal affairs desk at{' '}
-            <a href="mailto:info@dreamcyber.pk">info@dreamcyber.pk</a>.
+            <a href="mailto:dcsltd.pk@gmail.com">dcsltd.pk@gmail.com</a>.
           </p>
         </div>
       </div>
