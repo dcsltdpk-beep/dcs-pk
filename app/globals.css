@@ -672,6 +672,29 @@ details.faq-item[open] {
   color: var(--text-muted);
 }
 
+.footer-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(34, 30, 83, 0.95);
+  border: 1px solid rgba(251, 174, 68, 0.35);
+  color: #FBAE44;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(10, 8, 30, 0.5);
+  text-decoration: none;
+}
+
+.footer-social-btn:hover {
+  background: linear-gradient(135deg, #FCCD7B, #FBAE44, #E39527);
+  color: #141133 !important;
+  border-color: #FBAE44;
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(251, 174, 68, 0.5);
+}
+
 /* Admin Login Layout & Card */
 .admin-login-layout {
   width: 100%;
