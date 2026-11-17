@@ -49,9 +49,11 @@ export default function Footer({
             {/* Col 1: About Firm */}
             <div>
               <div className="brand-logo" style={{ marginBottom: '1.25rem' }}>
-                <span style={{ color: 'var(--accent-cyan)', display: 'inline-flex', alignItems: 'center' }}>
-                  <Icon name="shield-check" size={24} />
-                </span>
+                <img
+                  src="/logo.png"
+                  alt="Dream Cyber Security Pakistan"
+                  style={{ width: '36px', height: '36px', objectFit: 'contain', borderRadius: '50%' }}
+                />
                 <span style={{ color: 'var(--accent-cyan)', fontWeight: 900, marginLeft: '6px' }}>DREAM</span>
                 <span>CYBER</span>
                 <span className="brand-badge">Pakistan</span>

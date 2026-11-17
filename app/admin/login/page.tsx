@@ -69,8 +69,12 @@ export default function AdminLoginPage() {
       <div className="card login-card">
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div className="login-icon-badge">
-            <Icon name="shield-lock" size={38} />
+          <div className="login-icon-badge" style={{ padding: '6px', background: 'rgba(0, 242, 254, 0.08)' }}>
+            <img
+              src="/logo.png"
+              alt="Dream Cyber Security Pakistan"
+              style={{ width: '56px', height: '56px', objectFit: 'contain', borderRadius: '50%' }}
+            />
           </div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.35rem', letterSpacing: '-0.5px' }}>
             Control Center

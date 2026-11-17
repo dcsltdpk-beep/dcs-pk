@@ -52,7 +52,11 @@ export default function AdminSidebar() {
             <Icon name="menu" size={24} />
           </button>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ color: 'var(--accent-cyan)' }}><Icon name="shield-check" size={20} /></span>
+            <img
+              src="/logo.png"
+              alt="DCS Control"
+              style={{ width: '24px', height: '24px', objectFit: 'contain', borderRadius: '50%' }}
+            />
             <span style={{ fontWeight: 800, color: '#fff', fontSize: '1rem', letterSpacing: '0.5px' }}>DCS CONTROL</span>
           </div>
         </div>
@@ -89,7 +93,11 @@ export default function AdminSidebar() {
           {/* Brand Logo Header */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.75rem', padding: '0 0.5rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ color: 'var(--accent-cyan)' }}><Icon name="shield-check" size={24} /></span>
+              <img
+                src="/logo.png"
+                alt="DCS Control"
+                style={{ width: '28px', height: '28px', objectFit: 'contain', borderRadius: '50%' }}
+              />
               <span style={{ fontWeight: 800, color: '#fff', fontSize: '1.15rem', letterSpacing: '0.5px' }}>DCS CONTROL</span>
             </div>
             {/* Close button inside mobile drawer */}

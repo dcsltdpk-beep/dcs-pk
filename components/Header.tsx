@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import Icon from './Icon';
 
@@ -29,9 +30,14 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
     <header className="site-header">
       <div className="container header-inner">
         <Link href="/" className="brand-logo" aria-label={siteName}>
-          <span style={{ color: 'var(--accent-cyan)', display: 'inline-flex', alignItems: 'center' }}>
-            <Icon name="shield-check" size={24} />
-          </span>
+          <Image
+            src="/logo.png"
+            alt={siteName}
+            width={36}
+            height={36}
+            style={{ width: '36px', height: '36px', objectFit: 'contain', borderRadius: '50%' }}
+            priority
+          />
           <span style={{ color: 'var(--accent-cyan)', fontWeight: 900, marginLeft: '6px' }}>DREAM</span>
           <span>CYBER</span>
           <span className="brand-badge">Pakistan</span>

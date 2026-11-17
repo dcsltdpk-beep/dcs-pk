@@ -7,6 +7,13 @@ export const metadata: Metadata = {
     'Premier international-standard cybersecurity firm, bespoke software engineering, AI workflow automations, and training academy in Pakistan.',
   keywords: 'cybersecurity pakistan, penetration testing lahore, web development, AI automation, IT firm pakistan, SOC monitoring',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dreamcybersecurity.pk'),
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon.png', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-icon.png' }],
+  },
   verification: {
     google: 'pewPU0U99OKBT9gp2PI4t2h_uS--HT4ISi200Px3K9E',
   },
@@ -33,6 +40,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        {/* Favicons */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+
         {/* Google Analytics / Google tag (gtag.js) immediately after <head> */}
         <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-N72RQZVG" />
         <script
