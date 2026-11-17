@@ -6,7 +6,11 @@ export const metadata: Metadata = {
   description:
     'Premier international-standard cybersecurity firm, bespoke software engineering, AI workflow automations, and training academy in Pakistan.',
   keywords: 'cybersecurity pakistan, penetration testing lahore, web development, AI automation, IT firm pakistan, SOC monitoring',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dreamcybersecurity.pk'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes('localhost')
+      ? process.env.NEXT_PUBLIC_SITE_URL
+      : 'https://www.dreamcybersecurity.pk'
+  ),
   icons: {
     icon: [
       { url: '/favicon.ico' },

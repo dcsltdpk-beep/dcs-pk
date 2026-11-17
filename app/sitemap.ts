@@ -3,7 +3,8 @@ import { getServices, getCourses, getPosts } from '@/lib/data';
 import seedData from '@/database/seed-data.json';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dreamcybersecurity.pk').replace(/\/+$/, '');
+  const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
+  const baseUrl = (rawUrl && !rawUrl.includes('localhost') ? rawUrl : 'https://www.dreamcybersecurity.pk').replace(/\/+$/, '');
 
   const staticPages = [
     '',
