@@ -10,33 +10,64 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = await getAdminSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  try {
+    const session = await getAdminSession();
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const data = await req.json();
-  await connectDB();
+    const data = await req.json();
+    await connectDB();
 
-  if (!data.slug) {
-    data.slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-  }
+    // Sanitize slug
+    let rawSlug = (data.slug || data.title || '')
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/(^-|-$)+/g, '');
 
-  if (data._id) {
-    const updated = await Post.findByIdAndUpdate(data._id, data, { new: true });
-    return NextResponse.json(updated);
-  } else {
-    delete data._id;
-    const created = await Post.create(data);
-    return NextResponse.json(created);
+    if (!rawSlug) {
+      rawSlug = `post-${Date.now()}`;
+    }
+
+    if (data._id) {
+      // Check for collision with another post
+      const existing = await Post.findOne({ slug: rawSlug, _id: { $ne: data._id } });
+      if (existing) {
+        rawSlug = `${rawSlug}-${Date.now().toString().slice(-4)}`;
+      }
+      data.slug = rawSlug;
+
+      const updated = await Post.findByIdAndUpdate(data._id, data, { new: true });
+      return NextResponse.json(updated);
+    } else {
+      // Check for collision with any post
+      const existing = await Post.findOne({ slug: rawSlug });
+      if (existing) {
+        rawSlug = `${rawSlug}-${Date.now().toString().slice(-4)}`;
+      }
+      data.slug = rawSlug;
+
+      delete data._id;
+      const created = await Post.create(data);
+      return NextResponse.json(created);
+    }
+  } catch (err: any) {
+    console.error('Error in /api/admin/posts:', err);
+    return NextResponse.json({ error: err?.message || 'Failed to save post' }, { status: 500 });
   }
 }
 
 export async function DELETE(req: Request) {
-  const session = await getAdminSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  try {
+    const session = await getAdminSession();
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { searchParams } = new URL(req.url);
-  const id = searchParams.get('id');
-  await connectDB();
-  await Post.findByIdAndDelete(id);
-  return NextResponse.json({ success: true });
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+    await connectDB();
+    await Post.findByIdAndDelete(id);
+    return NextResponse.json({ success: true });
+  } catch (err: any) {
+    console.error('Error in /api/admin/posts DELETE:', err);
+    return NextResponse.json({ error: err?.message || 'Failed to delete post' }, { status: 500 });
+  }
 }

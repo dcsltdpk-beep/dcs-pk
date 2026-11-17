@@ -18,9 +18,34 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props) {
   const post = await getPostBySlug(params.slug);
   if (!post) return { title: 'Post Not Found | Dream Cyber Security' };
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dreamcybersecurity.pk';
+  const postUrl = `${siteUrl}/blog/${post.slug}`;
+  const ogImages = post.featured_image
+    ? [{ url: post.featured_image, width: 1200, height: 630, alt: post.title }]
+    : undefined;
+
   return {
-    title: `${post.title} | Dream Cyber Security Pakistan`,
+    title: post.title,
     description: post.excerpt,
+    keywords: post.tags,
+    alternates: {
+      canonical: postUrl,
+    },
+    openGraph: {
+      type: 'article',
+      title: post.title,
+      description: post.excerpt,
+      url: postUrl,
+      publishedTime: post.published_at ? new Date(post.published_at).toISOString() : undefined,
+      images: ogImages,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: post.featured_image ? [post.featured_image] : undefined,
+    },
   };
 }
 
@@ -48,6 +73,26 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
 
         <h1 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', lineHeight: '1.3' }}>{post.title}</h1>
+
+        {post.featured_image && (
+          <div
+            style={{
+              width: '100%',
+              maxHeight: '450px',
+              borderRadius: 'var(--radius-md)',
+              overflow: 'hidden',
+              marginBottom: '2.5rem',
+              border: '1px solid var(--border-color)',
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={post.featured_image}
+              alt={post.title}
+              style={{ width: '100%', height: '100%', maxHeight: '450px', objectFit: 'cover' }}
+            />
+          </div>
+        )}
 
         <div
           className="card"
@@ -78,14 +123,15 @@ export default async function BlogPostPage({ params }: Props) {
             padding: '2rem',
             textAlign: 'center',
             background: 'linear-gradient(135deg, rgba(251, 174, 68, 0.08), rgba(62, 56, 135, 0.15))',
+            border: '1px solid var(--border-color)',
           }}
         >
-          <h3 style={{ marginBottom: '0.5rem' }}>Protect Your Infrastructure Against These Threats</h3>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
-            Schedule an expert zero-trust vulnerability assessment with our certified engineers in Pakistan.
+          <h3 style={{ marginBottom: '0.75rem' }}>Need Specialized Enterprise Cyber Defense?</h3>
+          <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', maxWidth: '600px', margin: '0 auto 1.5rem auto' }}>
+            Consult our certified security architects for penetration testing, zero-trust infrastructure, or SOC integration.
           </p>
           <Link href="/contact" className="btn btn-primary" style={{ padding: '0.75rem 2rem' }}>
-            Request Security Consultation
+            Speak with our Security Engineers
           </Link>
         </div>
       </div>

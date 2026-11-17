@@ -28,8 +28,26 @@ export default async function BlogPage() {
 
         <div className="grid grid-2">
           {posts.map((post) => (
-            <div key={post.slug} className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div key={post.slug} className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflow: 'hidden' }}>
               <div>
+                {post.featured_image && (
+                  <div
+                    style={{
+                      height: '180px',
+                      borderRadius: 'var(--radius-sm)',
+                      overflow: 'hidden',
+                      marginBottom: '1.25rem',
+                      border: '1px solid var(--border-color)',
+                    }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={post.featured_image}
+                      alt={post.title}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                )}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                   <span className="badge badge-cyan">{post.category}</span>
                   <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>

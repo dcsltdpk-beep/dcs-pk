@@ -40,9 +40,19 @@ export default async function TeamPage() {
                   justifyContent: 'center',
                   color: 'var(--accent-cyan)',
                   flexShrink: 0,
+                  overflow: 'hidden',
                 }}
               >
-                <Icon name="user" size={36} />
+                {member.photo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={member.photo}
+                    alt={member.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                ) : (
+                  <Icon name="user" size={36} />
+                )}
               </div>
 
               <div>
