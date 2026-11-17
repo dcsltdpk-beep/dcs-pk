@@ -1,27 +1,5 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Cinzel, Manrope, JetBrains_Mono } from 'next/font/google';
-
-const cinzel = Cinzel({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-cinzel',
-  display: 'swap',
-});
-
-const manrope = Manrope({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-manrope',
-  display: 'swap',
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-mono',
-  display: 'swap',
-});
 
 export const viewport: Viewport = {
   themeColor: '#28245F',
@@ -70,10 +48,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${cinzel.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
-    >
+    <html lang="en">
       <head>
         {/* Google Fonts: Cinzel (Display), Manrope (Text), JetBrains Mono (Technical) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -132,7 +107,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className={`${manrope.className} font-sans`}>
+      <body className="font-sans">
         {children}
       </body>
     </html>
