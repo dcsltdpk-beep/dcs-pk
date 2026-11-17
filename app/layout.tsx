@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     'Premier international-standard cybersecurity firm, bespoke software engineering, AI workflow automations, and training academy in Pakistan.',
   keywords: 'cybersecurity pakistan, penetration testing lahore, web development, AI automation, IT firm pakistan, SOC monitoring',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dreamcybersecurity.pk'),
   verification: {
     google: 'pewPU0U99OKBT9gp2PI4t2h_uS--HT4ISi200Px3K9E',
   },
@@ -58,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'Dream Cyber Security Pakistan',
-              url: 'https://dreamcyber.pk',
+              url: 'https://www.dreamcybersecurity.pk',
               description:
                 'International-standard cyber defense, custom software engineering, AI workflow automations, and enterprise technology solutions.',
               address: {
