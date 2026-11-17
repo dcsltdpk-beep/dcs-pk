@@ -111,7 +111,7 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
 
             {/* 2. Services Mega Menu */}
             <li
-              className="nav-item nav-item-has-dropdown"
+              className="nav-item nav-item-has-dropdown nav-item-mega"
               onMouseEnter={() => handleMouseEnter('services')}
               onMouseLeave={handleMouseLeave}
             >
@@ -251,7 +251,7 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
 
             {/* 3. Academy Mega Menu */}
             <li
-              className="nav-item nav-item-has-dropdown"
+              className="nav-item nav-item-has-dropdown nav-item-mega"
               onMouseEnter={() => handleMouseEnter('academy')}
               onMouseLeave={handleMouseLeave}
             >
@@ -411,7 +411,7 @@ export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: H
 
               {activeMenu === 'insights' && (
                 <div
-                  className="mega-dropdown-menu simple-dropdown"
+                  className="mega-dropdown-menu simple-dropdown insights-dropdown"
                   onMouseEnter={() => handleMouseEnter('insights')}
                   onMouseLeave={handleMouseLeave}
                 >
