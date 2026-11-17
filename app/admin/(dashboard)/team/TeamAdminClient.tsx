@@ -54,38 +54,34 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
 
     let payload = '';
     if (qrType === 'portal') {
-      // 100% Public Portal Team Page
+      // Clean, short public URL — Generates large bold blocks for instant 0.1s scanning
       payload = publicSiteUrl;
     } else if (qrType === 'vcard') {
-      // Offline Digital Business Card (Saves to Phone Contacts)
+      // Clean, minimal vCard (No long bio essays, to keep QR code simple & fast to scan)
       payload = [
         'BEGIN:VCARD',
         'VERSION:3.0',
         `FN:${qrMember.name}`,
-        `N:${qrMember.name};;;;`,
-        'ORG:Dream Cyber Security Pakistan',
+        'ORG:Dream Cyber Security',
         `TITLE:${qrMember.designation}`,
-        qrMember.email ? `EMAIL;TYPE=INTERNET,WORK:${qrMember.email}` : '',
+        `EMAIL:${qrMember.email || 'dcsltd.pk@gmail.com'}`,
         `URL:${publicSiteUrl}`,
-        qrMember.linkedin && qrMember.linkedin !== 'https://linkedin.com' ? `X-SOCIALPROFILE;TYPE=linkedin:${qrMember.linkedin}` : '',
-        qrMember.bio ? `NOTE:${qrMember.bio.replace(/(\r\n|\n|\r)/gm, ' ')}` : '',
         'END:VCARD',
-      ]
-        .filter(Boolean)
-        .join('\n');
+      ].join('\n');
     } else {
-      // Public LinkedIn Profile
-      payload = qrMember.linkedin && qrMember.linkedin.startsWith('http') ? qrMember.linkedin : publicSiteUrl;
+      payload = qrMember.linkedin && qrMember.linkedin.startsWith('http') && qrMember.linkedin !== 'https://linkedin.com'
+        ? qrMember.linkedin
+        : publicSiteUrl;
     }
 
     QRCode.toDataURL(payload, {
-      width: 320,
-      margin: 2,
+      width: 260,
+      margin: 1,
       color: {
-        dark: '#050711',
+        dark: '#000000',
         light: '#ffffff',
       },
-      errorCorrectionLevel: 'H',
+      errorCorrectionLevel: 'M',
     })
       .then((url) => setQrDataUrl(url))
       .catch((err) => console.error('QR code generation error:', err));
@@ -703,11 +699,11 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
               🔒 Scans to: {qrType === 'portal' ? publicSiteUrl : qrType === 'vcard' ? 'Phone Contacts (vCard)' : (qrMember.linkedin || publicSiteUrl)}
             </div>
 
-            {/* QR Code Canvas */}
+            {/* QR Code Canvas (Clean, High-Contrast & Instant-Scan) */}
             <div
               style={{
                 background: '#ffffff',
-                padding: '8px',
+                padding: '10px',
                 borderRadius: '10px',
                 display: 'inline-block',
                 boxShadow: '0 6px 20px rgba(0, 0, 0, 0.4)',
@@ -719,10 +715,10 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                 <img
                   src={qrDataUrl}
                   alt={`QR Code for ${qrMember.name}`}
-                  style={{ width: '150px', height: '150px', display: 'block' }}
+                  style={{ width: '160px', height: '160px', display: 'block', imageRendering: 'pixelated' }}
                 />
               ) : (
-                <div style={{ width: '150px', height: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '0.75rem' }}>
+                <div style={{ width: '160px', height: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '0.75rem' }}>
                   Generating QR...
                 </div>
               )}
