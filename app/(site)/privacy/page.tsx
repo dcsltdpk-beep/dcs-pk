@@ -1,9 +1,16 @@
 import React from 'react';
+import type { Metadata } from 'next';
+import { getSettings } from '@/lib/data';
 
-export const metadata = {
-  title: 'Privacy Policy | Dream Cyber Security Pakistan',
-  description: 'Privacy policy, data protection, and confidentiality commitments of Dream Cyber Security Pakistan.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const title = settings.privacy_meta_title || 'Privacy Policy | Dream Cyber Security Pakistan';
+  return {
+    title: { absolute: title },
+    description: settings.privacy_meta_description || 'Privacy policy, data protection, and confidentiality commitments of Dream Cyber Security Pakistan.',
+    keywords: settings.privacy_meta_keywords || 'privacy policy, terms, data protection',
+  };
+}
 
 export default function PrivacyPage() {
   return (

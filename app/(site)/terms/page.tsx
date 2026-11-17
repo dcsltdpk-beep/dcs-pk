@@ -1,9 +1,16 @@
 import React from 'react';
+import type { Metadata } from 'next';
+import { getSettings } from '@/lib/data';
 
-export const metadata = {
-  title: 'Terms of Service | Dream Cyber Security Pakistan',
-  description: 'Terms of service, engagement conditions, and legal policies of Dream Cyber Security Pakistan.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const title = settings.terms_meta_title || 'Terms of Service | Dream Cyber Security Pakistan';
+  return {
+    title: { absolute: title },
+    description: settings.terms_meta_description || 'Terms of service, engagement conditions, and legal policies of Dream Cyber Security Pakistan.',
+    keywords: settings.terms_meta_keywords || 'terms of service, legal policy, sla commitments',
+  };
+}
 
 export default function TermsPage() {
   return (

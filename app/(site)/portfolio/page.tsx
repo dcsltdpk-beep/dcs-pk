@@ -1,11 +1,21 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import PortfolioClient from './PortfolioClient';
-import { getPortfolio } from '@/lib/data';
+import { getPortfolio, getSettings } from '@/lib/data';
 
-export const metadata = {
-  title: 'Client Portfolio | Dream Cyber Security Pakistan',
-  description: 'Explore our track record of enterprise engineering, cyber defense, video production, and AI automation.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const title = settings.portfolio_meta_title || 'Client Projects & Technical Case Studies | Dream Cyber Security Pakistan';
+  return {
+    title: { absolute: title },
+    description:
+      settings.portfolio_meta_description ||
+      'Proven engineering delivery across defense cybersecurity audits, custom enterprise web architectures, and automation pipelines in Pakistan.',
+    keywords:
+      settings.portfolio_meta_keywords ||
+      'cybersecurity case studies, enterprise software portfolio, web development projects lahore',
+  };
+}
 
 export const revalidate = 60;
 

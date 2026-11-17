@@ -1,12 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import Icon from '@/components/Icon';
-import { getPosts } from '@/lib/data';
+import { getPosts, getSettings } from '@/lib/data';
 
-export const metadata = {
-  title: 'Cyber Advisories & Updates | Dream Cyber Security Pakistan',
-  description: 'Read the latest technical threat advisories, enterprise case studies, and corporate news from DCS researchers.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const title = settings.blog_meta_title || 'Cyber Advisories, Threat Intelligence & News | Dream Cyber Security Pakistan';
+  return {
+    title: { absolute: title },
+    description:
+      settings.blog_meta_description ||
+      'Stay informed with technical threat advisories, vulnerability breakdowns, defense engineering playbooks, and corporate news from DCS researchers.',
+    keywords:
+      settings.blog_meta_keywords ||
+      'cyber threat intelligence, pakistani cybersecurity advisories, zero-day alerts, security blog',
+  };
+}
 
 export const revalidate = 60;
 

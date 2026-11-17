@@ -1,11 +1,21 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import ContactClient from './ContactClient';
 import { getSettings } from '@/lib/data';
 
-export const metadata = {
-  title: 'Contact Us & Business Inquiries | Dream Cyber Security Pakistan',
-  description: 'Get in touch with Dream Cyber Security Pakistan. Reach out via email, phone, consultation form, or direct WhatsApp.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const title = settings.contact_meta_title || 'Contact Us & Security Consultation | Dream Cyber Security Pakistan';
+  return {
+    title: { absolute: title },
+    description:
+      settings.contact_meta_description ||
+      'Speak directly with our security architects. Request a confidential vulnerability assessment, enterprise software proposal, or academy consultation.',
+    keywords:
+      settings.contact_meta_keywords ||
+      'contact dream cyber security, hire penetration testers pakistan, cybersecurity consultation lahore',
+  };
+}
 
 export default async function ContactPage({
   searchParams,

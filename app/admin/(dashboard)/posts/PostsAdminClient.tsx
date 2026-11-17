@@ -11,6 +11,9 @@ interface PostItem {
   featured_image?: string;
   excerpt: string;
   content: string;
+  meta_title?: string;
+  meta_description?: string;
+  meta_keywords?: string;
   is_published: boolean;
 }
 
@@ -30,6 +33,9 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
     featured_image: '',
     excerpt: '',
     content: '<p>Write your detailed article or advisory here...</p>',
+    meta_title: '',
+    meta_description: '',
+    meta_keywords: '',
     is_published: true,
   };
 
@@ -44,7 +50,6 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
   const handleTitleChange = (val: string) => {
     if (!editing) return;
     const currentAutoSlug = generateSlug(editing.title);
-    // If slug is currently empty or was matching previous auto slug, auto-update it
     if (!editing._id && (!editing.slug || editing.slug === currentAutoSlug)) {
       setEditing({ ...editing, title: val, slug: generateSlug(val) });
     } else {
@@ -92,6 +97,9 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
     const payload = {
       ...editing,
       slug: editing.slug ? generateSlug(editing.slug) : generateSlug(editing.title),
+      meta_title: editing.meta_title?.trim() || editing.title,
+      meta_description: editing.meta_description?.trim() || editing.excerpt,
+      meta_keywords: editing.meta_keywords?.trim() || editing.tags || '',
     };
 
     try {
@@ -128,6 +136,9 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
     }
   };
 
+  const previewTitle = editing?.meta_title || editing?.title || 'Article Title';
+  const previewDesc = editing?.meta_description || editing?.excerpt || 'Article summary excerpt displayed in Google search snippet...';
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
@@ -143,7 +154,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
       {editing && (
         <div className="card" style={{ padding: '2rem', marginBottom: '2.5rem', border: '1px solid var(--accent-cyan)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-            <h3 style={{ margin: 0 }}>{editing._id ? 'Edit Article & URL Slug' : 'Create New Article'}</h3>
+            <h3 style={{ margin: 0 }}>{editing._id ? 'Edit Article & SEO' : 'Create New Article & SEO'}</h3>
             <button onClick={() => { setEditing(null); setImageError(null); }} className="btn btn-outline" style={{ padding: '4px 10px' }}>
               ✕ Cancel
             </button>
@@ -176,80 +187,192 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
               </div>
             </div>
 
-            {/* Custom URL Slug Editor (SEO Permalink for Blog) */}
+            {/* DEDICATED BLOG SEO & META INTELLIGENCE SECTION */}
             <div
               style={{
-                padding: '1.25rem',
+                padding: '1.5rem',
                 marginBottom: '1.5rem',
                 borderRadius: 'var(--radius-sm)',
                 background: 'rgba(0, 240, 255, 0.03)',
-                border: '1px solid rgba(0, 240, 255, 0.2)',
+                border: '1px solid rgba(0, 240, 255, 0.25)',
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <label className="form-label" style={{ margin: 0, color: 'var(--accent-cyan)', fontWeight: 700 }}>
-                  🔗 Article URL Slug (SEO Permalink) *
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setEditing({ ...editing, slug: generateSlug(editing.title) })}
-                  className="btn btn-outline"
-                  style={{ padding: '3px 10px', fontSize: '0.75rem', borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)' }}
-                >
-                  ⚡ Auto-Generate from Title
-                </button>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontSize: '1.1rem' }}>🎯</span>
+                  <h4 style={{ margin: 0, color: 'var(--accent-cyan)' }}>Blog SEO, Meta Tags & Google SERP Preview</h4>
+                </div>
+                <span className="badge badge-cyan" style={{ fontSize: '0.72rem' }}>Indexed by Google</span>
               </div>
 
+              {/* Live SERP Preview Card for this Blog Post */}
               <div
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  background: 'var(--bg-secondary)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: 'var(--radius-sm)',
-                  padding: '0 12px',
-                  overflow: 'hidden',
+                  padding: '1rem 1.25rem',
+                  borderRadius: '6px',
+                  background: '#0a0d1a',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  marginBottom: '1.25rem',
                 }}
               >
-                <span
-                  style={{
-                    color: 'var(--accent-cyan)',
-                    fontSize: '0.9rem',
-                    fontFamily: 'var(--font-mono, monospace)',
-                    whiteSpace: 'nowrap',
-                    userSelect: 'none',
-                    fontWeight: 600,
-                  }}
-                >
-                  /blog/
-                </span>
-                <input
-                  type="text"
-                  required
-                  placeholder="custom-seo-url-slug"
-                  value={editing.slug}
-                  onChange={(e) => {
-                    const sanitized = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-');
-                    setEditing({ ...editing, slug: sanitized });
-                  }}
-                  style={{
-                    flex: 1,
-                    background: 'transparent',
-                    border: 'none',
-                    outline: 'none',
-                    color: '#fff',
-                    padding: '10px 8px',
-                    fontFamily: 'var(--font-mono, monospace)',
-                    fontSize: '0.92rem',
-                  }}
-                />
+                <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--accent-cyan)', fontWeight: 700, marginBottom: '6px' }}>
+                  🔍 Google Search Preview for this Article
+                </div>
+                <div style={{ fontSize: '0.78rem', color: '#8b949e', marginBottom: '4px', fontFamily: 'var(--font-mono, monospace)' }}>
+                  https://www.dreamcybersecurity.pk/blog/<span style={{ color: 'var(--accent-cyan)' }}>{editing.slug || 'article-slug'}</span>
+                </div>
+                <div style={{ color: '#58a6ff', fontSize: '1.1rem', fontWeight: 500, lineHeight: '1.3', marginBottom: '4px' }}>
+                  {previewTitle} | Dream Cyber Security Pakistan
+                </div>
+                <div style={{ color: '#8b949e', fontSize: '0.85rem', lineHeight: '1.45' }}>
+                  {previewDesc}
+                </div>
               </div>
 
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span>🌐 Public Live URL:</span>
-                <span style={{ color: 'var(--accent-cyan)', fontFamily: 'var(--font-mono, monospace)' }}>
-                  https://dreamcybersecurity.pk/blog/{editing.slug || 'url-slug'}
-                </span>
+              {/* Custom URL Slug Editor */}
+              <div className="form-group" style={{ marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <label className="form-label" style={{ margin: 0, fontWeight: 700, fontSize: '0.88rem' }}>
+                    1. Article URL Slug (Permalink) *
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setEditing({ ...editing, slug: generateSlug(editing.title) })}
+                    className="btn btn-outline"
+                    style={{ padding: '2px 8px', fontSize: '0.72rem', borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)' }}
+                  >
+                    ⚡ Auto-Generate from Title
+                  </button>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    background: 'var(--bg-secondary)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: 'var(--radius-sm)',
+                    padding: '0 12px',
+                    overflow: 'hidden',
+                    marginTop: '6px',
+                  }}
+                >
+                  <span
+                    style={{
+                      color: 'var(--accent-cyan)',
+                      fontSize: '0.88rem',
+                      fontFamily: 'var(--font-mono, monospace)',
+                      whiteSpace: 'nowrap',
+                      userSelect: 'none',
+                      fontWeight: 600,
+                    }}
+                  >
+                    /blog/
+                  </span>
+                  <input
+                    type="text"
+                    required
+                    placeholder="custom-seo-url-slug"
+                    value={editing.slug}
+                    onChange={(e) => {
+                      const sanitized = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+                      setEditing({ ...editing, slug: sanitized });
+                    }}
+                    style={{
+                      flex: 1,
+                      background: 'transparent',
+                      border: 'none',
+                      outline: 'none',
+                      color: '#fff',
+                      padding: '8px',
+                      fontFamily: 'var(--font-mono, monospace)',
+                      fontSize: '0.9rem',
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-2" style={{ gap: '1rem' }}>
+                {/* Custom SEO Meta Title */}
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <label className="form-label" style={{ margin: 0, fontSize: '0.85rem' }}>
+                      2. Custom Meta Title (Google SERP Title)
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setEditing({ ...editing, meta_title: editing.title })}
+                      style={{ background: 'none', border: 'none', color: 'var(--accent-cyan)', fontSize: '0.72rem', cursor: 'pointer', padding: 0 }}
+                    >
+                      Copy Title
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Leave blank to use Article Title automatically"
+                    value={editing.meta_title || ''}
+                    onChange={(e) => setEditing({ ...editing, meta_title: e.target.value })}
+                    style={{ marginTop: '4px' }}
+                  />
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    {(editing.meta_title || editing.title || '').length} / 60 characters
+                  </div>
+                </div>
+
+                {/* Primary Keywords */}
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <label className="form-label" style={{ margin: 0, fontSize: '0.85rem' }}>
+                      3. Primary Keywords (Comma-separated)
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setEditing({ ...editing, meta_keywords: editing.tags || '' })}
+                      style={{ background: 'none', border: 'none', color: 'var(--accent-cyan)', fontSize: '0.72rem', cursor: 'pointer', padding: 0 }}
+                    >
+                      Copy Tags
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="e.g. ransomware recovery, SOC monitoring lahore, zero-trust"
+                    value={editing.meta_keywords || ''}
+                    onChange={(e) => setEditing({ ...editing, meta_keywords: e.target.value })}
+                    style={{ marginTop: '4px' }}
+                  />
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    Injected into &lt;meta name=&quot;keywords&quot;&gt;
+                  </div>
+                </div>
+              </div>
+
+              {/* Custom Meta Description */}
+              <div className="form-group" style={{ marginTop: '0.75rem', marginBottom: 0 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <label className="form-label" style={{ margin: 0, fontSize: '0.85rem' }}>
+                    4. Custom Meta Description (Google Snippet)
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setEditing({ ...editing, meta_description: editing.excerpt })}
+                    style={{ background: 'none', border: 'none', color: 'var(--accent-cyan)', fontSize: '0.72rem', cursor: 'pointer', padding: 0 }}
+                  >
+                    Copy Excerpt
+                  </button>
+                </div>
+                <textarea
+                  className="form-control"
+                  rows={2}
+                  placeholder="Leave blank to use Summary Excerpt automatically..."
+                  value={editing.meta_description || ''}
+                  onChange={(e) => setEditing({ ...editing, meta_description: e.target.value })}
+                  style={{ marginTop: '4px' }}
+                />
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                  {(editing.meta_description || editing.excerpt || '').length} / 160 characters
+                </div>
               </div>
             </div>
 
@@ -341,7 +464,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
 
             <div className="grid grid-2" style={{ gap: '1rem' }}>
               <div className="form-group">
-                <label className="form-label">Tags (comma-separated keywords)</label>
+                <label className="form-label">Article Tags (comma-separated)</label>
                 <input
                   type="text"
                   className="form-control"
@@ -365,12 +488,12 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
             </div>
 
             <div className="form-group">
-              <label className="form-label">Summary Excerpt (Meta Description for Article) *</label>
+              <label className="form-label">Summary Excerpt *</label>
               <textarea
                 className="form-control"
                 rows={2}
                 required
-                placeholder="Brief 1-2 sentence synopsis shown in Google search snippets..."
+                placeholder="Brief 1-2 sentence synopsis shown on blog cards..."
                 value={editing.excerpt}
                 onChange={(e) => setEditing({ ...editing, excerpt: e.target.value })}
               />
@@ -401,7 +524,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
             <tr>
               <th>Article Title & Slug</th>
               <th>Category</th>
-              <th>Status</th>
+              <th>SEO Title / Status</th>
               <th style={{ width: '180px' }}>Actions</th>
             </tr>
           </thead>
@@ -427,9 +550,14 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                 </td>
                 <td><span className="badge badge-cyan">{post.category}</span></td>
                 <td>
-                  <span className={`badge ${post.is_published ? 'badge-cyan' : ''}`}>
+                  <span className={`badge ${post.is_published ? 'badge-cyan' : ''}`} style={{ marginBottom: '4px', display: 'inline-block' }}>
                     {post.is_published ? 'Live' : 'Draft'}
                   </span>
+                  {post.meta_title && (
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                      SEO: {post.meta_title.slice(0, 28)}...
+                    </div>
+                  )}
                 </td>
                 <td>
                   <div style={{ display: 'flex', gap: '6px' }}>

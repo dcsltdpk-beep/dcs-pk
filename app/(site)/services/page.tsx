@@ -1,12 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import Icon from '@/components/Icon';
-import { getServices } from '@/lib/data';
+import { getServices, getSettings } from '@/lib/data';
 
-export const metadata = {
-  title: 'Corporate Services | Dream Cyber Security Pakistan',
-  description: 'Explore our 10 international-standard technology & cyber defense services tailored for enterprises in Pakistan.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const title = settings.services_meta_title || 'Enterprise Cybersecurity & Software Engineering Services | Dream Cyber Security Pakistan';
+  return {
+    title: { absolute: title },
+    description:
+      settings.services_meta_description ||
+      'High-performance cybersecurity auditing, bespoke software engineering, AI workflow automations, and enterprise technology services in Pakistan.',
+    keywords:
+      settings.services_meta_keywords ||
+      'cybersecurity services pakistan, penetration testing lahore, custom software development, SOC monitoring, AI automation',
+  };
+}
 
 export const revalidate = 60;
 

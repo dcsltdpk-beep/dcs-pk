@@ -1,11 +1,21 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Icon from '@/components/Icon';
-import { getTeam } from '@/lib/data';
+import { getTeam, getSettings } from '@/lib/data';
 
-export const metadata = {
-  title: 'Our Team & Leadership | Dream Cyber Security Pakistan',
-  description: 'Meet the executive leadership, principal cybersecurity researchers, and technical trainers behind Dream Cyber Security.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const title = settings.team_meta_title || 'Our Team & Specialist Leadership | Dream Cyber Security Pakistan';
+  return {
+    title: { absolute: title },
+    description:
+      settings.team_meta_description ||
+      'Meet the executive leadership, certified cybersecurity researchers, full-stack software architects, and AI automation practitioners behind DCS Pakistan.',
+    keywords:
+      settings.team_meta_keywords ||
+      'cybersecurity team pakistan, certified ethical hackers lahore, enterprise security consultants',
+  };
+}
 
 export const revalidate = 60;
 

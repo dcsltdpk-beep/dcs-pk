@@ -1,11 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
-import { getFaqs } from '@/lib/data';
+import type { Metadata } from 'next';
+import { getFaqs, getSettings } from '@/lib/data';
 
-export const metadata = {
-  title: 'Frequently Asked Questions (FAQ) | Dream Cyber Security Pakistan',
-  description: 'Find answers regarding our cybersecurity services, academy training inquiries, response SLAs, and corporate partnerships.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const title = settings.faq_meta_title || 'Frequently Asked Questions & Advisory Support | Dream Cyber Security Pakistan';
+  return {
+    title: { absolute: title },
+    description:
+      settings.faq_meta_description ||
+      'Answers to common queries regarding cybersecurity audits, SLA timelines, corporate training programs, and software development pricing.',
+    keywords:
+      settings.faq_meta_keywords ||
+      'cybersecurity faq pakistan, penetration testing questions, enterprise IT pricing faq',
+  };
+}
 
 export const revalidate = 60;
 

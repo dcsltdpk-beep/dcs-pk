@@ -1,12 +1,23 @@
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import Icon from '@/components/Icon';
 import { getSettings } from '@/lib/data';
 
-export const metadata = {
-  title: 'About Us | Dream Cyber Security Pakistan',
-  description: 'Learn about our corporate story, cyber defense mission, executive vision, and international engineering standards.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const siteName = settings.site_name || 'Dream Cyber Security Pakistan';
+  const title = settings.about_meta_title || `About Us | ${siteName}`;
+  return {
+    title: { absolute: title },
+    description:
+      settings.about_meta_description ||
+      'Learn about our corporate story, cyber defense mission, executive vision, and international engineering standards.',
+    keywords:
+      settings.about_meta_keywords ||
+      'about dream cyber security, cybersecurity company lahore, enterprise defense leadership',
+  };
+}
 
 export default async function AboutPage() {
   const settings = await getSettings();

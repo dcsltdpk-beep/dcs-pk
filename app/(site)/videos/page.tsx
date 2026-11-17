@@ -1,10 +1,20 @@
 import React from 'react';
-import { getVideos } from '@/lib/data';
+import type { Metadata } from 'next';
+import { getVideos, getSettings } from '@/lib/data';
 
-export const metadata = {
-  title: 'Video Gallery | Dream Cyber Security Pakistan',
-  description: 'Watch company presentations, course previews, student capstone demonstrations, and cybersecurity tutorials.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const title = settings.videos_meta_title || 'Video Showcase & Technical Demonstrations | Dream Cyber Security Pakistan';
+  return {
+    title: { absolute: title },
+    description:
+      settings.videos_meta_description ||
+      'Watch cybersecurity proof-of-concepts, technical workshops, company briefings, and engineering showreels.',
+    keywords:
+      settings.videos_meta_keywords ||
+      'cybersecurity videos, ethical hacking demos, tech webinars pakistan',
+  };
+}
 
 export const revalidate = 60;
 

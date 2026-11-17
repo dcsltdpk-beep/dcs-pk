@@ -25,25 +25,29 @@ export async function generateMetadata({ params }: Props) {
     ? [{ url: post.featured_image, width: 1200, height: 630, alt: post.title }]
     : undefined;
 
+  const title = post.meta_title?.trim() || post.title;
+  const description = post.meta_description?.trim() || post.excerpt;
+  const keywords = post.meta_keywords?.trim() || post.tags || 'cybersecurity, threat intelligence, dcs pakistan';
+
   return {
-    title: post.title,
-    description: post.excerpt,
-    keywords: post.tags,
+    title: { absolute: title.includes('Dream Cyber Security') ? title : `${title} | Dream Cyber Security Pakistan` },
+    description,
+    keywords,
     alternates: {
       canonical: postUrl,
     },
     openGraph: {
       type: 'article',
-      title: post.title,
-      description: post.excerpt,
+      title,
+      description,
       url: postUrl,
       publishedTime: post.published_at ? new Date(post.published_at).toISOString() : undefined,
       images: ogImages,
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt,
+      title,
+      description,
       images: post.featured_image ? [post.featured_image] : undefined,
     },
   };

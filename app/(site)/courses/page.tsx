@@ -1,13 +1,23 @@
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import Icon from '@/components/Icon';
 import { GraduationCap, Phone } from 'lucide-react';
-import { getCourses } from '@/lib/data';
+import { getCourses, getSettings } from '@/lib/data';
 
-export const metadata = {
-  title: 'Training Academy | Dream Cyber Security Pakistan',
-  description: 'Hands-on practical training programs in AI Automation, Enterprise Web Engineering, Graphic Design, and IT Basics.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const title = settings.courses_meta_title || 'Cybersecurity & Technology Training Academy | Dream Cyber Security Pakistan';
+  return {
+    title: { absolute: title },
+    description:
+      settings.courses_meta_description ||
+      'Hands-on technical certifications in offensive cybersecurity, AI automation engineering, enterprise full-stack development, and digital arts in Pakistan.',
+    keywords:
+      settings.courses_meta_keywords ||
+      'cybersecurity courses lahore, ethical hacking training pakistan, ai automation course, web development training',
+  };
+}
 
 export const revalidate = 60;
 
