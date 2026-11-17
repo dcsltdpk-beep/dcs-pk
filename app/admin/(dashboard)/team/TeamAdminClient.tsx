@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import QRCode from 'qrcode';
 
 interface TeamMember {
   _id?: string;
@@ -23,6 +24,12 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  // QR Code Generation State
+  const [qrMember, setQrMember] = useState<TeamMember | null>(null);
+  const [qrType, setQrType] = useState<'vcard' | 'url'>('vcard');
+  const [qrDataUrl, setQrDataUrl] = useState<string>('');
+  const [copied, setCopied] = useState(false);
+
   const emptyForm: TeamMember = {
     name: '',
     designation: '',
@@ -33,6 +40,64 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
     github: '',
     email: '',
     order_num: team.length + 1,
+  };
+
+  // Generate QR Code whenever qrMember or qrType changes
+  useEffect(() => {
+    if (!qrMember) {
+      setQrDataUrl('');
+      return;
+    }
+
+    let payload = '';
+    if (qrType === 'vcard') {
+      payload = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        `FN:${qrMember.name}`,
+        `N:${qrMember.name};;;;`,
+        'ORG:Dream Cyber Security Pakistan',
+        `TITLE:${qrMember.designation}`,
+        qrMember.email ? `EMAIL;TYPE=INTERNET,WORK:${qrMember.email}` : '',
+        qrMember.linkedin ? `URL:${qrMember.linkedin}` : 'URL:https://www.dreamcybersecurity.pk/team',
+        qrMember.bio ? `NOTE:${qrMember.bio.replace(/(\r\n|\n|\r)/gm, ' ')}` : '',
+        'END:VCARD',
+      ]
+        .filter(Boolean)
+        .join('\n');
+    } else {
+      payload = qrMember.linkedin || 'https://www.dreamcybersecurity.pk/team';
+    }
+
+    QRCode.toDataURL(payload, {
+      width: 320,
+      margin: 2,
+      color: {
+        dark: '#050711',
+        light: '#ffffff',
+      },
+      errorCorrectionLevel: 'H',
+    })
+      .then((url) => setQrDataUrl(url))
+      .catch((err) => console.error('QR code generation error:', err));
+  }, [qrMember, qrType]);
+
+  const handleDownloadQr = () => {
+    if (!qrDataUrl || !qrMember) return;
+    const link = document.createElement('a');
+    link.href = qrDataUrl;
+    link.download = `QR_${qrMember.name.toLowerCase().replace(/[^a-z0-9]+/g, '_')}_dcs.png`;
+    link.click();
+  };
+
+  const handleCopyText = () => {
+    if (!qrMember) return;
+    const text = qrType === 'vcard'
+      ? `${qrMember.name}\n${qrMember.designation}\nDream Cyber Security Pakistan\nEmail: ${qrMember.email || 'dcsltd.pk@gmail.com'}\n${qrMember.linkedin || ''}`
+      : (qrMember.linkedin || 'https://www.dreamcybersecurity.pk/team');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -220,6 +285,17 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                       ✕ Remove
                     </button>
                   )}
+
+                  {editing.name && (
+                    <button
+                      type="button"
+                      onClick={() => setQrMember(editing)}
+                      className="btn btn-outline"
+                      style={{ padding: '6px 12px', fontSize: '0.85rem', borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)' }}
+                    >
+                      📱 Generate QR Code
+                    </button>
+                  )}
                 </div>
 
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.65rem' }}>
@@ -327,11 +403,11 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
           <thead>
             <tr>
               <th style={{ width: '60px' }}>Order</th>
-              <th style={{ width: '70px' }}>Photo</th>
+              <th style={{ width: '80px' }}>Photo</th>
               <th>Member Name</th>
               <th>Designation</th>
               <th>Email</th>
-              <th style={{ width: '140px' }}>Actions</th>
+              <th style={{ width: '220px' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -340,16 +416,21 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                 <td>{member.order_num}</td>
                 <td>
                   <div
+                    onClick={() => setQrMember(member)}
+                    title="Click to view QR code"
                     style={{
-                      width: '38px',
-                      height: '38px',
+                      width: '42px',
+                      height: '42px',
                       borderRadius: '50%',
                       background: 'var(--bg-secondary)',
-                      border: '1px solid var(--border-color)',
+                      border: '2px solid var(--border-color)',
                       overflow: 'hidden',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      transition: 'border-color 0.2s ease',
                     }}
                   >
                     {member.photo ? (
@@ -360,7 +441,7 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                     ) : (
-                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>👤</span>
+                      <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>👤</span>
                     )}
                   </div>
                 </td>
@@ -368,7 +449,15 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                 <td style={{ color: 'var(--accent-cyan)' }}>{member.designation}</td>
                 <td>{member.email || '—'}</td>
                 <td>
-                  <div style={{ display: 'flex', gap: '8px' }}>
+                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                    <button
+                      onClick={() => setQrMember(member)}
+                      className="btn btn-outline"
+                      title="Generate Scannable QR Code / vCard"
+                      style={{ padding: '4px 10px', fontSize: '0.8rem', color: 'var(--accent-cyan)', borderColor: 'rgba(0, 240, 255, 0.4)' }}
+                    >
+                      📱 QR Code
+                    </button>
                     <button
                       onClick={() => { setEditing(member); setUploadError(null); }}
                       className="btn btn-outline"
@@ -390,6 +479,204 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
           </tbody>
         </table>
       </div>
+
+      {/* ================================================================== */}
+      {/* TEAM MEMBER QR CODE MODAL POPUP */}
+      {/* ================================================================== */}
+      {qrMember && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.82)',
+            backdropFilter: 'blur(8px)',
+            zIndex: 100000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem',
+          }}
+          onClick={() => setQrMember(null)}
+        >
+          <div
+            className="card"
+            style={{
+              maxWidth: '460px',
+              width: '100%',
+              padding: '2rem',
+              borderRadius: '16px',
+              border: '1px solid var(--accent-cyan)',
+              background: '#0d1124',
+              boxShadow: '0 20px 50px rgba(0, 240, 255, 0.15)',
+              position: 'relative',
+              textAlign: 'center',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setQrMember(null)}
+              style={{
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: 'none',
+                color: '#fff',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem',
+              }}
+            >
+              ✕
+            </button>
+
+            {/* Header with Photo & Name */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1.25rem' }}>
+              <div
+                style={{
+                  width: '72px',
+                  height: '72px',
+                  borderRadius: '50%',
+                  background: 'var(--bg-secondary)',
+                  border: '3px solid var(--accent-cyan)',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '0.75rem',
+                  boxShadow: '0 4px 16px rgba(0, 240, 255, 0.25)',
+                }}
+              >
+                {qrMember.photo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={qrMember.photo}
+                    alt={qrMember.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                ) : (
+                  <span style={{ fontSize: '1.8rem' }}>👤</span>
+                )}
+              </div>
+
+              <h3 style={{ margin: '0 0 0.25rem 0', fontSize: '1.3rem', color: '#fff' }}>{qrMember.name}</h3>
+              <p style={{ margin: 0, color: 'var(--accent-cyan)', fontSize: '0.88rem', fontWeight: 600 }}>
+                {qrMember.designation}
+              </p>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                Dream Cyber Security Pakistan
+              </div>
+            </div>
+
+            {/* QR Type Switcher */}
+            <div
+              style={{
+                display: 'inline-flex',
+                background: 'rgba(255, 255, 255, 0.05)',
+                padding: '4px',
+                borderRadius: '8px',
+                marginBottom: '1.25rem',
+                border: '1px solid var(--border-color)',
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setQrType('vcard')}
+                style={{
+                  padding: '5px 14px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  background: qrType === 'vcard' ? 'var(--accent-cyan)' : 'transparent',
+                  color: qrType === 'vcard' ? '#0a0e1a' : 'var(--text-muted)',
+                  fontWeight: qrType === 'vcard' ? 700 : 500,
+                  fontSize: '0.82rem',
+                  cursor: 'pointer',
+                }}
+              >
+                📇 Contact vCard (Scan to Save)
+              </button>
+              <button
+                type="button"
+                onClick={() => setQrType('url')}
+                style={{
+                  padding: '5px 14px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  background: qrType === 'url' ? 'var(--accent-cyan)' : 'transparent',
+                  color: qrType === 'url' ? '#0a0e1a' : 'var(--text-muted)',
+                  fontWeight: qrType === 'url' ? 700 : 500,
+                  fontSize: '0.82rem',
+                  cursor: 'pointer',
+                }}
+              >
+                🌐 Profile Link
+              </button>
+            </div>
+
+            {/* QR Code Canvas / Image Display */}
+            <div
+              style={{
+                background: '#ffffff',
+                padding: '16px',
+                borderRadius: '12px',
+                display: 'inline-block',
+                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.5)',
+                marginBottom: '1.25rem',
+              }}
+            >
+              {qrDataUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={qrDataUrl}
+                  alt={`QR Code for ${qrMember.name}`}
+                  style={{ width: '220px', height: '220px', display: 'block' }}
+                />
+              ) : (
+                <div style={{ width: '220px', height: '220px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
+                  Generating QR...
+                </div>
+              )}
+            </div>
+
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: '0 0 1.25rem 0', lineHeight: '1.4' }}>
+              {qrType === 'vcard'
+                ? '📱 Scan with any smartphone camera to instantly save contact details (Name, Title, Org, Email & Link).'
+                : '🌐 Scan to open public profile / LinkedIn.'}
+            </p>
+
+            {/* Actions: Download PNG & Copy Text */}
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                onClick={handleDownloadQr}
+                className="btn btn-primary"
+                style={{ padding: '8px 18px', fontSize: '0.85rem' }}
+              >
+                📥 Download QR (PNG)
+              </button>
+              <button
+                onClick={handleCopyText}
+                className="btn btn-outline"
+                style={{ padding: '8px 16px', fontSize: '0.85rem' }}
+              >
+                {copied ? '✓ Copied!' : '📋 Copy Info'}
+              </button>
+              <button
+                onClick={() => setQrMember(null)}
+                className="btn btn-outline"
+                style={{ padding: '8px 16px', fontSize: '0.85rem' }}
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
