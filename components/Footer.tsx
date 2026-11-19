@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { MapPin, Mail, Phone, MessageCircle, ArrowRight } from 'lucide-react';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa6';
+import FloatingActions from './FloatingActions';
 
 interface FooterProps {
   whatsappNumber?: string;
@@ -31,17 +32,11 @@ export default function Footer({
 
   return (
     <>
-      {/* Floating WhatsApp Action Button */}
-      <a
-        href={`https://wa.me/${whatsappNumber}?text=${encodedMsg}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="floating-whatsapp"
-        aria-label="Chat on WhatsApp"
-      >
-        <FaWhatsapp size={20} />
-        <span>WhatsApp Us</span>
-      </a>
+      {/* Floating Action Buttons (WhatsApp + Scroll Up) */}
+      <FloatingActions
+        whatsappNumber={whatsappNumber}
+        whatsappMessage={whatsappMessage}
+      />
 
       {/* Main Site Footer */}
       <footer className="site-footer">
@@ -65,7 +60,7 @@ export default function Footer({
               <p className="footer-brand-desc">
                 Premier technology and security solutions provider in Pakistan, empowering modern enterprises and cultivating next-generation digital leaders.
               </p>
-              
+
               {/* Proper Lucide & Brand Social Media Icons */}
               <div className="footer-social-wrap">
                 <a
@@ -177,9 +172,13 @@ export default function Footer({
                   <a href={`tel:${companyPhone.replace(/\s+/g, '')}`}>{companyPhone}</a>
                 </li>
                 <li className="footer-contact-item footer-whatsapp-item">
-                  <span className="footer-contact-icon text-green"><MessageCircle size={16} /></span>
+                  <span className="footer-contact-icon text-green" style={{ color: '#25d366' }}>
+                    {/* <MessageCircle size={16} /> */}
+                    <FaWhatsapp size={16} />
+                  </span>
                   <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
-                    Official WhatsApp Desk
+                    {/* Official WhatsApp Desk */}
+                    +{whatsappNumber}
                   </a>
                 </li>
               </ul>
