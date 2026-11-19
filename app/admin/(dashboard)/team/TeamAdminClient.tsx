@@ -6,6 +6,7 @@ import QRCode from 'qrcode';
 interface TeamMember {
   _id?: string;
   name: string;
+  slug?: string;
   designation: string;
   bio: string;
   photo?: string;
@@ -32,6 +33,7 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
 
   const emptyForm: TeamMember = {
     name: '',
+    slug: '',
     designation: '',
     bio: '',
     photo: '',
@@ -42,8 +44,16 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
     order_num: team.length + 1,
   };
 
-  // Strictly Public Website URL (Never links to backend/admin)
-  const publicSiteUrl = 'https://www.dreamcybersecurity.pk/team';
+  // Helper: auto-generate slug from name
+  const slugify = (text: string) =>
+    (text || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+  // Resolve the public URL for a specific team member
+  const publicSiteBase = 'https://www.dreamcybersecurity.pk';
+  const getMemberUrl = (member: TeamMember) => {
+    const slug = member.slug || slugify(member.name);
+    return `${publicSiteBase}/team/${slug}`;
+  };
 
   // Generate QR Code purely in the browser (No backend API calls)
   useEffect(() => {
@@ -52,10 +62,12 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
       return;
     }
 
+    const memberPublicUrl = getMemberUrl(qrMember);
+
     let payload = '';
     if (qrType === 'portal') {
-      // Clean, short public URL — Generates large bold blocks for instant 0.1s scanning
-      payload = publicSiteUrl;
+      // Per-member URL — unique QR for each team member
+      payload = memberPublicUrl;
     } else if (qrType === 'vcard') {
       // Clean, minimal vCard (No long bio essays, to keep QR code simple & fast to scan)
       payload = [
@@ -65,13 +77,13 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
         'ORG:Dream Cyber Security',
         `TITLE:${qrMember.designation}`,
         `EMAIL:${qrMember.email || 'dcsltd.pk@gmail.com'}`,
-        `URL:${publicSiteUrl}`,
+        `URL:${memberPublicUrl}`,
         'END:VCARD',
       ].join('\n');
     } else {
       payload = qrMember.linkedin && qrMember.linkedin.startsWith('http') && qrMember.linkedin !== 'https://linkedin.com'
         ? qrMember.linkedin
-        : publicSiteUrl;
+        : memberPublicUrl;
     }
 
     QRCode.toDataURL(payload, {
@@ -89,19 +101,21 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
 
   const handleDownloadQr = () => {
     if (!qrDataUrl || !qrMember) return;
+    const memberSlug = qrMember.slug || slugify(qrMember.name);
     const link = document.createElement('a');
     link.href = qrDataUrl;
-    link.download = `QR_${qrMember.name.toLowerCase().replace(/[^a-z0-9]+/g, '_')}_public.png`;
+    link.download = `QR_${memberSlug}.png`;
     link.click();
   };
 
   const handleCopyText = () => {
     if (!qrMember) return;
+    const memberPublicUrl = getMemberUrl(qrMember);
     const text = qrType === 'portal'
-      ? publicSiteUrl
+      ? memberPublicUrl
       : qrType === 'vcard'
-      ? `${qrMember.name}\n${qrMember.designation}\nDream Cyber Security Pakistan\nEmail: ${qrMember.email || 'dcsltd.pk@gmail.com'}\nWebsite: ${publicSiteUrl}`
-      : (qrMember.linkedin || publicSiteUrl);
+      ? `${qrMember.name}\n${qrMember.designation}\nDream Cyber Security Pakistan\nEmail: ${qrMember.email || 'dcsltd.pk@gmail.com'}\nWebsite: ${memberPublicUrl}`
+      : (qrMember.linkedin || memberPublicUrl);
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -338,7 +352,15 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                   className="form-control"
                   required
                   value={editing.name}
-                  onChange={(e) => setEditing({ ...editing, name: e.target.value })}
+                  onChange={(e) => {
+                    const name = e.target.value;
+                    // Auto-fill slug when creating new (no _id yet)
+                    if (!editing._id) {
+                      setEditing({ ...editing, name, slug: slugify(name) });
+                    } else {
+                      setEditing({ ...editing, name });
+                    }
+                  }}
                 />
               </div>
 
@@ -351,6 +373,32 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                   value={editing.designation}
                   onChange={(e) => setEditing({ ...editing, designation: e.target.value })}
                 />
+              </div>
+            </div>
+
+            {/* Slug field with live preview */}
+            <div className="form-group" style={{ marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                <label className="form-label" style={{ margin: 0 }}>Profile URL Slug *</label>
+                <button
+                  type="button"
+                  className="btn btn-outline"
+                  style={{ padding: '2px 8px', fontSize: '0.72rem', borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)' }}
+                  onClick={() => setEditing({ ...editing, slug: slugify(editing.name) })}
+                >
+                  ↺ Auto-generate
+                </button>
+              </div>
+              <input
+                type="text"
+                className="form-control"
+                required
+                placeholder="e.g. muhammad-shahriar"
+                value={editing.slug || ''}
+                onChange={(e) => setEditing({ ...editing, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-') })}
+              />
+              <div style={{ fontSize: '0.75rem', color: 'var(--accent-cyan)', marginTop: '4px', fontFamily: 'monospace' }}>
+                🔗 dreamcybersecurity.pk/team/<strong>{editing.slug || slugify(editing.name) || 'slug'}</strong>
               </div>
             </div>
 
@@ -411,10 +459,10 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
             <tr>
               <th style={{ width: '60px' }}>Order</th>
               <th style={{ width: '70px' }}>Photo</th>
-              <th>Member Name</th>
+              <th>Member Name &amp; Slug</th>
               <th>Designation</th>
               <th>Email</th>
-              <th style={{ width: '210px' }}>Actions</th>
+              <th style={{ width: '240px' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -452,11 +500,28 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                     )}
                   </div>
                 </td>
-                <td style={{ fontWeight: 600 }}>{member.name}</td>
+                <td style={{ fontWeight: 600 }}>
+                  {member.name}
+                  {member.slug && (
+                    <div style={{ fontSize: '0.72rem', color: 'var(--accent-cyan)', fontFamily: 'monospace', marginTop: '2px' }}>
+                      /team/{member.slug}
+                    </div>
+                  )}
+                </td>
                 <td style={{ color: 'var(--accent-cyan)' }}>{member.designation}</td>
                 <td>{member.email || '—'}</td>
                 <td>
                   <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <a
+                      href={`/team/${member.slug || slugify(member.name)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-outline"
+                      title="View public profile page"
+                      style={{ padding: '3px 8px', fontSize: '0.78rem', color: '#8bff8b', borderColor: 'rgba(139,255,139,0.4)' }}
+                    >
+                      👁 View
+                    </a>
                     <button
                       onClick={() => setQrMember(member)}
                       className="btn btn-outline"
@@ -643,7 +708,7 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                   cursor: 'pointer',
                 }}
               >
-                🌐 Public Website (/team)
+                🌐 Member Profile Page
               </button>
               <button
                 type="button"
@@ -696,7 +761,7 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                 whiteSpace: 'nowrap',
               }}
             >
-              🔒 Scans to: {qrType === 'portal' ? publicSiteUrl : qrType === 'vcard' ? 'Phone Contacts (vCard)' : (qrMember.linkedin || publicSiteUrl)}
+              🔒 Scans to: {qrType === 'portal' ? getMemberUrl(qrMember) : qrType === 'vcard' ? 'Phone Contacts (vCard)' : (qrMember.linkedin || getMemberUrl(qrMember))}
             </div>
 
             {/* QR Code Canvas (Clean, High-Contrast & Instant-Scan) */}
@@ -726,7 +791,7 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
 
             <p style={{ color: 'var(--text-muted)', fontSize: '0.7rem', margin: '0 0 0.75rem 0', lineHeight: '1.3' }}>
               {qrType === 'portal'
-                ? '🌐 Scans to open public website: www.dreamcybersecurity.pk/team (Never opens admin panel).'
+                ? `🌐 Unique QR → dreamcybersecurity.pk/team/${qrMember.slug || slugify(qrMember.name)}`
                 : qrType === 'vcard'
                 ? '📱 Scans to instantly add contact info to mobile address book.'
                 : '💼 Scans to open member\'s official LinkedIn profile.'}

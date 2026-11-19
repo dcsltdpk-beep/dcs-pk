@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getServices, getCourses, getPosts } from '@/lib/data';
+import { getServices, getCourses, getPosts, getTeam } from '@/lib/data';
 import seedData from '@/database/seed-data.json';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -27,10 +27,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   try {
-    const [services, courses, posts] = await Promise.all([
+    const [services, courses, posts, team] = await Promise.all([
       getServices(),
       getCourses(),
       getPosts(),
+      getTeam(),
     ]);
 
     const serviceUrls = services.map((s: any) => ({
@@ -54,6 +55,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.75,
     }));
 
+    const teamUrls = team.map((m: any) => ({
+      url: `${baseUrl}/team/${m.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.75,
+    }));
+
     const landingUrls = seedData.landingPages.map((l: any) => ({
       url: `${baseUrl}/landing/${l.slug}`,
       lastModified: new Date(),
@@ -61,7 +69,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }));
 
-    return [...staticPages, ...serviceUrls, ...courseUrls, ...postUrls, ...landingUrls];
+    return [...staticPages, ...serviceUrls, ...courseUrls, ...postUrls, ...teamUrls, ...landingUrls];
   } catch {
     return staticPages;
   }

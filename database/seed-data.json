@@ -259,6 +259,7 @@
   "team": [
     {
       "name": "Muhammad Shahriar",
+      "slug": "muhammad-shahriar",
       "designation": "Chief Executive Officer (CEO)",
       "bio": "Visionary technology leader with extensive background in cyber defense, enterprise IT architecture, and digital transformation initiatives.",
       "photo": "",
@@ -270,6 +271,7 @@
     },
     {
       "name": "Hamza Ali",
+      "slug": "hamza-ali",
       "designation": "Head of Cybersecurity & Threat Intelligence",
       "bio": "CISSP certified security veteran specializing in proactive threat detection, vulnerability assessments, and enterprise zero-trust audits.",
       "photo": "",
@@ -281,6 +283,7 @@
     },
     {
       "name": "Zainab Bukhari",
+      "slug": "zainab-bukhari",
       "designation": "Director of Software Engineering",
       "bio": "Over 9 years of architecting scalable cloud platforms, database optimization, and high-performance server architectures.",
       "photo": "",
@@ -292,6 +295,7 @@
     },
     {
       "name": "Bilal Farooq",
+      "slug": "bilal-farooq",
       "designation": "Lead AI & Automation Specialist",
       "bio": "Expert in large language model pipelines, cognitive automation workflows, and machine learning integration for enterprise clients.",
       "photo": "",

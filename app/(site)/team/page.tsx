@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import Icon from '@/components/Icon';
 import { getTeam, getSettings } from '@/lib/data';
@@ -26,7 +27,7 @@ export default async function TeamPage() {
     <section className="section" style={{ paddingTop: '4rem' }}>
       <div className="container">
         <div className="section-header">
-          <span className="section-subtitle">Leadership & Engineers</span>
+          <span className="section-subtitle">Leadership &amp; Engineers</span>
           <h1 className="section-title">
             Meet Our <span className="text-gradient">Specialist Team</span>
           </h1>
@@ -37,36 +38,41 @@ export default async function TeamPage() {
 
         <div className="grid grid-2">
           {team.map((member) => (
-            <div key={member._id} className="card" style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
-              <div
-                style={{
-                  width: '75px',
-                  height: '75px',
-                  borderRadius: 'var(--radius-sm)',
-                  background: 'var(--bg-secondary)',
-                  border: '1px solid var(--border-color)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'var(--accent-cyan)',
-                  flexShrink: 0,
-                  overflow: 'hidden',
-                }}
-              >
-                {member.photo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={member.photo}
-                    alt={member.name}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                ) : (
-                  <Icon name="user" size={36} />
-                )}
-              </div>
+            <div key={member._id || member.slug} className="card" style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start', position: 'relative' }}>
+              {/* Avatar — clicking goes to member page */}
+              <Link href={`/team/${member.slug}`} style={{ flexShrink: 0 }}>
+                <div
+                  style={{
+                    width: '75px',
+                    height: '75px',
+                    borderRadius: 'var(--radius-sm)',
+                    background: 'var(--bg-secondary)',
+                    border: '1px solid var(--border-color)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--accent-cyan)',
+                    overflow: 'hidden',
+                    transition: 'border-color 0.2s',
+                  }}
+                >
+                  {member.photo ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <Icon name="user" size={36} />
+                  )}
+                </div>
+              </Link>
 
-              <div>
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '0.25rem' }}>{member.name}</h3>
+              <div style={{ flex: 1 }}>
+                <Link href={`/team/${member.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <h3 style={{ fontSize: '1.3rem', marginBottom: '0.25rem' }}>{member.name}</h3>
+                </Link>
                 <p style={{ color: 'var(--accent-cyan)', fontSize: '0.88rem', fontWeight: 600, marginBottom: '0.85rem' }}>
                   {member.designation}
                 </p>
@@ -74,18 +80,25 @@ export default async function TeamPage() {
                   {member.bio}
                 </p>
 
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  {member.linkedin && (
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <Link
+                    href={`/team/${member.slug}`}
+                    className="btn btn-primary"
+                    style={{ padding: '4px 12px', fontSize: '0.78rem' }}
+                  >
+                    View Profile
+                  </Link>
+                  {member.linkedin && member.linkedin !== 'https://linkedin.com' && (
                     <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '4px 10px', fontSize: '0.78rem' }}>
                       LinkedIn
                     </a>
                   )}
-                  {member.twitter && (
+                  {member.twitter && member.twitter !== 'https://twitter.com' && (
                     <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '4px 10px', fontSize: '0.78rem' }}>
                       Twitter
                     </a>
                   )}
-                  {member.github && (
+                  {member.github && member.github !== 'https://github.com' && (
                     <a href={member.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '4px 10px', fontSize: '0.78rem' }}>
                       GitHub
                     </a>

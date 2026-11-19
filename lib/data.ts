@@ -104,17 +104,63 @@ export async function getCourseBySlug(slug: string): Promise<any | null> {
   return seedData.courses.find((c) => c.slug === resolvedSlug || c.slug === slug) || null;
 }
 
+export function slugifyName(text: string): string {
+  return (text || '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 export async function getTeam(): Promise<any[]> {
   try {
     const conn = await connectDB();
     if (conn) {
       const items = await Team.find({}).sort({ order_num: 1 }).lean();
-      if (items && items.length > 0) return items;
+      if (items && items.length > 0) {
+        return items.map((m: any) => ({
+          ...m,
+          slug: m.slug || slugifyName(m.name),
+        }));
+      }
     }
   } catch (err) {
     console.warn('Using fallback team');
   }
-  return seedData.team;
+  return (seedData.team as any[]).map((m: any) => ({
+    ...m,
+    slug: m.slug || slugifyName(m.name),
+  }));
+}
+
+export async function getTeamMemberBySlug(slug: string): Promise<any | null> {
+  const normalizedSlug = (slug || '').toLowerCase().trim();
+  try {
+    const conn = await connectDB();
+    if (conn) {
+      let item = await Team.findOne({ slug: normalizedSlug }).lean() as any;
+      if (!item) {
+        // fallback: match by auto-generated slug from name
+        const all = await Team.find({}).lean() as any[];
+        item = all.find(
+          (m: any) =>
+            (m.slug && m.slug.toLowerCase() === normalizedSlug) ||
+            slugifyName(m.name) === normalizedSlug
+        ) || null;
+      }
+      if (item) {
+        return { ...item, slug: item.slug || slugifyName(item.name) };
+      }
+    }
+  } catch (err) {
+    console.warn(`Using fallback team member for slug: ${slug}`);
+  }
+  const fallback = (seedData.team as any[]).find(
+    (m: any) =>
+      (m.slug && m.slug.toLowerCase() === normalizedSlug) ||
+      slugifyName(m.name) === normalizedSlug
+  );
+  return fallback ? { ...fallback, slug: fallback.slug || slugifyName(fallback.name) } : null;
 }
 
 export async function getPortfolio(category?: string): Promise<any[]> {
