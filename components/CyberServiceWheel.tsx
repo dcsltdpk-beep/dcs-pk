@@ -83,6 +83,7 @@ export default function CyberServiceWheel({ services: propServices }: CyberServi
   const dragging = useRef(false);
   const lastInput = useRef(0);
   const isScrollingControlled = useRef(false);
+  const isTrackVisibleRef = useRef(false);
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
 
@@ -172,8 +173,8 @@ export default function CyberServiceWheel({ services: propServices }: CyberServi
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.05;
-    // Cap pixel ratio to 1.5 to prevent GPU bottleneck on Retina screens and eliminate scroll lag
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    // Cap pixel ratio to 1.2 to eliminate GPU rasterization bottlenecks and guarantee locked 120 FPS
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.2));
     renderer.setSize(W, H, false);
     renderer.domElement.style.cssText = `width:${W}px;height:${H}px;display:block;position:absolute;inset:0;pointer-events:none;`;
     host.appendChild(renderer.domElement);
@@ -270,6 +271,11 @@ export default function CyberServiceWheel({ services: propServices }: CyberServi
     const tint = new THREE.Color();
     let raf = 0;
     let prev = performance.now();
+    let vw = typeof window !== 'undefined' ? window.innerWidth : 1200;
+    const handleResize = () => {
+      vw = window.innerWidth;
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
 
     // Viewport visibility tracking: pause WebGL when off-screen to guarantee 120fps smooth scrolling for the rest of the site
     let isVisible = true;
@@ -278,6 +284,7 @@ export default function CyberServiceWheel({ services: propServices }: CyberServi
       observer = new IntersectionObserver(
         ([entry]) => {
           isVisible = entry.isIntersecting;
+          isTrackVisibleRef.current = entry.isIntersecting;
           if (isVisible && !raf) {
             prev = performance.now();
             raf = requestAnimationFrame(loop);
@@ -312,7 +319,9 @@ export default function CyberServiceWheel({ services: propServices }: CyberServi
       const idx = ((Math.round(cur) % N) + N) % N;
       if (idx !== activeRef.current) {
         activeRef.current = idx;
-        setActive(idx);
+        React.startTransition(() => {
+          setActive(idx);
+        });
       }
 
       // Exact angular distance of closest service from the 12 o'clock active circle
@@ -383,7 +392,6 @@ export default function CyberServiceWheel({ services: propServices }: CyberServi
       panel.position.z = -40;
 
       // Adapt 3D glass slab dimensions to match responsive card on mobile/tablet/desktop
-      const vw = window.innerWidth;
       const isMob = vw < 768;
       const isTab = vw >= 768 && vw < 1024;
       const cardSx = isMob ? 2.58 : isTab ? 1.41 : 1.0;
@@ -415,6 +423,7 @@ export default function CyberServiceWheel({ services: propServices }: CyberServi
     raf = requestAnimationFrame(loop);
 
     return () => {
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(raf);
       observer?.disconnect();
       scene.traverse((o) => {
@@ -438,7 +447,7 @@ export default function CyberServiceWheel({ services: propServices }: CyberServi
     let scrollTicking = false;
 
     const handleWindowScroll = () => {
-      if (!trackRef.current || scrollTicking) return;
+      if (!trackRef.current || !isTrackVisibleRef.current || scrollTicking) return;
       scrollTicking = true;
 
       requestAnimationFrame(() => {

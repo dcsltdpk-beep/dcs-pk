@@ -26,34 +26,42 @@ export default function WebsiteScrollAnimations() {
     // 1. PAGE SCROLL ANIMATION (Layered Section Stacking)
     // ========================================================
     const setupPageScrollAnimation = () => {
-      if (prefersReducedMotion) return () => {};
+      if (prefersReducedMotion) return () => { };
 
       const main = document.querySelector('main') || document.body;
 
-      // Select all top-level sections across any page (including pinned tracks for smooth layered ordering)
+      // Select all content sections across the page (Hero sections and footer remain in normal document flow)
       const directSections = Array.from(
-        main.querySelectorAll<HTMLElement>('section.section, section.hero-section, section.cyber-wheel-track, section')
+        main.querySelectorAll<HTMLElement>('section.section, section.cyber-wheel-track')
       ).filter((sec) => {
-        return !sec.parentElement?.closest('section');
+        return (
+          !sec.parentElement?.closest('section') &&
+          !sec.classList.contains('hero-section') &&
+          !sec.classList.contains('dcs-section-hero') &&
+          !sec.classList.contains('dcs-hero-section')
+        );
       });
 
-      // Include site footer as the final layered curtain
-      const footer = document.querySelector<HTMLElement>('footer.site-footer');
       const allSections = [...directSections];
-      if (footer && !allSections.includes(footer)) {
-        allSections.push(footer);
-      }
 
-      if (allSections.length <= 1) return () => {};
+      if (allSections.length <= 1) return () => { };
 
-      // Dynamically calculate sticky top per section so no content is ever cut off
+      // Calculate sticky positioning per section
       const updateStickyTops = () => {
-        const vh = window.innerHeight || 800;
         const isMobileOrTablet = window.innerWidth <= 992;
+
+        // Hero sections across all pages are strictly relative in normal document flow so they remain 100% visible on load
+        const heroes = main.querySelectorAll<HTMLElement>(
+          'section.hero-section, section.dcs-section-hero, section.dcs-hero-section'
+        );
+        heroes.forEach((hero) => {
+          hero.style.position = 'relative';
+          hero.style.top = 'auto';
+          hero.style.zIndex = '1';
+        });
 
         allSections.forEach((sec) => {
           if (isMobileOrTablet) {
-            // Natural flow on mobile and tablets guarantees complete visibility of all stacked elements
             sec.style.position = 'relative';
             sec.style.top = 'auto';
             sec.style.transform = '';
@@ -66,13 +74,28 @@ export default function WebsiteScrollAnimations() {
             sec.style.position = 'relative';
             sec.style.top = 'auto';
           } else {
-            // If section height exceeds viewport, stick only after the entire bottom is scrolled into view
-            const secHeight = sec.offsetHeight;
-            const stickyTop = Math.min(0, vh - secHeight);
             sec.style.position = 'sticky';
-            sec.style.top = `${stickyTop}px`;
+            // Dynamically calculate sticky top:
+            // If the section is taller than the viewport, pin it so the entire section (including
+            // all bottom cards and buttons) scrolls fully into view before locking (top = vh - secH).
+            const vh = window.innerHeight;
+            const secH = sec.offsetHeight;
+            if (secH > vh) {
+              sec.style.top = `${vh - secH}px`;
+            } else {
+              sec.style.top = '0px';
+            }
           }
         });
+
+        // Footer is NEVER sticky — it rests naturally at the bottom of the page
+        const footer = document.querySelector<HTMLElement>('footer.site-footer');
+        if (footer) {
+          footer.style.position = 'relative';
+          footer.style.top = 'auto';
+          footer.style.zIndex = String(10 + allSections.length * 5);
+          footer.classList.add('layered-covering-section');
+        }
       };
 
       // Assign stacking context and base layer styling
@@ -89,109 +112,21 @@ export default function WebsiteScrollAnimations() {
 
       updateStickyTops();
 
-      // Update layered depth transition on scroll
-      const updateLayers = () => {
-        if (isDestroyed) return;
-
-        // Pause scroll effects while initial site intro sequence is playing
-        if (
-          document.documentElement.classList.contains('intro-active') ||
-          document.body.classList.contains('intro-active')
-        ) {
-          return;
-        }
-
-        const vh = window.innerHeight || 800;
-        const isMobileOrTablet = window.innerWidth <= 992;
-
-        if (isMobileOrTablet) {
-          allSections.forEach((sec) => {
-            sec.style.transform = '';
-            sec.style.opacity = '1';
-            sec.style.visibility = 'visible';
-            sec.style.filter = '';
-            sec.style.pointerEvents = 'auto';
-          });
-          return;
-        }
-
-        const maxTuckTranslate = 16;
-
-        for (let i = 0; i < allSections.length; i++) {
-          const sec = allSections[i];
-
-          // Check if section i is being covered by section i + 1
-          if (i < allSections.length - 1) {
-            const nextSec = allSections[i + 1];
-            const nextRect = nextSec.getBoundingClientRect();
-
-            if (nextRect.top < vh && nextRect.top > 0) {
-              // Section i is actively being covered by Section i + 1 as user scrolls down
-              // In reverse scroll, this smoothly uncovers Section i as Section i + 1 slides down
-              const p = 1 - Math.max(0, Math.min(1, nextRect.top / vh));
-              const eased = easeOutCubic(p);
-
-              sec.style.transform = `scale(${1 - eased * 0.04}) translate3d(0, ${eased * maxTuckTranslate}px, 0)`;
-              sec.style.transformOrigin = 'center top';
-
-              // Pure compositor-accelerated opacity fade without expensive filter repaints
-              const fadeProgress = Math.max(0, Math.min(1, (p - 0.45) / 0.55));
-              const opacity = 1 - fadeProgress;
-              sec.style.opacity = String(opacity);
-              sec.style.visibility = opacity <= 0.02 ? 'hidden' : 'visible';
-              sec.style.pointerEvents = opacity <= 0.1 ? 'none' : 'auto';
-            } else if (nextRect.top <= 0) {
-              // Section i + 1 has fully covered Section i: completely hide to eliminate background clutter
-              sec.style.transform = `scale(0.96) translate3d(0, ${maxTuckTranslate}px, 0)`;
-              sec.style.transformOrigin = 'center top';
-              sec.style.opacity = '0';
-              sec.style.visibility = 'hidden';
-              sec.style.pointerEvents = 'none';
-            } else {
-              // Section i + 1 is below viewport; Section i is fully uncovered and interactive
-              sec.style.transform = 'scale(1) translate3d(0, 0, 0)';
-              sec.style.opacity = '1';
-              sec.style.visibility = 'visible';
-              sec.style.pointerEvents = 'auto';
-            }
-          } else {
-            // Last section (Footer) stays at resting position once reached
-            sec.style.transform = 'scale(1) translate3d(0, 0, 0)';
-            sec.style.opacity = '1';
-            sec.style.visibility = 'visible';
-            sec.style.pointerEvents = 'auto';
-            sec.style.filter = 'none';
-          }
-        }
-      };
-
-      const onScroll = () => {
-        if (scrollRafId !== null) return;
-        scrollRafId = requestAnimationFrame(() => {
-          updateLayers();
-          scrollRafId = null;
-        });
-      };
-
       const onResize = () => {
         updateStickyTops();
-        onScroll();
       };
 
-      window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onResize, { passive: true });
 
-      // Run initial check
-      updateLayers();
+      // Secondary check after web fonts and late images settle
+      const settleTimer = setTimeout(updateStickyTops, 600);
 
       return () => {
-        window.removeEventListener('scroll', onScroll);
+        clearTimeout(settleTimer);
         window.removeEventListener('resize', onResize);
-        if (scrollRafId !== null) {
-          cancelAnimationFrame(scrollRafId);
-          scrollRafId = null;
-        }
         allSections.forEach((sec) => {
+          sec.style.position = '';
+          sec.style.top = '';
           sec.style.transform = '';
           sec.style.opacity = '';
           sec.style.visibility = '';
@@ -201,6 +136,13 @@ export default function WebsiteScrollAnimations() {
           sec.style.zIndex = '';
           sec.classList.remove('layered-scroll-section', 'layered-covering-section');
         });
+        const footer = document.querySelector<HTMLElement>('footer.site-footer');
+        if (footer) {
+          footer.style.position = '';
+          footer.style.top = '';
+          footer.style.zIndex = '';
+          footer.classList.remove('layered-covering-section');
+        }
       };
     };
 
@@ -222,13 +164,13 @@ export default function WebsiteScrollAnimations() {
         );
       });
 
-      if (cardNodes.length === 0) return () => {};
+      if (cardNodes.length === 0) return () => { };
 
       if (prefersReducedMotion) {
         cardNodes.forEach((card) => {
           card.classList.add('card-animate-settled');
         });
-        return () => {};
+        return () => { };
       }
 
       const isMobile = window.innerWidth <= 992;

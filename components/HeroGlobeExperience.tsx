@@ -655,15 +655,10 @@ export default function HeroGlobeExperience() {
       window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (prefersReducedMotion) {
-      forceSettleRef.current = true;
-      setIsSettled(true);
-      document.documentElement.classList.remove('intro-active');
-      document.body.classList.remove('intro-active');
-    } else {
-      document.documentElement.classList.add('intro-active');
-      document.body.classList.add('intro-active');
-    }
+    forceSettleRef.current = true;
+    setIsSettled(true);
+    document.documentElement.classList.remove('intro-active');
+    document.body.classList.remove('intro-active');
 
     const logoImg = new Image();
     logoImg.src = '/logo.png';
@@ -998,7 +993,7 @@ export default function HeroGlobeExperience() {
 
     function draw(now: number) {
       if (!running) return;
-      const t = (now - startTime) / 1000;
+      const t = Math.max(0, (now - startTime) / 1000);
 
       const activeCanvas = canvas;
       if (!activeCanvas) return;
@@ -1071,17 +1066,17 @@ export default function HeroGlobeExperience() {
       glowGrad.addColorStop(1, rgba(rimC, 0));
       ctx.fillStyle = glowGrad;
       ctx.beginPath();
-      ctx.arc(geom.cx, geom.cy - geom.R, glowR, 0, Math.PI * 2);
+      ctx.arc(geom.cx, geom.cy - geom.R, Math.max(0, glowR), 0, Math.PI * 2);
       ctx.fill();
 
       // 3. Rising Logo behind Earth (during intro rise only)
       if (!geom.isSettled && s.logo > 0 && s.logo < 0.9) {
-        const g = ctx.createRadialGradient(L.c.x, L.c.y, 0, L.c.x, L.c.y, L.size);
+        const g = ctx.createRadialGradient(L.c.x, L.c.y, 0, L.c.x, L.c.y, Math.max(0, L.size));
         g.addColorStop(0, rgba(GOLD, 0.4 * s.logo));
         g.addColorStop(1, rgba(GOLD, 0));
         ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(L.c.x, L.c.y, L.size, 0, Math.PI * 2);
+        ctx.arc(L.c.x, L.c.y, Math.max(0, L.size), 0, Math.PI * 2);
         ctx.fill();
 
         if (logoImg.complete && logoImg.naturalWidth > 0) {
@@ -1093,10 +1088,10 @@ export default function HeroGlobeExperience() {
       const body = ctx.createRadialGradient(
         geom.cx,
         geom.cy - geom.R * 0.88,
-        geom.R * 0.05,
+        Math.max(0, geom.R * 0.05),
         geom.cx,
         geom.cy,
-        geom.R
+        Math.max(0, geom.R)
       );
       body.addColorStop(0, '#0d2866');
       body.addColorStop(0.45, '#06163b');
@@ -1104,7 +1099,7 @@ export default function HeroGlobeExperience() {
       body.addColorStop(1, '#020617');
       ctx.fillStyle = body;
       ctx.beginPath();
-      ctx.arc(geom.cx, geom.cy, geom.R, 0, Math.PI * 2);
+      ctx.arc(geom.cx, geom.cy, Math.max(0, geom.R), 0, Math.PI * 2);
       ctx.fill();
 
       // -------------------------------------------------------------
@@ -1112,7 +1107,7 @@ export default function HeroGlobeExperience() {
       // -------------------------------------------------------------
       ctx.save();
       ctx.beginPath();
-      ctx.arc(geom.cx, geom.cy, geom.R, 0, Math.PI * 2);
+      ctx.arc(geom.cx, geom.cy, Math.max(0, geom.R), 0, Math.PI * 2);
       ctx.clip(); // Strictly confined to Earth globe surface
 
       // Upper atmosphere haze wash inside top limb (matching reference image)
@@ -1122,14 +1117,14 @@ export default function HeroGlobeExperience() {
         0,
         geom.cx,
         geom.cy - geom.R,
-        geom.R * 0.65
+        Math.max(0, geom.R * 0.65)
       );
       apexHaze.addColorStop(0, rgba([100, 200, 255], 0.20 * s.rise));
       apexHaze.addColorStop(0.5, rgba([50, 140, 240], 0.07 * s.rise));
       apexHaze.addColorStop(1, 'rgba(0, 10, 30, 0)');
       ctx.fillStyle = apexHaze;
       ctx.beginPath();
-      ctx.arc(geom.cx, geom.cy, geom.R, 0, Math.PI * 2);
+      ctx.arc(geom.cx, geom.cy, Math.max(0, geom.R), 0, Math.PI * 2);
       ctx.fill();
 
       // Project all network nodes in 3D for this frame
@@ -1619,7 +1614,7 @@ export default function HeroGlobeExperience() {
         ctx.arc(
           geom.cx,
           geom.cy,
-          geom.R + i * 1.5,
+          Math.max(0, geom.R + i * 1.5),
           -Math.PI / 2 - rimAngle,
           -Math.PI / 2 + rimAngle
         );
@@ -1636,7 +1631,7 @@ export default function HeroGlobeExperience() {
           0,
           L.c.x,
           L.c.y,
-          L.size * 0.85
+          Math.max(0, L.size * 0.85)
         );
         const glowA =
           0.42 * s.logo * (geom.isSettled ? 0.88 + 0.12 * Math.sin(t * 2) : 1);
@@ -1645,7 +1640,7 @@ export default function HeroGlobeExperience() {
         g.addColorStop(1, rgba(GOLD, 0));
         ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(L.c.x, L.c.y, L.size * 0.85, 0, Math.PI * 2);
+        ctx.arc(L.c.x, L.c.y, Math.max(0, L.size * 0.85), 0, Math.PI * 2);
         ctx.fill();
 
         if (logoImg.complete && logoImg.naturalWidth > 0) {
@@ -1655,38 +1650,69 @@ export default function HeroGlobeExperience() {
 
       // 9. Periodic Gold Ripple expanding from Logo (every ~3s in hero state)
       if (geom.isSettled) {
-        const rp = (t % 3) / 3;
+        const rp = Math.max(0, Math.min(1, ((t % 3) + 3) % 3 / 3));
+        const rippleR = Math.max(0, L.size * 0.52 + rp * geom.R * 0.75);
         ctx.strokeStyle = rgba(GOLD, 0.40 * (1 - rp));
         ctx.lineWidth = 2.0;
         ctx.beginPath();
-        ctx.arc(L.c.x, L.c.y, L.size * 0.52 + rp * geom.R * 0.75, 0, Math.PI * 2);
+        ctx.arc(L.c.x, L.c.y, rippleR, 0, Math.PI * 2);
         ctx.stroke();
       }
 
       // 10. Expanding Energy Wave Ring from Logo during intro
       if (!geom.isSettled && s.wave > 0 && s.wave < Math.max(W, H) * 1.4) {
-        ctx.strokeStyle = rgba(GOLD, 0.50 * (1 - s.wave / (Math.max(W, H) * 1.4)));
+        const waveR = Math.max(0, s.wave);
+        ctx.strokeStyle = rgba(GOLD, 0.50 * (1 - waveR / (Math.max(W, H) * 1.4)));
         ctx.lineWidth = 2.5;
         ctx.beginPath();
-        ctx.arc(L.c.x, L.c.y, s.wave, 0, Math.PI * 2);
+        ctx.arc(L.c.x, L.c.y, waveR, 0, Math.PI * 2);
         ctx.stroke();
       }
 
       ctx.restore();
       ctx.globalAlpha = 1.0;
 
-      if (running) {
+      if (running && isVisible) {
         animId = requestAnimationFrame(draw);
+      } else {
+        animId = 0;
       }
     }
 
     setup();
     window.addEventListener('resize', setup);
+
+    // Visibility observer to pause canvas rendering when off-screen (preserves 60-120 FPS on rest of site)
+    let isVisible = true;
+    let observer: IntersectionObserver | null = null;
+    try {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          const visible = entry.isIntersecting;
+          if (visible !== isVisible) {
+            isVisible = visible;
+            if (isVisible && running && !animId) {
+              animId = requestAnimationFrame(draw);
+            } else if (!isVisible && animId) {
+              cancelAnimationFrame(animId);
+              animId = 0;
+            }
+          }
+        },
+        { rootMargin: '100px 0px 100px 0px' }
+      );
+      if (containerRef.current) observer.observe(containerRef.current);
+    } catch {
+      isVisible = true;
+    }
+
     animId = requestAnimationFrame(draw);
 
     return () => {
       running = false;
       if (animId) cancelAnimationFrame(animId);
+      animId = 0;
+      observer?.disconnect();
       document.documentElement.classList.remove('intro-active');
       document.body.classList.remove('intro-active');
       window.removeEventListener('resize', setup);

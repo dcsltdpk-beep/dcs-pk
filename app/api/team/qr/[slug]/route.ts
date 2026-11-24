@@ -28,7 +28,7 @@ export async function GET(req: Request, { params }: Props) {
         dark: '#000000',
         light: '#ffffff',
       },
-      errorCorrectionLevel: 'M',
+      errorCorrectionLevel: 'L',
     });
 
     const headers: Record<string, string> = {

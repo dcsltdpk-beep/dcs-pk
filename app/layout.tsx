@@ -94,25 +94,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <head>
-        {/* Instant Intro State: Locks scrolling and hides website structure immediately on homepage */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var p = window.location.pathname;
-                  if (p === '/' || p === '') {
-                    var m = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                    if (!m) {
-                      document.documentElement.classList.add('intro-active');
-                    }
-                  }
-                } catch(e) {}
-              })();
-            `,
-          }}
-        />
-
         {/* Google Fonts: Cinzel (Display), Manrope (Text), JetBrains Mono (Technical) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -194,19 +175,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
       </head>
       <body className="font-sans">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  if (document.documentElement.classList.contains('intro-active')) {
-                    document.body.classList.add('intro-active');
-                  }
-                } catch(e) {}
-              })();
-            `,
-          }}
-        />
         <Suspense fallback={null}>
           <TopProgressBar />
         </Suspense>

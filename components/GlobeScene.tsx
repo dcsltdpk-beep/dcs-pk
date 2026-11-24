@@ -210,7 +210,7 @@ export default function GlobeScene({
 
     function draw(now: number) {
       if (!running) return;
-      const t = (now - start) / 1000;
+      const t = Math.max(0, (now - start) / 1000);
 
       // Handle intro completion notification at 7.6s
       if (mode === 'intro' && !finishFired && t >= 7.6) {
@@ -360,20 +360,22 @@ export default function GlobeScene({
 
       // 7. Energy wave ring from logo (intro)
       if (mode === 'intro' && s.wave > 0 && s.wave < Math.max(W, H) * 1.3) {
-        ctx.strokeStyle = rgba(GOLD, 0.5 * (1 - s.wave / (Math.max(W, H) * 1.3)));
+        const waveR = Math.max(0, s.wave);
+        ctx.strokeStyle = rgba(GOLD, 0.5 * (1 - waveR / (Math.max(W, H) * 1.3)));
         ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.arc(L.c.x, L.c.y, s.wave, 0, Math.PI * 2);
+        ctx.arc(L.c.x, L.c.y, waveR, 0, Math.PI * 2);
         ctx.stroke();
       }
 
       // 8. Periodic gold ripple from logo (hero mode, every ~3s)
       if (mode === 'hero') {
-        const rp = (t % 3) / 3;
+        const rp = Math.max(0, Math.min(1, ((t % 3) + 3) % 3 / 3));
+        const rippleR = Math.max(0, L.size * 0.5 + rp * W * 0.5);
         ctx.strokeStyle = rgba(GOLD, 0.35 * (1 - rp));
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.arc(L.c.x, L.c.y, L.size * 0.5 + rp * W * 0.5, 0, Math.PI * 2);
+        ctx.arc(L.c.x, L.c.y, rippleR, 0, Math.PI * 2);
         ctx.stroke();
       }
 

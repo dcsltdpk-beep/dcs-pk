@@ -18,18 +18,17 @@ export default function FloatingActions({
 
   useEffect(() => {
     let ticking = false;
+    let isVisible = false;
+
     const handleScroll = () => {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        const shouldShow = scrollY > 280;
-        setShowScrollTop((prev) => (prev !== shouldShow ? shouldShow : prev));
-
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
-        const nearBottom = scrollY + windowHeight >= documentHeight - 600;
-        setIsNearBottom((prev) => (prev !== nearBottom ? nearBottom : prev));
+        const shouldShow = window.scrollY > 280;
+        if (shouldShow !== isVisible) {
+          isVisible = shouldShow;
+          setShowScrollTop(shouldShow);
+        }
         ticking = false;
       });
     };
@@ -37,8 +36,26 @@ export default function FloatingActions({
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
+    // Use passive IntersectionObserver on footer to avoid scroll height reflows
+    let footerObserver: IntersectionObserver | null = null;
+    try {
+      const footer = document.querySelector('footer.site-footer');
+      if (footer) {
+        footerObserver = new IntersectionObserver(
+          ([entry]) => {
+            setIsNearBottom(entry.isIntersecting);
+          },
+          { rootMargin: '200px 0px 0px 0px' }
+        );
+        footerObserver.observe(footer);
+      }
+    } catch {
+      // safe fallback
+    }
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      footerObserver?.disconnect();
     };
   }, []);
 

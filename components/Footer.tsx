@@ -1,6 +1,8 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { MapPin, Mail, Phone, MessageCircle, ArrowRight } from 'lucide-react';
+import { Mail, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa6';
 import FloatingActions from './FloatingActions';
 
@@ -16,19 +18,47 @@ interface FooterProps {
 export default function Footer({
   whatsappNumber = '923165478855',
   whatsappMessage = 'Hello Dream Cyber Security Pakistan, I have an inquiry.',
-  companyEmail = 'dcsltd.pk@gmail.com',
-  companyPhone = '0316 5478855',
+  companyEmail = 'info@dreamcybersecurity.pk',
+  companyPhone = '+92 316 5478855',
   companyAddress = 'Lahore, Pakistan',
-  services = [
-    { title: 'Web Design & Development', slug: 'web-design-development' },
-    { title: 'E-commerce Development', slug: 'ecommerce-development' },
-    { title: 'Cybersecurity Services', slug: 'cybersecurity-services' },
-    { title: 'AI Automation & Chatbots', slug: 'ai-automation-chatbot-development' },
-    { title: 'Video Editing & Motion', slug: 'video-editing-motion-graphics' },
-    { title: 'Software Development', slug: 'software-application-development' },
-  ],
 }: FooterProps) {
-  const encodedMsg = encodeURIComponent(whatsappMessage);
+  // Newsletter subscription state
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes('@')) {
+      setStatus('error');
+      setMessage('Please enter a valid corporate or personal email address.');
+      return;
+    }
+
+    try {
+      setStatus('loading');
+      setMessage('');
+
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Subscription failed.');
+      }
+
+      setStatus('success');
+      setMessage(data.message || 'Thank you for subscribing to our intelligence briefings!');
+      setEmail('');
+    } catch (err: any) {
+      setStatus('error');
+      setMessage(err.message || 'Unable to subscribe right now. Please try again.');
+    }
+  };
 
   return (
     <>
@@ -41,163 +71,234 @@ export default function Footer({
       {/* Main Site Footer */}
       <footer className="site-footer">
         <div className="container">
+          {/* ========================================================
+              NEWSLETTER SECTION
+              ======================================================== */}
+          <div className="footer-newsletter-wrap">
+            <div className="footer-newsletter-grid">
+              <div className="footer-newsletter-info">
+                <span className="footer-newsletter-tag">
+                  <i /> NEWSLETTER &amp; BRIEFINGS
+                </span>
+                <h3 className="footer-newsletter-heading">
+                  Stay Ahead with Enterprise Intelligence
+                </h3>
+                <p className="footer-newsletter-sub">
+                  Subscribe to receive weekly cybersecurity bulletins, zero-trust engineering insights, and professional academy updates.
+                </p>
+              </div>
+
+              <div className="footer-newsletter-form-col">
+                <form className="footer-newsletter-form" onSubmit={handleSubscribe}>
+                  <div className="footer-newsletter-input-box">
+                    <Mail size={18} className="footer-newsletter-icon" />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter corporate email address..."
+                      required
+                      disabled={status === 'loading'}
+                    />
+                    <button
+                      type="submit"
+                      className="footer-newsletter-btn"
+                      disabled={status === 'loading'}
+                    >
+                      <span>{status === 'loading' ? 'Joining...' : 'Subscribe'}</span>
+                      <ArrowRight size={15} />
+                    </button>
+                  </div>
+                  {message && (
+                    <div className={`footer-newsletter-status ${status}`}>
+                      {status === 'success' ? (
+                        <CheckCircle2 size={15} />
+                      ) : (
+                        <AlertCircle size={15} />
+                      )}
+                      <span>{message}</span>
+                    </div>
+                  )}
+                </form>
+              </div>
+            </div>
+          </div>
+
+          {/* ========================================================
+              MAIN 4-COLUMN FOOTER (Matching Mockup Exactly)
+              ======================================================== */}
           <div className="footer-main-grid">
-            {/* Col 1: About Firm */}
+            {/* Column 1: Brand & Socials */}
             <div className="footer-col footer-col-brand">
-              <div className="brand-logo footer-brand-logo">
+              <Link href="/" className="footer-brand-header">
                 <img
                   src="/logo.png"
                   alt="Dream Cyber Security Pakistan"
-                  style={{ width: '38px', height: '38px', objectFit: 'contain', borderRadius: '50%' }}
+                  className="footer-brand-logo-img"
+                  width={42}
+                  height={42}
+                  style={{ objectFit: 'contain' }}
                 />
-                <div className="brand-text-wrap">
-                  <span className="brand-dream">DREAM</span>
-                  <span className="brand-cyber">CYBER</span>
-                  <span className="brand-security">SECURITY</span>
-                  <span className="brand-badge">Pakistan</span>
+                <div className="footer-brand-text">
+                  <span className="footer-brand-line1">DREAM CYBER</span>
+                  <span className="footer-brand-line2">
+                    SECURITY <small className="footer-brand-pill">PAKISTAN</small>
+                  </span>
                 </div>
-              </div>
+              </Link>
+
               <p className="footer-brand-desc">
-                Premier technology and security solutions provider in Pakistan, empowering modern enterprises and cultivating next-generation digital leaders.
+                Cyber Defense &amp; IT Solutions — enterprise cybersecurity, software engineering and digital growth.
               </p>
 
-              {/* Proper Lucide & Brand Social Media Icons */}
+              {/* 4 Brand Rounded Social Buttons */}
               <div className="footer-social-wrap">
                 <a
                   href="https://www.facebook.com/profile.php?id=61595891767697"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-social-btn"
-                  aria-label="Follow Dream Cyber Security on Facebook"
+                  aria-label="Facebook"
                   title="Facebook"
                 >
-                  <FaFacebookF size={16} />
+                  <FaFacebookF size={15} />
                 </a>
                 <a
                   href="https://www.instagram.com/dreamcybersecurityltd/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-social-btn"
-                  aria-label="Follow Dream Cyber Security on Instagram"
+                  aria-label="Instagram"
                   title="Instagram"
                 >
-                  <FaInstagram size={17} />
+                  <FaInstagram size={16} />
                 </a>
                 <a
                   href="https://www.linkedin.com/company/dream-cyber-security-ltd/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-social-btn"
-                  aria-label="Connect with Dream Cyber Security on LinkedIn"
+                  aria-label="LinkedIn"
                   title="LinkedIn"
                 >
-                  <FaLinkedinIn size={16} />
+                  <FaLinkedinIn size={15} />
                 </a>
                 <a
                   href={`https://wa.me/${whatsappNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-social-btn"
-                  aria-label="Chat with Dream Cyber Security on WhatsApp"
+                  aria-label="WhatsApp"
                   title="WhatsApp"
                 >
-                  <FaWhatsapp size={18} />
+                  <FaWhatsapp size={17} />
                 </a>
               </div>
             </div>
 
-            {/* Nav Columns Group: Services & Academy */}
-            <div className="footer-nav-columns">
-              {/* Col 2: Core Services */}
-              <div className="footer-col footer-col-services">
-                <h4 className="footer-heading">Corporate Services</h4>
-                <ul className="footer-link-list">
-                  {services.map((s) => (
-                    <li key={s.slug}>
-                      <Link href={`/services/${s.slug}`} className="footer-nav-link">
-                        <span className="footer-bullet">▸</span> {s.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Col 3: Academy Training */}
-              <div className="footer-col footer-col-academy">
-                <h4 className="footer-heading">Training Academy</h4>
-                <ul className="footer-link-list">
-                  <li>
-                    <Link href="/courses/ai-automation" className="footer-nav-link">
-                      <span className="footer-bullet">▸</span> AI Automation
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/courses/web-development" className="footer-nav-link">
-                      <span className="footer-bullet">▸</span> Web Engineering
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/courses/video-editing-graphic-design" className="footer-nav-link">
-                      <span className="footer-bullet">▸</span> Video & Design
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/courses/computer-basics" className="footer-nav-link">
-                      <span className="footer-bullet">▸</span> Computer Basics
-                    </Link>
-                  </li>
-                  <li style={{ marginTop: '0.35rem' }}>
-                    <Link href="/courses" className="footer-view-all-link">
-                      View All Courses <ArrowRight size={13} />
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+            {/* Column 2: Corporate Services */}
+            <div className="footer-col">
+              <h4 className="footer-heading">Corporate Services</h4>
+              <ul className="footer-link-list">
+                <li>
+                  <Link href="/services/cybersecurity-services" className="footer-nav-link">
+                    Cybersecurity
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services/web-design-development" className="footer-nav-link">
+                    Web Development
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services/ai-automation-chatbot-development" className="footer-nav-link">
+                    AI Automation
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services/software-application-development" className="footer-nav-link">
+                    Software &amp; Apps
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services" className="footer-nav-link">
+                    Digital Marketing
+                  </Link>
+                </li>
+              </ul>
             </div>
 
-            {/* Col 4: Contact & Location */}
-            <div className="footer-col footer-col-contact">
-              <h4 className="footer-heading">Headquarters & Desk</h4>
-              <ul className="footer-contact-list">
-                <li className="footer-contact-item">
-                  <span className="footer-contact-icon text-sky"><MapPin size={16} /></span>
-                  <span>{companyAddress}</span>
+            {/* Column 3: Training Academy */}
+            <div className="footer-col">
+              <h4 className="footer-heading">Training Academy</h4>
+              <ul className="footer-link-list">
+                <li>
+                  <Link href="/courses/ai-automation" className="footer-nav-link">
+                    AI Automation
+                  </Link>
                 </li>
-                <li className="footer-contact-item">
-                  <span className="footer-contact-icon text-sky"><Mail size={16} /></span>
-                  <a href={`mailto:${companyEmail}`}>{companyEmail}</a>
+                <li>
+                  <Link href="/courses/web-development" className="footer-nav-link">
+                    Web Engineering
+                  </Link>
                 </li>
-                <li className="footer-contact-item">
-                  <span className="footer-contact-icon text-sky"><Phone size={16} /></span>
-                  <a href={`tel:${companyPhone.replace(/\s+/g, '')}`}>{companyPhone}</a>
+                <li>
+                  <Link href="/courses/video-editing-graphic-design" className="footer-nav-link">
+                    Video &amp; Design
+                  </Link>
                 </li>
-                <li className="footer-contact-item footer-whatsapp-item">
-                  <span className="footer-contact-icon text-green" style={{ color: '#25d366' }}>
-                    {/* <MessageCircle size={16} /> */}
-                    <FaWhatsapp size={16} />
+                <li>
+                  <Link href="/courses/computer-basics" className="footer-nav-link">
+                    Computer Basics
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 4: Headquarters & Desk */}
+            <div className="footer-col">
+              <h4 className="footer-heading">Headquarters &amp; Desk</h4>
+              <ul className="footer-link-list footer-contact-links">
+                <li>
+                  <span className="footer-nav-plain">
+                    {companyAddress}
                   </span>
-                  <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
-                    {/* Official WhatsApp Desk */}
-                    +{whatsappNumber}
+                </li>
+                <li>
+                  <a href={`mailto:${companyEmail}`} className="footer-nav-link">
+                    {companyEmail}
+                  </a>
+                </li>
+                <li>
+                  <a href={`tel:${companyPhone.replace(/\s+/g, '')}`} className="footer-nav-link">
+                    {companyPhone}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={`https://wa.me/${whatsappNumber}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-nav-link footer-wa-desk"
+                  >
+                    WhatsApp Desk
                   </a>
                 </li>
               </ul>
             </div>
           </div>
 
-          {/* Footer Bottom */}
+          {/* ========================================================
+              FOOTER BOTTOM BAR
+              ======================================================== */}
           <div className="footer-bottom">
             <div className="footer-copyright">
-              &copy; {new Date().getFullYear()} Dream Cyber Security Pakistan. All Rights Reserved. Built to Enterprise Standards.
+              &copy; {new Date().getFullYear()} Dream Cyber Security Pakistan. All Rights Reserved.
             </div>
             <div className="footer-legal-links">
               <Link href="/privacy">Privacy Policy</Link>
-              <span className="footer-legal-sep">&bull;</span>
               <Link href="/terms">Terms of Service</Link>
-              <span className="footer-legal-sep">&bull;</span>
               <Link href="/faq">FAQ</Link>
-              <span className="footer-legal-sep">&bull;</span>
-              <Link href="/admin">Admin Portal</Link>
             </div>
           </div>
         </div>

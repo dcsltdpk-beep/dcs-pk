@@ -66,20 +66,22 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
 
     let payload = '';
     if (qrType === 'portal') {
-      // Per-member URL — unique QR for each team member
+      // Per-member URL — clean, short URL creates large bold blocks for instant 0.1s scanning
       payload = memberPublicUrl;
     } else if (qrType === 'vcard') {
-      // Clean, minimal vCard (No long bio essays, to keep QR code simple & fast to scan)
+      // Ultra-clean, minimal vCard (essential contact fields only for low density & instant scanning)
       payload = [
         'BEGIN:VCARD',
-        'VERSION:3.0',
+        'VERSION:2.1',
         `FN:${qrMember.name}`,
         'ORG:Dream Cyber Security',
         `TITLE:${qrMember.designation}`,
-        `EMAIL:${qrMember.email || 'dcsltd.pk@gmail.com'}`,
+        qrMember.email ? `EMAIL:${qrMember.email}` : '',
         `URL:${memberPublicUrl}`,
         'END:VCARD',
-      ].join('\n');
+      ]
+        .filter(Boolean)
+        .join('\n');
     } else {
       payload = qrMember.linkedin && qrMember.linkedin.startsWith('http') && qrMember.linkedin !== 'https://linkedin.com'
         ? qrMember.linkedin
@@ -87,13 +89,13 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
     }
 
     QRCode.toDataURL(payload, {
-      width: 260,
+      width: 300,
       margin: 1,
       color: {
         dark: '#000000',
         light: '#ffffff',
       },
-      errorCorrectionLevel: 'M',
+      errorCorrectionLevel: 'L',
     })
       .then((url) => setQrDataUrl(url))
       .catch((err) => console.error('QR code generation error:', err));
@@ -768,8 +770,8 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
             <div
               style={{
                 background: '#ffffff',
-                padding: '10px',
-                borderRadius: '10px',
+                padding: '12px',
+                borderRadius: '12px',
                 display: 'inline-block',
                 boxShadow: '0 6px 20px rgba(0, 0, 0, 0.4)',
                 marginBottom: '0.65rem',
@@ -780,10 +782,10 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                 <img
                   src={qrDataUrl}
                   alt={`QR Code for ${qrMember.name}`}
-                  style={{ width: '160px', height: '160px', display: 'block', imageRendering: 'pixelated' }}
+                  style={{ width: '180px', height: '180px', display: 'block', imageRendering: 'pixelated' }}
                 />
               ) : (
-                <div style={{ width: '160px', height: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '0.75rem' }}>
+                <div style={{ width: '180px', height: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '0.75rem' }}>
                   Generating QR...
                 </div>
               )}
