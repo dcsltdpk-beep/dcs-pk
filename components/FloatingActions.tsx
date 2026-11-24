@@ -17,25 +17,29 @@ export default function FloatingActions({
   const [isNearBottom, setIsNearBottom] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      // Show when scrolled down more than 280px
-      setShowScrollTop(scrollY > 280);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const shouldShow = scrollY > 280;
+        setShowScrollTop((prev) => (prev !== shouldShow ? shouldShow : prev));
 
-      // Check if near bottom of page (within 600px of page bottom)
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      if (scrollY + windowHeight >= documentHeight - 600) {
-        setIsNearBottom(true);
-      } else {
-        setIsNearBottom(false);
-      }
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const nearBottom = scrollY + windowHeight >= documentHeight - 600;
+        setIsNearBottom((prev) => (prev !== nearBottom ? nearBottom : prev));
+        ticking = false;
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const scrollToTop = () => {

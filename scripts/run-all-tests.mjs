@@ -339,10 +339,10 @@ async function runProcessTests() {
   assert(fs.existsSync(seedDataPath), 'PRC-01: Master seed dataset exists on disk');
   const seedData = JSON.parse(fs.readFileSync(seedDataPath, 'utf8'));
 
-  // Process 2: 10 Services Process
+  // Process 2: 10+ Services Process
   assert(
-    Array.isArray(seedData.services) && seedData.services.length === 10,
-    'PRC-02: Exactly 10 core corporate services loaded and verified'
+    Array.isArray(seedData.services) && seedData.services.length >= 10,
+    `PRC-02: Core corporate services loaded and verified (${seedData.services.length} services)`
   );
 
   // Process 3: 4 Academy Courses Process

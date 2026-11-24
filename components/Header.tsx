@@ -34,7 +34,8 @@ interface HeaderProps {
 }
 
 export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: HeaderProps) {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const pathname = rawPathname || '';
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);

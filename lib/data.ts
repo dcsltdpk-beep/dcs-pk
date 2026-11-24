@@ -10,6 +10,24 @@ import { Faq } from './models/Faq';
 import { LandingPage } from './models/LandingPage';
 import seedData from '@/database/seed-data.json';
 
+// Helper to guarantee plain objects are passed across Server/Client boundary
+function toPlain<T>(data: T): T {
+  if (!data) return data;
+  return JSON.parse(
+    JSON.stringify(data, (key, value) => {
+      if (value && typeof value === 'object') {
+        if (value._bsontype === 'ObjectID' || value._bsontype === 'ObjectId' || (value.type === 'Buffer' && Array.isArray(value.data))) {
+          return value.toString ? value.toString() : '';
+        }
+        if (key === '_id' && typeof value === 'object') {
+          return value.toString ? value.toString() : String(value);
+        }
+      }
+      return value;
+    })
+  );
+}
+
 export async function getSettings(): Promise<Record<string, string>> {
   try {
     const conn = await connectDB();
@@ -20,13 +38,13 @@ export async function getSettings(): Promise<Record<string, string>> {
         dbSettings.forEach((s) => {
           map[s.key_name] = s.key_value || '';
         });
-        return map;
+        return toPlain(map);
       }
     }
   } catch (err) {
     console.warn('Using fallback settings:', err);
   }
-  return seedData.settings as Record<string, string>;
+  return toPlain(seedData.settings as Record<string, string>);
 }
 
 export async function getServices(): Promise<any[]> {
@@ -34,12 +52,12 @@ export async function getServices(): Promise<any[]> {
     const conn = await connectDB();
     if (conn) {
       const items = await Service.find({ status: 'active' }).sort({ order_num: 1 }).lean();
-      if (items && items.length > 0) return items;
+      if (items && items.length > 0) return toPlain(items);
     }
   } catch (err) {
     console.warn('Using fallback services');
   }
-  return seedData.services;
+  return toPlain(seedData.services);
 }
 
 const SERVICE_ALIASES: Record<string, string> = {
@@ -79,12 +97,12 @@ export async function getCourses(): Promise<any[]> {
     const conn = await connectDB();
     if (conn) {
       const items = await Course.find({ status: 'active' }).sort({ order_num: 1 }).lean();
-      if (items && items.length > 0) return items;
+      if (items && items.length > 0) return toPlain(items);
     }
   } catch (err) {
     console.warn('Using fallback courses');
   }
-  return seedData.courses;
+  return toPlain(seedData.courses);
 }
 
 export async function getCourseBySlug(slug: string): Promise<any | null> {
@@ -118,19 +136,23 @@ export async function getTeam(): Promise<any[]> {
     if (conn) {
       const items = await Team.find({}).sort({ order_num: 1 }).lean();
       if (items && items.length > 0) {
-        return items.map((m: any) => ({
-          ...m,
-          slug: m.slug || slugifyName(m.name),
-        }));
+        return toPlain(
+          items.map((m: any) => ({
+            ...m,
+            slug: m.slug || slugifyName(m.name),
+          }))
+        );
       }
     }
   } catch (err) {
     console.warn('Using fallback team');
   }
-  return (seedData.team as any[]).map((m: any) => ({
-    ...m,
-    slug: m.slug || slugifyName(m.name),
-  }));
+  return toPlain(
+    (seedData.team as any[]).map((m: any) => ({
+      ...m,
+      slug: m.slug || slugifyName(m.name),
+    }))
+  );
 }
 
 export async function getTeamMemberBySlug(slug: string): Promise<any | null> {
@@ -169,15 +191,15 @@ export async function getPortfolio(category?: string): Promise<any[]> {
     if (conn) {
       const query = category && category !== 'All' ? { category } : {};
       const items = await Portfolio.find(query).sort({ order_num: 1 }).lean();
-      if (items && items.length > 0) return items;
+      if (items && items.length > 0) return toPlain(items);
     }
   } catch (err) {
     console.warn('Using fallback portfolio');
   }
   if (category && category !== 'All') {
-    return seedData.portfolio.filter((p) => p.category === category);
+    return toPlain(seedData.portfolio.filter((p) => p.category === category));
   }
-  return seedData.portfolio;
+  return toPlain(seedData.portfolio);
 }
 
 export async function getVideos(category?: string): Promise<any[]> {
@@ -186,15 +208,15 @@ export async function getVideos(category?: string): Promise<any[]> {
     if (conn) {
       const query = category && category !== 'All' ? { category } : {};
       const items = await Video.find(query).sort({ order_num: 1 }).lean();
-      if (items && items.length > 0) return items;
+      if (items && items.length > 0) return toPlain(items);
     }
   } catch (err) {
     console.warn('Using fallback videos');
   }
   if (category && category !== 'All') {
-    return seedData.videos.filter((v) => v.category === category);
+    return toPlain(seedData.videos.filter((v) => v.category === category));
   }
-  return seedData.videos;
+  return toPlain(seedData.videos);
 }
 
 export async function getPosts(): Promise<any[]> {
@@ -202,12 +224,12 @@ export async function getPosts(): Promise<any[]> {
     const conn = await connectDB();
     if (conn) {
       const items = await Post.find({ is_published: true }).sort({ published_at: -1 }).lean();
-      if (items && items.length > 0) return items;
+      if (items && items.length > 0) return toPlain(items);
     }
   } catch (err) {
     console.warn('Using fallback posts');
   }
-  return seedData.posts;
+  return toPlain(seedData.posts);
 }
 
 export async function getPostBySlug(slug: string): Promise<any | null> {
@@ -215,12 +237,13 @@ export async function getPostBySlug(slug: string): Promise<any | null> {
     const conn = await connectDB();
     if (conn) {
       const item = await Post.findOne({ slug, is_published: true }).lean();
-      if (item) return item;
+      if (item) return toPlain(item);
     }
   } catch (err) {
     console.warn(`Using fallback post for slug: ${slug}`);
   }
-  return seedData.posts.find((p) => p.slug === slug) || null;
+  const fallback = seedData.posts.find((p) => p.slug === slug) || null;
+  return toPlain(fallback);
 }
 
 export async function getFaqs(category?: string): Promise<any[]> {
@@ -229,15 +252,15 @@ export async function getFaqs(category?: string): Promise<any[]> {
     if (conn) {
       const query = category && category !== 'All' ? { category } : {};
       const items = await Faq.find(query).sort({ order_num: 1 }).lean();
-      if (items && items.length > 0) return items;
+      if (items && items.length > 0) return toPlain(items);
     }
   } catch (err) {
     console.warn('Using fallback faqs');
   }
   if (category && category !== 'All') {
-    return seedData.faqs.filter((f) => f.category === category);
+    return toPlain(seedData.faqs.filter((f) => f.category === category));
   }
-  return seedData.faqs;
+  return toPlain(seedData.faqs);
 }
 
 export async function getLandingPageBySlug(slug: string): Promise<any | null> {
