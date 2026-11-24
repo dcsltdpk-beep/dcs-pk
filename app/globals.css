@@ -1267,6 +1267,7 @@ body.intro-active .stats-bar {
 
 html.intro-active .site-subsections,
 body.intro-active .site-subsections {
+  display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
   transform: translateY(40px) !important;
@@ -1285,6 +1286,7 @@ html.intro-active .site-footer,
 html.intro-active footer,
 body.intro-active .site-footer,
 body.intro-active footer {
+  display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;

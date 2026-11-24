@@ -94,6 +94,51 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <head>
+        {/* Instant pre-hydration script to guarantee ZERO flash of page content on reload */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var p = window.location.pathname;
+                  if (p === '/' || p === '') {
+                    document.documentElement.classList.add('intro-active');
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              html.intro-active, html.intro-active body {
+                overflow: hidden !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                background: #020617 !important;
+              }
+              html.intro-active header,
+              html.intro-active .site-header,
+              html.intro-active .hero-content-col,
+              html.intro-active .stats-bar,
+              html.intro-active .hero-banner-bottom-fade,
+              html.intro-active .floating-actions,
+              html.intro-active .floating-whatsapp,
+              html.intro-active .scroll-to-top-btn {
+                opacity: 0 !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+              }
+              html.intro-active .site-subsections,
+              html.intro-active footer,
+              html.intro-active .site-footer {
+                display: none !important;
+              }
+            `,
+          }}
+        />
+
         {/* Google Fonts: Cinzel (Display), Manrope (Text), JetBrains Mono (Technical) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
