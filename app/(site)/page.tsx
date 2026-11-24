@@ -7,6 +7,7 @@ import { FaWhatsapp } from 'react-icons/fa6';
 import { getSettings, getServices, getCourses, getPortfolio, getPosts } from '@/lib/data';
 import HeroGlobeExperience from '@/components/HeroGlobeExperience';
 import CyberServiceWheel from '@/components/CyberServiceWheel';
+import HomeCtaSection from '@/components/HomeCtaSection';
 
 export const revalidate = 60; // ISR cache
 
@@ -304,26 +305,27 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* CTA Banner */}
-        <section className="section" style={{ background: 'linear-gradient(135deg, rgba(251, 174, 68, 0.12) 0%, rgba(62, 56, 135, 0.25) 100%), #141133', borderTop: '1px solid var(--border-color)' }}>
-          <div className="container">
-            <div className="cta-banner-wrap">
-              <span className="badge badge-cyan" style={{ marginBottom: 'clamp(0.4rem, 0.8vh, 0.65rem)', display: 'inline-flex' }}>Get In Touch</span>
-              <h2 className="cta-banner-title">
-                Ready to Fortify Your Enterprise &amp; <span className="text-gradient">Innovate With AI?</span>
-              </h2>
-              <p className="cta-banner-desc">
-                Book a confidential cybersecurity evaluation or discuss your digital engineering roadmap with our certified team in Lahore.
-              </p>
-              <div className="cta-banner-actions">
-                <Link href="/contact" className="btn btn-primary cta-banner-btn">
-                  Schedule Security Audit
-                </Link>
-                <Link href="/courses" className="btn btn-outline cta-banner-btn">
-                  Explore Academy Courses
-                </Link>
-              </div>
-            </div>
+        {/* Ready to Fortify Your Enterprise & Innovate With AI? - Golden CTA Section */}
+        <section
+          className="section home-cta-section"
+          style={{
+            background: 'linear-gradient(135deg, rgba(251, 174, 68, 0.08) 0%, rgba(62, 56, 135, 0.2) 100%), #141133',
+            borderTop: '1px solid var(--border-color)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <div className="container" style={{ width: '100%', position: 'relative', zIndex: 2 }}>
+            <HomeCtaSection
+              whatsappNumber={settings.whatsapp_number || '923165478855'}
+              whatsappMessage={settings.whatsapp_message || 'Hello Dream Cyber Security Pakistan, I would like to inquire about your cybersecurity and enterprise IT services.'}
+              title="Ready to Fortify Your Enterprise & Innovate With AI?"
+              description="Book a confidential cybersecurity evaluation or discuss your digital engineering roadmap with our certified team in Lahore."
+              primaryBtnText="Schedule Security Audit"
+              primaryBtnLink="/contact?inquiry_type=security_audit"
+            />
           </div>
         </section>
       </div>
