@@ -70,8 +70,11 @@ const SERVICE_ALIASES: Record<string, string> = {
 const COURSE_ALIASES: Record<string, string> = {
   'ai-automation-agents': 'ai-automation',
   'video-editing': 'video-editing-graphic-design',
+  'video-design': 'video-editing-graphic-design',
   'graphic-design': 'video-editing-graphic-design',
   'web-dev': 'web-development',
+  'web': 'web-development',
+  'enterprise-web-dev': 'web-development',
   'computer-basics-office': 'computer-basics',
 };
 

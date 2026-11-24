@@ -655,10 +655,17 @@ export default function HeroGlobeExperience() {
       window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    forceSettleRef.current = true;
-    setIsSettled(true);
-    document.documentElement.classList.remove('intro-active');
-    document.body.classList.remove('intro-active');
+    if (prefersReducedMotion) {
+      forceSettleRef.current = true;
+      setIsSettled(true);
+      document.documentElement.classList.remove('intro-active');
+      document.body.classList.remove('intro-active');
+    } else {
+      forceSettleRef.current = false;
+      setIsSettled(false);
+      document.documentElement.classList.add('intro-active');
+      document.body.classList.add('intro-active');
+    }
 
     const logoImg = new Image();
     logoImg.src = '/logo.png';
@@ -719,8 +726,15 @@ export default function HeroGlobeExperience() {
       targetParallaxY = 0;
     };
 
+    const handleWindowScroll = () => {
+      if (!forceSettleRef.current && window.scrollY > 40) {
+        handleSkip();
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('scroll', handleWindowScroll, { passive: true });
 
     let initialized = false;
 
@@ -1718,6 +1732,7 @@ export default function HeroGlobeExperience() {
       window.removeEventListener('resize', setup);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('scroll', handleWindowScroll);
     };
   }, []);
 
