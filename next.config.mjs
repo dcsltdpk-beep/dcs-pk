@@ -4,6 +4,9 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   swcMinify: true,
+  experimental: {
+    serverComponentsExternalPackages: ['mongoose'],
+  },
   images: {
     unoptimized: true,
     remotePatterns: [
