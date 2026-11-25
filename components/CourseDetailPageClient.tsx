@@ -1263,19 +1263,6 @@ export default function CourseDetailPageClient({
           </div>
         </div>
       </section>
-
-      {/* ===================================================================
-          6. FLOATING WHATSAPP BUTTON
-          =================================================================== */}
-      <a
-        href={waLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="wa-float"
-        aria-label="Direct WhatsApp Inquiry"
-      >
-        <FaWhatsapp size={32} />
-      </a>
     </div>
   );
 }

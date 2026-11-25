@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { FaWhatsapp } from 'react-icons/fa6';
-import { ChevronUp } from 'lucide-react';
+import { ChevronUp, PhoneCall } from 'lucide-react';
 
 interface FloatingActionsProps {
   whatsappNumber?: string;
@@ -69,30 +70,44 @@ export default function FloatingActions({
   const encodedMsg = encodeURIComponent(whatsappMessage);
 
   return (
-    <div className="floating-actions-container" aria-label="Quick Actions">
-      {/* Floating WhatsApp Action Button */}
-      <a
-        href={`https://wa.me/${whatsappNumber}?text=${encodedMsg}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="floating-whatsapp"
-        aria-label="Chat on WhatsApp"
-        title="Chat with Dream Cyber Security on WhatsApp"
+    <>
+      {/* Vertical Contact Us Tab - Middle of Left Edge */}
+      <Link
+        href="/contact"
+        className="vertical-contact-tab"
+        aria-label="Contact Us"
+        title="Contact Dream Cyber Security Pakistan"
       >
-        <FaWhatsapp size={20} />
-        <span>WhatsApp Us</span>
-      </a>
+        <span className="v-pulse-dot" aria-hidden="true" />
+        <PhoneCall size={14} className="v-icon" aria-hidden="true" />
+        <span className="v-text">Contact Us</span>
+      </Link>
 
-      {/* Scroll Up Button - Positioned Below WhatsApp */}
-      <button
-        type="button"
-        onClick={scrollToTop}
-        className={`scroll-to-top-btn ${showScrollTop ? 'visible' : ''} ${isNearBottom ? 'near-bottom' : ''}`}
-        aria-label="Scroll back to top"
-        title="Scroll to top"
-      >
-        <ChevronUp size={22} strokeWidth={2.5} />
-      </button>
-    </div>
+      <div className="floating-actions-container" aria-label="Quick Actions">
+        {/* Floating WhatsApp Action Button */}
+        <a
+          href={`https://wa.me/${whatsappNumber}?text=${encodedMsg}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="floating-whatsapp"
+          aria-label="Chat on WhatsApp"
+          title="Chat with Dream Cyber Security on WhatsApp"
+        >
+          <FaWhatsapp size={20} />
+          <span>WhatsApp Us</span>
+        </a>
+
+        {/* Scroll Up Button - Positioned Below WhatsApp */}
+        <button
+          type="button"
+          onClick={scrollToTop}
+          className={`scroll-to-top-btn ${showScrollTop ? 'visible' : ''} ${isNearBottom ? 'near-bottom' : ''}`}
+          aria-label="Scroll back to top"
+          title="Scroll to top"
+        >
+          <ChevronUp size={22} strokeWidth={2.5} />
+        </button>
+      </div>
+    </>
   );
 }
