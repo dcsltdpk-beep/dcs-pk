@@ -12,7 +12,7 @@
     "site_tagline": "Technology. Creativity. Innovation.",
     "company_email": "dcsltd.pk@gmail.com",
     "company_phone": "0316 5478855",
-    "company_address": "Lahore, Pakistan",
+    "company_address": "Central Tower I, 90-B Hali Road, Block B, Gulberg II, Lahore-54660, Pakistan",
     "whatsapp_number": "923165478855",
     "whatsapp_message": "Hello Dream Cyber Security Pakistan, I would like to inquire about your services.",
     "facebook_url": "https://www.facebook.com/profile.php?id=61595891767697",
@@ -258,52 +258,79 @@
   ],
   "team": [
     {
-      "name": "Muhammad Shahriar",
-      "slug": "muhammad-shahriar",
-      "designation": "Chief Executive Officer (CEO)",
-      "bio": "Visionary technology leader with extensive background in cyber defense, enterprise IT architecture, and digital transformation initiatives.",
+      "name": "Ahmmad Hassan",
+      "slug": "ahmmad-hassan",
+      "designation": "Chief Executive Officer / Managing Director",
+      "department": "Leadership",
+      "initials": "AH",
+      "bio": "Leads Dream Cyber Security toward secure, resilient digital growth for businesses across Pakistan and the region.",
+      "quote": "Security is not a product we sell — it is a promise we keep to every client.",
       "photo": "",
       "linkedin": "https://linkedin.com",
       "twitter": "https://twitter.com",
       "github": "https://github.com",
-      "email": "dcsltd.pk@gmail.com",
+      "email": "info@dreamcybersecurity.pk",
       "order_num": 1
     },
     {
-      "name": "Hamza Ali",
-      "slug": "hamza-ali",
-      "designation": "Head of Cybersecurity & Threat Intelligence",
-      "bio": "CISSP certified security veteran specializing in proactive threat detection, vulnerability assessments, and enterprise zero-trust audits.",
+      "name": "Aqsa Irshad",
+      "slug": "aqsa-irshad",
+      "designation": "HR Manager",
+      "department": "People",
+      "initials": "AQ",
+      "bio": "Builds a skilled, motivated team and a productive, people-first workplace.",
+      "quote": "",
       "photo": "",
       "linkedin": "https://linkedin.com",
       "twitter": "https://twitter.com",
       "github": "https://github.com",
-      "email": "dcsltd.pk@gmail.com",
+      "email": "info@dreamcybersecurity.pk",
       "order_num": 2
     },
     {
-      "name": "Zainab Bukhari",
-      "slug": "zainab-bukhari",
-      "designation": "Director of Software Engineering",
-      "bio": "Over 9 years of architecting scalable cloud platforms, database optimization, and high-performance server architectures.",
+      "name": "Moeed Rizwan Farooq",
+      "slug": "moeed-rizwan-farooq",
+      "designation": "Senior AI & Automations Expert",
+      "department": "AI & Automation",
+      "initials": "MR",
+      "bio": "Builds automation that makes security operations smarter, faster and more efficient.",
+      "quote": "",
       "photo": "",
       "linkedin": "https://linkedin.com",
       "twitter": "https://twitter.com",
       "github": "https://github.com",
-      "email": "dcsltd.pk@gmail.com",
+      "email": "info@dreamcybersecurity.pk",
       "order_num": 3
     },
     {
-      "name": "Bilal Farooq",
-      "slug": "bilal-farooq",
-      "designation": "Lead AI & Automation Specialist",
-      "bio": "Expert in large language model pipelines, cognitive automation workflows, and machine learning integration for enterprise clients.",
+      "name": "Husnain Niaz",
+      "slug": "husnain-niaz",
+      "designation": "Senior Graphic Designer & Video Editor",
+      "department": "Creative",
+      "initials": "HN",
+      "bio": "Creates visuals and videos that bring the Dream Cyber Security brand to life.",
+      "quote": "",
       "photo": "",
       "linkedin": "https://linkedin.com",
       "twitter": "https://twitter.com",
       "github": "https://github.com",
-      "email": "dcsltd.pk@gmail.com",
+      "email": "info@dreamcybersecurity.pk",
       "order_num": 4
+    },
+    {
+      "name": "Rashid Ali",
+      "slug": "rashid-ali",
+      "designation": "Senior Full Stack Developer",
+      "department": "Engineering",
+      "initials": "RA",
+      "bio": "Builds secure, scalable software that protects clients and their data.",
+      "quote": "",
+      "photo": "",
+      "linkedin": "https://linkedin.com",
+      "twitter": "https://twitter.com",
+      "github": "https://github.com",
+      "email": "info@dreamcybersecurity.pk",
+      "order_num": 5
     }
   ],
   "portfolio": [
@@ -311,36 +338,56 @@
       "title": "National Cyber Defense Portal",
       "category": "Web Development",
       "client_name": "GovTech Security Initiative",
-      "cover_image": "",
+      "cover_image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1000&q=80",
       "video_url": "",
-      "description": "Secure, high-concurrency web portal engineered with fortified authentication, role-based authorization, and real-time security alerting.",
+      "description": "Secure, high-traffic web portal with hardened authentication, role-based access control and real-time security alerts.",
+      "tags": [
+        "Next.js",
+        "RBAC",
+        "Security Alerts"
+      ],
       "order_num": 1
     },
     {
       "title": "Corporate Threat Explainer 3D Reel",
       "category": "Video Editing",
       "client_name": "FinSecure Bank Ltd",
-      "cover_image": "",
-      "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      "description": "Cinematic 3D motion graphics showreel explaining modern ransomware attack vectors and organizational prevention protocols.",
+      "cover_image": "https://img.youtube.com/vi/inWWhr5tnEA/hqdefault.jpg",
+      "video_url": "inWWhr5tnEA",
+      "description": "3D motion-graphics showreel explaining modern ransomware attack methods and how organisations can prevent them.",
+      "tags": [
+        "3D Motion",
+        "After Effects",
+        "Explainer"
+      ],
       "order_num": 2
     },
     {
       "title": "Zero-Trust Identity Brand Kit",
       "category": "Graphic Design",
       "client_name": "Apex Cyber Defense",
-      "cover_image": "",
+      "cover_image": "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1000&q=80",
       "video_url": "",
-      "description": "Comprehensive corporate visual identity, including vector brand identity, typography, corporate stationary, and security badges.",
+      "description": "Corporate visual identity package — vector logo, typography, stationery and security badges.",
+      "tags": [
+        "Logo",
+        "Typography",
+        "Brand Kit"
+      ],
       "order_num": 3
     },
     {
       "title": "Autonomous Lead & SOC Intake Bot",
       "category": "AI Automation",
       "client_name": "Global Telecom Provider",
-      "cover_image": "",
+      "cover_image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1000&q=80",
       "video_url": "",
-      "description": "Multi-channel autonomous AI agent providing instant lead triaging, customer onboarding, and initial technical incident logging 24/7.",
+      "description": "Multi-channel AI agent that triages leads, onboards customers and logs initial technical incidents 24/7.",
+      "tags": [
+        "AI Agent",
+        "n8n",
+        "Multi-channel"
+      ],
       "order_num": 4
     }
   ],
@@ -348,80 +395,102 @@
     {
       "title": "Dream Cyber Security Corporate Overview 2026",
       "category": "Company Videos",
+      "client_name": "DCS Media",
+      "cover_image": "https://img.youtube.com/vi/inWWhr5tnEA/hqdefault.jpg",
       "video_type": "embed",
-      "video_source": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      "description": "An executive introduction to our mission, core cyber defense capabilities, and international technology standards.",
+      "video_source": "inWWhr5tnEA",
+      "description": "Executive introduction to our mission, cyber-defense capabilities and technology standards.",
       "order_num": 1
     },
     {
       "title": "Academy Showcase: AI Automation in Practice",
       "category": "Course Introduction Videos",
+      "client_name": "DCS Media",
+      "cover_image": "https://img.youtube.com/vi/CWxoDT05ED0/hqdefault.jpg",
       "video_type": "embed",
-      "video_source": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      "description": "Discover how our Academy trains professionals to deploy real-world enterprise automations and intelligent bots.",
+      "video_source": "CWxoDT05ED0",
+      "description": "How our Academy trains professionals to deploy enterprise automations and intelligent bots.",
       "order_num": 2
     },
     {
       "title": "Student Project: Cloud Incident Detection System",
-      "category": "Student Projects and Work",
+      "category": "Student Projects & Work",
+      "client_name": "DCS Media",
+      "cover_image": "https://img.youtube.com/vi/3Kq1MIfTWCE/hqdefault.jpg",
       "video_type": "embed",
-      "video_source": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      "description": "Demonstration of an automated anomaly detection script built by our web and security batch students.",
+      "video_source": "3Kq1MIfTWCE",
+      "description": "An automated anomaly-detection script built by our web & security batch students.",
       "order_num": 3
     },
     {
       "title": "Educational Guide: Defending Against Social Engineering",
-      "category": "Tutorials and Educational Videos",
+      "category": "Tutorials & Educational",
+      "client_name": "DCS Media",
+      "cover_image": "https://img.youtube.com/vi/hXSFdwIOfnE/hqdefault.jpg",
       "video_type": "embed",
-      "video_source": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      "description": "Essential guidelines and proactive measures for corporate teams to safeguard credentials against phishing.",
+      "video_source": "hXSFdwIOfnE",
+      "description": "Guidance for corporate teams on protecting credentials from phishing attacks.",
       "order_num": 4
     }
   ],
   "posts": [
     {
-      "title": "Dream Cyber Security Expands Operations Across Pakistan",
-      "slug": "dream-cyber-security-expands-pakistan",
-      "category": "Company News",
-      "tags": "expansion, cybersecurity, pakistan, technology",
-      "excerpt": "We are proud to announce the expansion of our enterprise cyber defense and technology consulting services to support growing businesses across Pakistan.",
-      "content": "<p>As digital adoption accelerates throughout Pakistan, the need for international-standard cyber resilience and dependable technology engineering has never been greater. Dream Cyber Security is expanding its enterprise consulting footprint to provide local organizations with world-class defenses against emerging threats.</p><p>Our dedicated team of certified engineers offers continuous monitoring, vulnerability assessments, and bespoke digital automation solutions tailored to corporate clients, financial institutions, and fast-growing enterprises.</p>",
-      "is_published": true
-    },
-    {
       "title": "Top 5 Cybersecurity Essentials Every Business Must Implement in 2026",
       "slug": "top-5-cybersecurity-essentials-2026",
       "category": "Cybersecurity Tips",
       "tags": "cyber hygiene, security tips, best practices",
-      "excerpt": "Discover the critical security controls and organizational hygiene required to protect your business against modern ransomware and data exfiltration.",
+      "excerpt": "The critical security controls and organisational hygiene every business needs to defend against ransomware and data exfiltration.",
       "content": "<p>In modern corporate networks, perimeter defense alone is no longer sufficient. Organizations must transition to a zero-trust model where every access request is verified and inspected.</p><p>Key steps include multi-factor authentication (MFA), strict role-based access control, automated offsite encrypted backups, continuous vulnerability scanning, and employee phishing awareness drills.</p>",
-      "is_published": true
+      "featured_image": "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1000&q=80",
+      "read_time": "6 min read",
+      "published_at": "2026-11-17T00:00:00.000Z",
+      "is_published": true,
+      "is_featured": true
+    },
+    {
+      "title": "Dream Cyber Security Expands Operations Across Pakistan",
+      "slug": "dream-cyber-security-expands-pakistan",
+      "category": "Company News",
+      "tags": "expansion, cybersecurity, pakistan, technology",
+      "excerpt": "We are expanding our enterprise cyber defense and technology consulting to support growing businesses across Pakistan.",
+      "content": "<p>As digital adoption accelerates throughout Pakistan, the need for international-standard cyber resilience and dependable technology engineering has never been greater. Dream Cyber Security is expanding its enterprise consulting footprint to provide local organizations with world-class defenses against emerging threats.</p><p>Our dedicated team of certified engineers offers continuous monitoring, vulnerability assessments, and bespoke digital automation solutions tailored to corporate clients, financial institutions, and fast-growing enterprises.</p>",
+      "featured_image": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&q=80",
+      "read_time": "3 min read",
+      "published_at": "2026-11-17T00:00:00.000Z",
+      "is_published": true,
+      "is_featured": false
     }
   ],
   "faqs": [
     {
-      "question": "What cybersecurity services does Dream Cyber Security provide in Pakistan?",
-      "answer": "We provide comprehensive vulnerability assessment and penetration testing (VAPT), zero-trust architecture hardening, ISO 27001 readiness, incident response, and continuous security audits for enterprise infrastructures.",
-      "category": "Services",
+      "question": "How quickly can your team respond to security inquiries or project requests?",
+      "answer": "Our team reviews every inquiry within 2–4 business hours. For urgent matters, use the WhatsApp button for faster help.",
+      "category": "General",
       "order_num": 1
     },
     {
-      "question": "Can we enroll or purchase courses directly online?",
-      "answer": "Our Academy section is strictly for showcase and informational purposes. We do not sell courses online or process online admissions. To inquire about curriculum, schedules, or corporate training, please click \"Contact for Details\" or message us via WhatsApp.",
-      "category": "Academy",
+      "question": "Where is Dream Cyber Security located?",
+      "answer": "Our headquarters is in Lahore, Pakistan, and we serve clients across Pakistan and the region.",
+      "category": "General",
       "order_num": 2
     },
     {
-      "question": "Do you provide custom software and web development?",
-      "answer": "Yes, we design and build bespoke enterprise web applications, corporate websites, custom CRM/ERP modules, and secure API architectures adhering to international performance and security standards.",
+      "question": "What cybersecurity services does Dream Cyber Security provide in Pakistan?",
+      "answer": "We offer vulnerability assessment and penetration testing, zero-trust hardening, ISO 27001 readiness, incident response and continuous security audits for enterprises.",
       "category": "Services",
       "order_num": 3
     },
     {
-      "question": "How quickly can your team respond to security inquiries or project requests?",
-      "answer": "Our team reviews all incoming inquiries within 2 to 4 business hours. For urgent inquiries, you can reach out directly via our official WhatsApp button for immediate assistance.",
-      "category": "General",
+      "question": "Do you provide custom software and web development?",
+      "answer": "Yes. We build custom enterprise web applications, corporate websites, CRM/ERP modules and secure APIs that meet international performance and security standards.",
+      "category": "Services",
       "order_num": 4
+    },
+    {
+      "question": "Can we enroll or purchase courses directly online?",
+      "answer": "The Academy section is for information only — courses can’t be bought or enrolled in online. For curriculum, schedules or corporate training, use “Contact for Details” or message us on WhatsApp.",
+      "category": "Academy",
+      "order_num": 5
     }
   ],
   "landingPages": [

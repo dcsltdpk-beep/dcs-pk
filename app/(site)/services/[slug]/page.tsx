@@ -11,7 +11,18 @@ interface Props {
 
 export async function generateStaticParams() {
   const services = await getServices();
-  return services.map((s) => ({ slug: s.slug }));
+  const dbSlugs = services.map((s) => ({ slug: s.slug }));
+  const aliasSlugs = [
+    'cybersecurity',
+    'web-development',
+    'software-development',
+    'cloud-devops',
+    'ai-automation',
+    'ecommerce',
+    'video-motion',
+    'graphic-design',
+  ].map((slug) => ({ slug }));
+  return [...dbSlugs, ...aliasSlugs];
 }
 
 export async function generateMetadata({ params }: Props) {

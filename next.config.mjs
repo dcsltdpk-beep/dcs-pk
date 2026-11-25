@@ -62,6 +62,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/academy',
+        destination: '/courses',
+        permanent: true,
+      },
+      {
         source: '/courses/computer-basics-office',
         destination: '/courses/computer-basics',
         permanent: true,

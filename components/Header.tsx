@@ -2,719 +2,1410 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import {
-  Home,
-  LayoutGrid,
-  ChevronDown,
-  Shield,
-  Code2,
-  Bot,
-  Video,
-  Palette,
-  ShoppingCart,
-  Layers,
-  Cloud,
-  GraduationCap,
-  Users,
-  Briefcase,
-  PlaySquare,
-  FileText,
-  HelpCircle,
-  ArrowRight,
-  Sparkles,
-  Menu,
-  X,
-  Phone,
-} from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa6';
 
 interface HeaderProps {
   siteName?: string;
+  whatsappNumber?: string;
 }
 
-export default function Header({ siteName = 'Dream Cyber Security Pakistan' }: HeaderProps) {
+export default function Header({
+  siteName = 'Dream Cyber Security Pakistan',
+  whatsappNumber = '923165478855',
+}: HeaderProps) {
   const rawPathname = usePathname();
   const pathname = rawPathname || '';
+
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
+  const [openDetails, setOpenDetails] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  const headerRef = useRef<HTMLElement | null>(null);
+  const barRef = useRef<HTMLDivElement | null>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Close menus on page navigation
+  // Sliding pill position
+  const [pillStyle, setPillStyle] = useState<{
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    opacity: number;
+  }>({ left: 0, top: 0, width: 0, height: 0, opacity: 0 });
+
+  // Small panels (Company, Insights) dynamic horizontal offset
+  const [smOffsets, setSmOffsets] = useState<{ company: number; insights: number }>({
+    company: 0,
+    insights: 0,
+  });
+
+  // Close menus on pathname change
   useEffect(() => {
     setActiveMenu(null);
     setMobileOpen(false);
+    setPillStyle((prev) => ({ ...prev, opacity: 0 }));
   }, [pathname]);
 
-  // Handle desktop mouse enter/leave with debounce
-  const handleMouseEnter = (menuName: string) => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-    setActiveMenu(menuName);
-  };
-
-  const handleMouseLeave = () => {
-    closeTimeoutRef.current = setTimeout(() => {
-      setActiveMenu(null);
-    }, 150);
-  };
-
-  const toggleMobileMenu = () => {
-    setMobileOpen((prev) => !prev);
-  };
-
-  const toggleMobileAccordion = (key: string) => {
-    setMobileAccordion((prev) => (prev === key ? null : key));
-  };
-
-  // Close dropdown on outside click
+  // Scroll shrink & progress line
   useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest('.nav-item-has-dropdown') && !target.closest('.mega-dropdown-menu')) {
-        setActiveMenu(null);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+      if (barRef.current) {
+        barRef.current.style.setProperty('--p', progress.toFixed(3));
+      }
+      if (headerRef.current) {
+        headerRef.current.style.setProperty('--p', progress.toFixed(3));
       }
     };
-    document.addEventListener('click', handleOutsideClick);
-    return () => document.removeEventListener('click', handleOutsideClick);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Click outside and Escape key handler
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setActiveMenu(null);
+        setMobileOpen(false);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveMenu(null);
+        setMobileOpen(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  // Helper to move sliding pill indicator
+  const movePill = (el: HTMLElement | null) => {
+    if (!el || !barRef.current) {
+      setPillStyle((prev) => ({ ...prev, opacity: 0 }));
+      return;
+    }
+    const r = el.getBoundingClientRect();
+    const h = barRef.current.getBoundingClientRect();
+    setPillStyle({
+      left: r.left - h.left,
+      top: r.top - h.top,
+      width: r.width,
+      height: r.height,
+      opacity: 1,
+    });
+  };
+
+  // Helper to position small mega panels under their trigger
+  const positionSmPanel = (btn: HTMLElement, menuKey: 'company' | 'insights') => {
+    if (!barRef.current) return;
+    const b = btn.getBoundingClientRect();
+    const h = barRef.current.getBoundingClientRect();
+    const w = 420;
+    const left = Math.min(Math.max(b.left - h.left + b.width / 2 - w / 2, 0), h.width - w);
+    setSmOffsets((prev) => ({ ...prev, [menuKey]: left }));
+  };
+
+  const handleTriggerMouseEnter = (e: React.MouseEvent<HTMLButtonElement>, menuKey: string) => {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    movePill(e.currentTarget);
+    if (menuKey === 'company' || menuKey === 'insights') {
+      positionSmPanel(e.currentTarget, menuKey);
+    }
+    setActiveMenu(menuKey);
+  };
+
+  const handleLinkMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    movePill(e.currentTarget);
+    closeTimeoutRef.current = setTimeout(() => {
+      setActiveMenu(null);
+    }, 120);
+  };
+
+  const handleBarMouseLeave = () => {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    closeTimeoutRef.current = setTimeout(() => {
+      setActiveMenu(null);
+      movePill(null);
+    }, 180);
+  };
+
+  const handleMegaMouseEnter = () => {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+  };
+
+  const handleTriggerClick = (e: React.MouseEvent<HTMLButtonElement>, menuKey: string) => {
+    e.preventDefault();
+    if (activeMenu === menuKey) {
+      setActiveMenu(null);
+    } else {
+      movePill(e.currentTarget);
+      if (menuKey === 'company' || menuKey === 'insights') {
+        positionSmPanel(e.currentTarget, menuKey);
+      }
+      setActiveMenu(menuKey);
+    }
+  };
+
+  // Active route checking
+  const isHome = pathname === '/';
+  const isServices = pathname.startsWith('/services');
+  const isAcademy = pathname.startsWith('/courses');
+  const isCompany = pathname === '/about' || pathname.startsWith('/team');
+  const isInsights =
+    pathname === '/portfolio' ||
+    pathname === '/videos' ||
+    pathname.startsWith('/blog') ||
+    pathname === '/faq';
+  const isContact = pathname === '/contact';
+
+  const isExactItem = (href: string) => {
+    const cleanPath = pathname.replace(/\/$/, '') || '/';
+    const cleanHref = href.split('?')[0].replace(/\/$/, '') || '/';
+    return cleanPath === cleanHref;
+  };
+
+  const itemStyle = (href: string) => {
+    return isExactItem(href) ? { background: '#fff7e8' } : undefined;
+  };
+
+  const waHref = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '') || '923165478855'}`;
+
   return (
-    <>
-      <header className="site-header">
-      <div className="container header-inner">
+    <header
+      ref={headerRef}
+      className={`dcs-header ${scrolled ? 'scrolled' : ''} ${mobileOpen ? 'menu-open' : ''}`}
+      id="dcsHeader"
+    >
+      <div ref={barRef} className="dcs-bar" onMouseLeave={handleBarMouseLeave}>
+        {/* Sliding hover pill indicator */}
+        <span
+          className="dcs-pill"
+          aria-hidden="true"
+          style={{
+            left: `${pillStyle.left}px`,
+            top: `${pillStyle.top}px`,
+            width: `${pillStyle.width}px`,
+            height: `${pillStyle.height}px`,
+            opacity: pillStyle.opacity,
+          }}
+        />
+
         {/* Brand Logo */}
-        <Link href="/" className="brand-logo" aria-label={siteName}>
-          <Image
+        <Link
+          href="/"
+          className="dcs-logo"
+          aria-label={`${siteName} — Home`}
+          onClick={() => setMobileOpen(false)}
+        >
+          <img
             src="/logo.png"
             alt={siteName}
-            width={38}
-            height={38}
-            style={{ width: '38px', height: '38px', objectFit: 'contain', borderRadius: '50%' }}
-            priority
+            width={42}
+            height={42}
           />
-          <div className="brand-text-wrap">
-            <span className="brand-dream">DREAM</span>
-            <span className="brand-cyber">CYBER</span>
-            <span className="brand-security">SECURITY</span>
-            <span className="brand-badge">Pakistan</span>
-          </div>
+          <span>
+            <b>DREAM CYBER SECURITY</b>
+            <small>PAKISTAN</small>
+          </span>
         </Link>
 
-        {/* Desktop Navigation with Mega Menus */}
-        <nav className="desktop-nav" aria-label="Main Navigation">
-          <ul className="nav-menu">
-            {/* 1. Home */}
-            <li className="nav-item">
-              <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`}>
-                Home
-              </Link>
-            </li>
-
-            {/* 2. Services Mega Menu */}
-            <li
-              className="nav-item nav-item-has-dropdown nav-item-mega"
-              onMouseEnter={() => handleMouseEnter('services')}
-              onMouseLeave={handleMouseLeave}
+        {/* Desktop Main Navigation */}
+        <ul className="dcs-nav" role="menubar">
+          {/* HOME */}
+          <li role="none">
+            <Link
+              href="/"
+              role="menuitem"
+              className={`dcs-link ${isHome ? 'current' : ''}`}
+              onMouseEnter={handleLinkMouseEnter}
+              onFocus={(e) => movePill(e.currentTarget)}
             >
-              <button
-                type="button"
-                className={`nav-link dropdown-trigger ${pathname.startsWith('/services') || activeMenu === 'services' ? 'active' : ''}`}
-                onClick={() => setActiveMenu(activeMenu === 'services' ? null : 'services')}
-                aria-expanded={activeMenu === 'services'}
-              >
-                <span>Services</span>
-                <ChevronDown className={`chevron-icon ${activeMenu === 'services' ? 'rotated' : ''}`} size={14} />
-              </button>
+              Home
+            </Link>
+          </li>
 
-              {/* Mega Dropdown Panel */}
-              {activeMenu === 'services' && (
-                <div
-                  className="mega-dropdown-menu mega-services"
-                  onMouseEnter={() => handleMouseEnter('services')}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <div className="mega-grid-3">
-                    {/* Col 1: Tech & Cyber Defense */}
-                    <div className="mega-col">
-                      <div className="mega-col-heading">Cyber Defense & Engineering</div>
-                      <div className="mega-links-list">
-                        <Link href="/services/cybersecurity-services" className="mega-item">
-                          <div className="mega-icon-box">
-                            <Shield size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">Cybersecurity Services</div>
-                            <div className="mega-desc">VAPT, SOC monitoring & hardened defense</div>
-                          </div>
-                        </Link>
-
-                        <Link href="/services/web-design-development" className="mega-item">
-                          <div className="mega-icon-box">
-                            <Code2 size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">Web Design & Development</div>
-                            <div className="mega-desc">High-performance secure web systems</div>
-                          </div>
-                        </Link>
-
-                        <Link href="/services/software-application-development" className="mega-item">
-                          <div className="mega-icon-box">
-                            <Layers size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">Software & App Development</div>
-                            <div className="mega-desc">Bespoke enterprise software & APIs</div>
-                          </div>
-                        </Link>
-
-                        <Link href="/services/cloud-devops-solutions" className="mega-item">
-                          <div className="mega-icon-box">
-                            <Cloud size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">Cloud & DevOps Solutions</div>
-                            <div className="mega-desc">Zero-trust architecture & CI/CD</div>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Col 2: AI, Commerce & Creative */}
-                    <div className="mega-col">
-                      <div className="mega-col-heading">Automation & Creative</div>
-                      <div className="mega-links-list">
-                        <Link href="/services/ai-automation-chatbot-development" className="mega-item">
-                          <div className="mega-icon-box">
-                            <Bot size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">AI Automation & Chatbots</div>
-                            <div className="mega-desc">LLM agents & autonomous workflows</div>
-                          </div>
-                        </Link>
-
-                        <Link href="/services/ecommerce-development" className="mega-item">
-                          <div className="mega-icon-box">
-                            <ShoppingCart size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">E-Commerce Development</div>
-                            <div className="mega-desc">High-conversion scalable online stores</div>
-                          </div>
-                        </Link>
-
-                        <Link href="/services/video-editing-motion-graphics" className="mega-item">
-                          <div className="mega-icon-box">
-                            <Video size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">Video & Motion Graphics</div>
-                            <div className="mega-desc">Cinematic post-production & reels</div>
-                          </div>
-                        </Link>
-
-                        <Link href="/services/graphic-design-branding" className="mega-item">
-                          <div className="mega-icon-box">
-                            <Palette size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">Graphic Design & Branding</div>
-                            <div className="mega-desc">Visual identities & modern UI/UX</div>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Col 3: Featured Launch Package Strip (matches dcs-card) */}
-                    <div className="mega-col mega-featured-card">
-                      <div className="featured-badge">
-                        <Sparkles size={12} /> ALL-IN-ONE SOLUTION
-                      </div>
-                      <h4 className="featured-title">Business Startup Package</h4>
-                      <p className="featured-desc">
-                        Complete launch suite for ambitious startups: Branding, Logo, Web, Socials & Promo Video.
-                      </p>
-                      <div className="featured-tags">
-                        <span>Branding</span>
-                        <span>Website</span>
-                        <span>SEO</span>
-                        <span>Security</span>
-                      </div>
-                      <Link href="/services" className="featured-cta-link">
-                        Explore All 10 Services <ArrowRight size={14} />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </li>
-
-            {/* 3. Academy Mega Menu */}
-            <li
-              className="nav-item nav-item-has-dropdown nav-item-mega"
-              onMouseEnter={() => handleMouseEnter('academy')}
-              onMouseLeave={handleMouseLeave}
+          {/* SERVICES */}
+          <li role="none">
+            <button
+              type="button"
+              className={`dcs-link ${isServices ? 'current' : ''}`}
+              aria-expanded={activeMenu === 'services'}
+              aria-controls="m-services"
+              onMouseEnter={(e) => handleTriggerMouseEnter(e, 'services')}
+              onClick={(e) => handleTriggerClick(e, 'services')}
+              onFocus={(e) => movePill(e.currentTarget)}
             >
-              <button
-                type="button"
-                className={`nav-link dropdown-trigger ${pathname.startsWith('/courses') || activeMenu === 'academy' ? 'active' : ''}`}
-                onClick={() => setActiveMenu(activeMenu === 'academy' ? null : 'academy')}
-                aria-expanded={activeMenu === 'academy'}
-              >
-                <span>Academy</span>
-                <ChevronDown className={`chevron-icon ${activeMenu === 'academy' ? 'rotated' : ''}`} size={14} />
-              </button>
+              Services
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
 
-              {activeMenu === 'academy' && (
-                <div
-                  className="mega-dropdown-menu mega-academy"
-                  onMouseEnter={() => handleMouseEnter('academy')}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <div className="mega-grid-3">
-                    {/* Programs Col 1 */}
-                    <div className="mega-col">
-                      <div className="mega-col-heading">Specialized Engineering</div>
-                      <div className="mega-links-list">
-                        <Link href="/courses/ai-automation" className="mega-item">
-                          <div className="mega-icon-box">
-                            <Bot size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">
-                              AI Automation & Agents <span className="mini-badge-gold">HOT</span>
-                            </div>
-                            <div className="mega-desc">LLM workflows, agents & n8n (10 Weeks)</div>
-                          </div>
-                        </Link>
-
-                        <Link href="/courses/web-development" className="mega-item">
-                          <div className="mega-icon-box">
-                            <Code2 size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">
-                              Enterprise Web Dev <span className="mini-badge-blue">CAREER</span>
-                            </div>
-                            <div className="mega-desc">Full-stack React, Next.js & APIs (14 Weeks)</div>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Programs Col 2 */}
-                    <div className="mega-col">
-                      <div className="mega-col-heading">Creative & Foundations</div>
-                      <div className="mega-links-list">
-                        <Link href="/courses/video-editing-graphic-design" className="mega-item">
-                          <div className="mega-icon-box">
-                            <Video size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">Video Editing & Design</div>
-                            <div className="mega-desc">Premiere Pro, After Effects & 3D (8 Weeks)</div>
-                          </div>
-                        </Link>
-
-                        <Link href="/courses/computer-basics" className="mega-item">
-                          <div className="mega-icon-box">
-                            <GraduationCap size={18} />
-                          </div>
-                          <div>
-                            <div className="mega-title">Computer Basics & Office</div>
-                            <div className="mega-desc">Digital literacy & cyber hygiene (6 Weeks)</div>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Academy Spotlight Banner */}
-                    <div className="mega-col mega-featured-card">
-                      <div className="featured-badge">
-                        <GraduationCap size={12} /> DCS SKILL ACADEMY
-                      </div>
-                      <h4 className="featured-title">Learn & Earn Guarantee</h4>
-                      <p className="featured-desc">
-                        Hands-on corporate labs, certified professional mentors, verified diploma & direct internship access.
-                      </p>
-                      <Link href="/courses" className="featured-cta-link">
-                        View All Programs <ArrowRight size={14} />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </li>
-
-            {/* 4. Company Dropdown */}
-            <li
-              className="nav-item nav-item-has-dropdown"
-              onMouseEnter={() => handleMouseEnter('company')}
-              onMouseLeave={handleMouseLeave}
+            <div
+              className={`dcs-mega ${activeMenu === 'services' ? 'open' : ''}`}
+              id="m-services"
+              onMouseEnter={handleMegaMouseEnter}
             >
-              <button
-                type="button"
-                className={`nav-link dropdown-trigger ${pathname === '/about' || pathname === '/team' || activeMenu === 'company' ? 'active' : ''}`}
-                onClick={() => setActiveMenu(activeMenu === 'company' ? null : 'company')}
-                aria-expanded={activeMenu === 'company'}
-              >
-                <span>Company</span>
-                <ChevronDown className={`chevron-icon ${activeMenu === 'company' ? 'rotated' : ''}`} size={14} />
-              </button>
+              <div className="dcs-panel dcs-cols-3">
+                {/* Col 1 */}
+                <div className="dcs-col">
+                  <h6>Cyber Defense &amp; Engineering</h6>
+                  <Link
+                    className="dcs-item"
+                    href="/services/cybersecurity"
+                    style={itemStyle('/services/cybersecurity')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Cybersecurity Services</b>
+                      <span>VAPT, SOC monitoring &amp; hardened defense</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
 
-              {activeMenu === 'company' && (
-                <div
-                  className="mega-dropdown-menu simple-dropdown"
-                  onMouseEnter={() => handleMouseEnter('company')}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <div className="mega-links-list">
-                    <Link href="/about" className="mega-item">
-                      <div className="mega-icon-box">
-                        <Shield size={18} />
-                      </div>
-                      <div>
-                        <div className="mega-title">About Our Firm</div>
-                        <div className="mega-desc">Our mission, security standards & leadership</div>
-                      </div>
-                    </Link>
+                  <Link
+                    className="dcs-item"
+                    href="/services/web-development"
+                    style={itemStyle('/services/web-development')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="m8 9-4 3 4 3M16 9l4 3-4 3M13 6l-2 12" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Web Design &amp; Development</b>
+                      <span>High-performance secure web systems</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
 
-                    <Link href="/team" className="mega-item">
-                      <div className="mega-icon-box">
-                        <Users size={18} />
-                      </div>
-                      <div>
-                        <div className="mega-title">Leadership & Team</div>
-                        <div className="mega-desc">Certified cybersecurity architects & engineers</div>
-                      </div>
-                    </Link>
-                  </div>
+                  <Link
+                    className="dcs-item"
+                    href="/services/software-development"
+                    style={itemStyle('/services/software-development')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="m12 2 10 5-10 5L2 7z" />
+                        <path d="m2 17 10 5 10-5M2 12l10 5 10-5" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Software &amp; App Development</b>
+                      <span>Bespoke enterprise software &amp; APIs</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+
+                  <Link
+                    className="dcs-item"
+                    href="/services/cloud-devops"
+                    style={itemStyle('/services/cloud-devops')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M17.5 19H8a6 6 0 1 1 5.7-8H15a4.5 4.5 0 0 1 2.5 8z" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Cloud &amp; DevOps Solutions</b>
+                      <span>Zero-trust architecture &amp; CI/CD</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
                 </div>
-              )}
-            </li>
 
-            {/* 5. Showcase & Insights Dropdown */}
-            <li
-              className="nav-item nav-item-has-dropdown"
-              onMouseEnter={() => handleMouseEnter('insights')}
-              onMouseLeave={handleMouseLeave}
+                {/* Col 2 */}
+                <div className="dcs-col">
+                  <h6>Automation &amp; Creative</h6>
+                  <Link
+                    className="dcs-item"
+                    href="/services/ai-automation"
+                    style={itemStyle('/services/ai-automation')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <rect x="4" y="8" width="16" height="12" rx="3" />
+                        <path d="M12 8V4M9 13v1M15 13v1M2 14h2M20 14h2" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>AI Automation &amp; Chatbots</b>
+                      <span>LLM agents &amp; autonomous workflows</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+
+                  <Link
+                    className="dcs-item"
+                    href="/services/ecommerce"
+                    style={itemStyle('/services/ecommerce')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <circle cx="9" cy="20" r="1.5" />
+                        <circle cx="18" cy="20" r="1.5" />
+                        <path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L21 7H6" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>E-Commerce Development</b>
+                      <span>High-conversion scalable online stores</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+
+                  <Link
+                    className="dcs-item"
+                    href="/services/video-motion"
+                    style={itemStyle('/services/video-motion')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <rect x="2" y="6" width="14" height="12" rx="2" />
+                        <path d="m16 10 6-3v10l-6-3" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Video &amp; Motion Graphics</b>
+                      <span>Cinematic post-production &amp; reels</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+
+                  <Link
+                    className="dcs-item"
+                    href="/services/graphic-design"
+                    style={itemStyle('/services/graphic-design')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <circle cx="13.5" cy="6.5" r="1" />
+                        <circle cx="17.5" cy="10.5" r="1" />
+                        <circle cx="8.5" cy="7.5" r="1" />
+                        <circle cx="6.5" cy="12.5" r="1" />
+                        <path d="M12 2a10 10 0 0 0 0 20c1 0 1.7-.8 1.7-1.7 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.9.8-1.7 1.7-1.7h2A5.6 5.6 0 0 0 22 13.9C22 7.3 17.5 2 12 2z" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Graphic Design &amp; Branding</b>
+                      <span>Visual identities &amp; modern UI/UX</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+                </div>
+
+                {/* Promo Card */}
+                <div className="dcs-promo">
+                  <span className="lbl">✦ All-in-one solution</span>
+                  <h5>Business Startup Package</h5>
+                  <p>Everything needed to launch securely: brand, web, cloud &amp; compliance in 21 days.</p>
+                  <div className="chips">
+                    <span>Branding</span>
+                    <span>Fast Web</span>
+                    <span>Domain/SSL</span>
+                    <span>Cloud Setup</span>
+                    <span>Audit</span>
+                  </div>
+                  <Link className="go" href="/contact?type=quote&service=startup-package">
+                    Claim startup package
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M7 17 17 7M8 7h9v9" />
+                    </svg>
+                  </Link>
+                </div>
+
+                {/* Panel Footer Strip */}
+                <div className="dcs-strip">
+                  <span>
+                    <b>Not sure what you need?</b> Our consultants reply within 2–4 business hours.
+                  </span>
+                  <Link href="/services">
+                    Explore all services
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          {/* ACADEMY */}
+          <li role="none">
+            <button
+              type="button"
+              className={`dcs-link ${isAcademy ? 'current' : ''}`}
+              aria-expanded={activeMenu === 'academy'}
+              aria-controls="m-academy"
+              onMouseEnter={(e) => handleTriggerMouseEnter(e, 'academy')}
+              onClick={(e) => handleTriggerClick(e, 'academy')}
+              onFocus={(e) => movePill(e.currentTarget)}
             >
-              <button
-                type="button"
-                className={`nav-link dropdown-trigger ${pathname === '/portfolio' || pathname === '/videos' || pathname === '/blog' || pathname === '/faq' || activeMenu === 'insights' ? 'active' : ''}`}
-                onClick={() => setActiveMenu(activeMenu === 'insights' ? null : 'insights')}
-                aria-expanded={activeMenu === 'insights'}
-              >
-                <span>Insights</span>
-                <ChevronDown className={`chevron-icon ${activeMenu === 'insights' ? 'rotated' : ''}`} size={14} />
-              </button>
+              Academy
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
 
-              {activeMenu === 'insights' && (
-                <div
-                  className="mega-dropdown-menu simple-dropdown insights-dropdown"
-                  onMouseEnter={() => handleMouseEnter('insights')}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <div className="mega-links-list">
-                    <Link href="/portfolio" className="mega-item">
-                      <div className="mega-icon-box">
-                        <Briefcase size={18} />
-                      </div>
-                      <div>
-                        <div className="mega-title">Delivered Portfolio</div>
-                        <div className="mega-desc">Real-world enterprise client case studies</div>
-                      </div>
-                    </Link>
+            <div
+              className={`dcs-mega ${activeMenu === 'academy' ? 'open' : ''}`}
+              id="m-academy"
+              onMouseEnter={handleMegaMouseEnter}
+            >
+              <div className="dcs-panel dcs-cols-3">
+                {/* Col 1 */}
+                <div className="dcs-col">
+                  <h6>Specialized Engineering</h6>
+                  <Link
+                    className="dcs-item"
+                    href="/courses/ai-automation"
+                    style={itemStyle('/courses/ai-automation')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <rect x="4" y="8" width="16" height="12" rx="3" />
+                        <path d="M12 8V4M9 13v1M15 13v1M2 14h2M20 14h2" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>
+                        AI Automation &amp; Agents <em className="tag-hot">HOT</em>
+                      </b>
+                      <span>LLM workflows, agents &amp; n8n</span>
+                      <span>
+                        <em className="tag-wk">10 WEEKS</em>
+                      </span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
 
-                    <Link href="/videos" className="mega-item">
-                      <div className="mega-icon-box">
-                        <PlaySquare size={18} />
-                      </div>
-                      <div>
-                        <div className="mega-title">Video Gallery</div>
-                        <div className="mega-desc">Tech showreels, demonstrations & demos</div>
-                      </div>
-                    </Link>
-
-                    <Link href="/blog" className="mega-item">
-                      <div className="mega-icon-box">
-                        <FileText size={18} />
-                      </div>
-                      <div>
-                        <div className="mega-title">Threat Advisories & Blog</div>
-                        <div className="mega-desc">Latest cybersecurity insights & updates</div>
-                      </div>
-                    </Link>
-
-                    <Link href="/faq" className="mega-item">
-                      <div className="mega-icon-box">
-                        <HelpCircle size={18} />
-                      </div>
-                      <div>
-                        <div className="mega-title">Knowledgebase & FAQ</div>
-                        <div className="mega-desc">Answers to common corporate questions</div>
-                      </div>
-                    </Link>
-                  </div>
+                  <Link
+                    className="dcs-item"
+                    href="/courses/web-development"
+                    style={itemStyle('/courses/web-development')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="m8 9-4 3 4 3M16 9l4 3-4 3M13 6l-2 12" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>
+                        Enterprise Web Dev <em className="tag-career">CAREER</em>
+                      </b>
+                      <span>Full-stack React, Next.js &amp; APIs</span>
+                      <span>
+                        <em className="tag-wk">14 WEEKS</em>
+                      </span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
                 </div>
-              )}
-            </li>
 
-            {/* 6. Contact */}
-            <li className="nav-item">
-              <Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}>
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
+                {/* Col 2 */}
+                <div className="dcs-col">
+                  <h6>Creative &amp; Foundations</h6>
+                  <Link
+                    className="dcs-item"
+                    href="/courses/video-editing-graphic-design"
+                    style={itemStyle('/courses/video-editing-graphic-design')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <rect x="2" y="6" width="14" height="12" rx="2" />
+                        <path d="m16 10 6-3v10l-6-3" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Video Editing &amp; Design</b>
+                      <span>Premiere Pro, After Effects &amp; 3D</span>
+                      <span>
+                        <em className="tag-wk">8 WEEKS</em>
+                      </span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
 
-        {/* Right CTA Consultation Button */}
-        <div className="header-actions">
-          <Link href="/contact" className="btn btn-primary header-cta-btn">
-            <Phone size={14} />
-            <span>Consult Security</span>
+                  <Link
+                    className="dcs-item"
+                    href="/courses/computer-basics"
+                    style={itemStyle('/courses/computer-basics')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M22 10 12 5 2 10l10 5 10-5z" />
+                        <path d="M6 12v5c3 2 9 2 12 0v-5" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Computer Basics &amp; Office</b>
+                      <span>Digital literacy &amp; cyber hygiene</span>
+                      <span>
+                        <em className="tag-wk">6 WEEKS</em>
+                      </span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+                </div>
+
+                {/* Promo Card */}
+                <div className="dcs-promo">
+                  <span className="lbl">🎓 DCS Skill Academy</span>
+                  <h5>Learn &amp; Earn Guarantee</h5>
+                  <p>Hands-on corporate labs, certified professional mentors, verified diploma &amp; direct internship access.</p>
+                  <div className="chips">
+                    <span>Live Labs</span>
+                    <span>Mentors</span>
+                    <span>Diploma</span>
+                    <span>Internship</span>
+                  </div>
+                  <Link className="go" href="/courses">
+                    View all programs
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M7 17 17 7M8 7h9v9" />
+                    </svg>
+                  </Link>
+                </div>
+
+                {/* Panel Footer Strip */}
+                <div className="dcs-strip">
+                  <span>
+                    <b>Next batch enrolling.</b> Online &amp; offline classes at our Lahore campus.
+                  </span>
+                  <Link href="/contact?type=admission">
+                    Contact for details
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          {/* COMPANY */}
+          <li role="none">
+            <button
+              type="button"
+              className={`dcs-link ${isCompany ? 'current' : ''}`}
+              aria-expanded={activeMenu === 'company'}
+              aria-controls="m-company"
+              onMouseEnter={(e) => handleTriggerMouseEnter(e, 'company')}
+              onClick={(e) => handleTriggerClick(e, 'company')}
+              onFocus={(e) => movePill(e.currentTarget)}
+            >
+              Company
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+
+            <div
+              className={`dcs-mega sm ${activeMenu === 'company' ? 'open' : ''}`}
+              id="m-company"
+              style={{ left: smOffsets.company ? `${smOffsets.company}px` : undefined }}
+              onMouseEnter={handleMegaMouseEnter}
+            >
+              <div className="dcs-panel dcs-cols-1">
+                <div className="dcs-col" style={{ paddingBottom: '4px' }}>
+                  <Link
+                    className="dcs-item"
+                    href="/about"
+                    style={itemStyle('/about')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>About Our Firm</b>
+                      <span>Our mission, security standards &amp; leadership</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+
+                  <Link
+                    className="dcs-item"
+                    href="/team"
+                    style={itemStyle('/team')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Leadership &amp; Team</b>
+                      <span>Certified cybersecurity architects &amp; engineers</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+                </div>
+
+                <div className="dcs-strip">
+                  <span>
+                    <b>We’re hiring.</b> Join our team
+                  </span>
+                  <Link href="/team#careers">
+                    Careers
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          {/* INSIGHTS */}
+          <li role="none">
+            <button
+              type="button"
+              className={`dcs-link ${isInsights ? 'current' : ''}`}
+              aria-expanded={activeMenu === 'insights'}
+              aria-controls="m-insights"
+              onMouseEnter={(e) => handleTriggerMouseEnter(e, 'insights')}
+              onClick={(e) => handleTriggerClick(e, 'insights')}
+              onFocus={(e) => movePill(e.currentTarget)}
+            >
+              Insights
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+
+            <div
+              className={`dcs-mega sm ${activeMenu === 'insights' ? 'open' : ''}`}
+              id="m-insights"
+              style={{ left: smOffsets.insights ? `${smOffsets.insights}px` : undefined }}
+              onMouseEnter={handleMegaMouseEnter}
+            >
+              <div className="dcs-panel dcs-cols-1">
+                <div className="dcs-col" style={{ paddingBottom: '4px' }}>
+                  <Link
+                    className="dcs-item"
+                    href="/portfolio"
+                    style={itemStyle('/portfolio')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <rect x="2" y="7" width="20" height="14" rx="2" />
+                        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Delivered Portfolio</b>
+                      <span>Real-world enterprise client case studies</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+
+                  <Link
+                    className="dcs-item"
+                    href="/videos"
+                    style={itemStyle('/videos')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <rect x="3" y="3" width="18" height="18" rx="3" />
+                        <path d="m10 8 6 4-6 4z" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Video Gallery</b>
+                      <span>Tech showreels, demonstrations &amp; demos</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+
+                  <Link
+                    className="dcs-item"
+                    href="/blog"
+                    style={itemStyle('/blog')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <path d="M14 2v6h6M16 13H8M16 17H8" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Threat Advisories &amp; Blog</b>
+                      <span>Latest cybersecurity insights &amp; updates</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+
+                  <Link
+                    className="dcs-item"
+                    href="/faq"
+                    style={itemStyle('/faq')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Knowledgebase &amp; FAQ</b>
+                      <span>Answers to common corporate questions</span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          {/* CONTACT */}
+          <li role="none">
+            <Link
+              href="/contact"
+              role="menuitem"
+              className={`dcs-link ${isContact ? 'current' : ''}`}
+              onMouseEnter={handleLinkMouseEnter}
+              onFocus={(e) => movePill(e.currentTarget)}
+            >
+              Contact
+            </Link>
+          </li>
+        </ul>
+
+        {/* Action Buttons */}
+        <div className="dcs-actions">
+          <a
+            className="dcs-btn dcs-btn-ghost"
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+          >
+            <FaWhatsapp className="dcs-wa-icon" size={17} />
+            <span>WhatsApp</span>
+          </a>
+
+          <Link className="dcs-btn dcs-btn-main" href="/contact">
+            <span className="dot" />
+            Consult Security
           </Link>
 
-          {/* Mobile Hamburger Toggle Button */}
           <button
             type="button"
-            className="mobile-menu-toggle-btn"
-            onClick={toggleMobileMenu}
-            aria-label="Toggle mobile menu"
+            className="dcs-burger"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
+            onClick={(e) => {
+              e.stopPropagation();
+              setMobileOpen((prev) => !prev);
+            }}
           >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            <i />
+            <i />
+            <i />
           </button>
         </div>
-      </div>
-    </header>
 
-      {/* Mobile Slide-Over Drawer Navigation */}
-      {mobileOpen && (
-        <div className="mobile-drawer-overlay" onClick={() => setMobileOpen(false)}>
-          <div className="mobile-drawer-content" onClick={(e) => e.stopPropagation()}>
-            <div className="mobile-drawer-header">
-              <div className="brand-logo">
-                <Image
-                  src="/logo.png"
-                  alt={siteName}
-                  width={32}
-                  height={32}
-                  style={{ width: '32px', height: '32px', objectFit: 'contain' }}
-                />
-                <span className="brand-dream">DREAM</span>
-                <span className="brand-cyber">CYBER</span>
-                <span className="brand-security">SECURITY</span>
-              </div>
-              <button
-                type="button"
-                className="mobile-drawer-close"
-                onClick={() => setMobileOpen(false)}
-                aria-label="Close menu"
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            <div className="mobile-drawer-body">
-              {/* Home */}
-              <Link
-                href="/"
-                className={`mobile-nav-link ${pathname === '/' ? 'active' : ''}`}
-                onClick={() => setMobileOpen(false)}
-              >
-                Home
-              </Link>
-
-              {/* Services Accordion */}
-              <div className="mobile-accordion-group">
-                <button
-                  type="button"
-                  className="mobile-accordion-trigger"
-                  onClick={() => toggleMobileAccordion('services')}
-                >
-                  <span>Services</span>
-                  <ChevronDown className={`chevron-icon ${mobileAccordion === 'services' ? 'rotated' : ''}`} size={16} />
-                </button>
-                {mobileAccordion === 'services' && (
-                  <div className="mobile-accordion-content">
-                    <Link href="/services/cybersecurity-services" onClick={() => setMobileOpen(false)}>Cybersecurity Services</Link>
-                    <Link href="/services/web-design-development" onClick={() => setMobileOpen(false)}>Web Design & Development</Link>
-                    <Link href="/services/software-application-development" onClick={() => setMobileOpen(false)}>Software & App Development</Link>
-                    <Link href="/services/cloud-devops-solutions" onClick={() => setMobileOpen(false)}>Cloud & DevOps Solutions</Link>
-                    <Link href="/services/domain-hosting-it-support" onClick={() => setMobileOpen(false)}>Domain, Hosting & IT Support</Link>
-                    <Link href="/services/ai-automation-chatbot-development" onClick={() => setMobileOpen(false)}>AI Automation & Chatbots</Link>
-                    <Link href="/services/ecommerce-development" onClick={() => setMobileOpen(false)}>E-Commerce Development</Link>
-                    <Link href="/services/video-editing-motion-graphics" onClick={() => setMobileOpen(false)}>Video & Motion Graphics</Link>
-                    <Link href="/services/graphic-design-branding" onClick={() => setMobileOpen(false)}>Graphic Design & Branding</Link>
-                    <Link href="/services/digital-marketing-seo" onClick={() => setMobileOpen(false)}>Digital Marketing & SEO</Link>
-                    <Link href="/services/social-media-management" onClick={() => setMobileOpen(false)}>Social Media Management</Link>
-                    <Link href="/services" className="mobile-view-all" onClick={() => setMobileOpen(false)}>View All 10 Services &rarr;</Link>
-                  </div>
-                )}
-              </div>
-
-              {/* Academy Accordion */}
-              <div className="mobile-accordion-group">
-                <button
-                  type="button"
-                  className="mobile-accordion-trigger"
-                  onClick={() => toggleMobileAccordion('academy')}
-                >
-                  <span>DCS Academy</span>
-                  <ChevronDown className={`chevron-icon ${mobileAccordion === 'academy' ? 'rotated' : ''}`} size={16} />
-                </button>
-                {mobileAccordion === 'academy' && (
-                  <div className="mobile-accordion-content">
-                    <Link href="/courses/ai-automation" onClick={() => setMobileOpen(false)}>AI Automation & Agents (10 Wks)</Link>
-                    <Link href="/courses/web-development" onClick={() => setMobileOpen(false)}>Enterprise Web Development (14 Wks)</Link>
-                    <Link href="/courses/video-editing-graphic-design" onClick={() => setMobileOpen(false)}>Video Editing & Motion (8 Wks)</Link>
-                    <Link href="/courses/computer-basics" onClick={() => setMobileOpen(false)}>Computer Basics & Office (6 Wks)</Link>
-                    <Link href="/courses" className="mobile-view-all" onClick={() => setMobileOpen(false)}>View All Academy Courses &rarr;</Link>
-                  </div>
-                )}
-              </div>
-
-              {/* Company Accordion */}
-              <div className="mobile-accordion-group">
-                <button
-                  type="button"
-                  className="mobile-accordion-trigger"
-                  onClick={() => toggleMobileAccordion('company')}
-                >
-                  <span>Company</span>
-                  <ChevronDown className={`chevron-icon ${mobileAccordion === 'company' ? 'rotated' : ''}`} size={16} />
-                </button>
-                {mobileAccordion === 'company' && (
-                  <div className="mobile-accordion-content">
-                    <Link href="/about" onClick={() => setMobileOpen(false)}>About Us</Link>
-                    <Link href="/team" onClick={() => setMobileOpen(false)}>Leadership & Team</Link>
-                  </div>
-                )}
-              </div>
-
-              {/* Insights Accordion */}
-              <div className="mobile-accordion-group">
-                <button
-                  type="button"
-                  className="mobile-accordion-trigger"
-                  onClick={() => toggleMobileAccordion('insights')}
-                >
-                  <span>Insights & Media</span>
-                  <ChevronDown className={`chevron-icon ${mobileAccordion === 'insights' ? 'rotated' : ''}`} size={16} />
-                </button>
-                {mobileAccordion === 'insights' && (
-                  <div className="mobile-accordion-content">
-                    <Link href="/portfolio" onClick={() => setMobileOpen(false)}>Delivered Portfolio</Link>
-                    <Link href="/videos" onClick={() => setMobileOpen(false)}>Video Showcase</Link>
-                    <Link href="/blog" onClick={() => setMobileOpen(false)}>Threat Advisories & Blog</Link>
-                    <Link href="/faq" onClick={() => setMobileOpen(false)}>Knowledgebase & FAQ</Link>
-                  </div>
-                )}
-              </div>
-
-              {/* Contact */}
-              <Link
-                href="/contact"
-                className={`mobile-nav-link ${pathname === '/contact' ? 'active' : ''}`}
-                onClick={() => setMobileOpen(false)}
-              >
-                Contact Us
-              </Link>
-
-              {/* Mobile CTA */}
-              <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(63, 57, 131, 0.5)' }}>
-                <Link
-                  href="/contact"
-                  className="btn btn-primary"
-                  style={{ width: '100%' }}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <Phone size={16} />
-                  <span>Get Security Consultation</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Modern App-Style Mobile Bottom Navigation Bar */}
-      <nav className="mobile-bottom-nav" aria-label="Mobile Navigation">
-        <div className="mobile-bottom-nav-inner">
+        {/* Mobile Drawer */}
+        <nav className="dcs-drawer" aria-label="Mobile">
           <Link
             href="/"
-            className={`bottom-nav-item ${pathname === '/' && !mobileOpen ? 'active' : ''}`}
+            className="top"
             onClick={() => setMobileOpen(false)}
           >
-            <span className="bottom-nav-icon">
-              <Home size={20} />
-            </span>
-            <span className="bottom-nav-label">Home</span>
-            {pathname === '/' && !mobileOpen && <span className="bottom-nav-indicator" />}
+            Home
           </Link>
 
-          <Link
-            href="/services"
-            className={`bottom-nav-item ${(pathname === '/services' || pathname.startsWith('/services/')) && !mobileOpen ? 'active' : ''}`}
-            onClick={() => setMobileOpen(false)}
+          {/* Mobile Services */}
+          <details
+            open={openDetails === 'services'}
+            onToggle={(e) => {
+              const isOpen = (e.currentTarget as HTMLDetailsElement).open;
+              if (isOpen) setOpenDetails('services');
+              else if (openDetails === 'services') setOpenDetails(null);
+            }}
           >
-            <span className="bottom-nav-icon">
-              <Shield size={20} />
-            </span>
-            <span className="bottom-nav-label">Services</span>
-            {(pathname === '/services' || pathname.startsWith('/services/')) && !mobileOpen && (
-              <span className="bottom-nav-indicator" />
-            )}
-          </Link>
+            <summary>
+              Services
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <div className="sub">
+              <Link
+                className="dcs-item"
+                href="/services/cybersecurity"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/services/cybersecurity')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Cybersecurity Services</b>
+                  <span>VAPT, SOC monitoring &amp; defense</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
 
-          <Link
-            href="/courses"
-            className={`bottom-nav-item ${(pathname === '/courses' || pathname.startsWith('/courses/')) && !mobileOpen ? 'active' : ''}`}
-            onClick={() => setMobileOpen(false)}
+              <Link
+                className="dcs-item"
+                href="/services/web-development"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/services/web-development')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="m8 9-4 3 4 3M16 9l4 3-4 3M13 6l-2 12" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Web Design &amp; Development</b>
+                  <span>High-performance secure web systems</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/services/software-development"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/services/software-development')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="m12 2 10 5-10 5L2 7z" />
+                    <path d="m2 17 10 5 10-5M2 12l10 5 10-5" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Software &amp; App Development</b>
+                  <span>Bespoke enterprise software &amp; APIs</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/services/cloud-devops"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/services/cloud-devops')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="M17.5 19H8a6 6 0 1 1 5.7-8H15a4.5 4.5 0 0 1 2.5 8z" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Cloud &amp; DevOps Solutions</b>
+                  <span>Zero-trust architecture &amp; CI/CD</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/services/ai-automation"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/services/ai-automation')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="4" y="8" width="16" height="12" rx="3" />
+                    <path d="M12 8V4M9 13v1M15 13v1M2 14h2M20 14h2" />
+                  </svg>
+                </span>
+                <div>
+                  <b>AI Automation &amp; Chatbots</b>
+                  <span>LLM agents &amp; workflows</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/services/ecommerce"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/services/ecommerce')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <circle cx="9" cy="20" r="1.5" />
+                    <circle cx="18" cy="20" r="1.5" />
+                    <path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L21 7H6" />
+                  </svg>
+                </span>
+                <div>
+                  <b>E-Commerce Development</b>
+                  <span>High-conversion online stores</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/services/video-motion"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/services/video-motion')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="2" y="6" width="14" height="12" rx="2" />
+                    <path d="m16 10 6-3v10l-6-3" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Video &amp; Motion Graphics</b>
+                  <span>Cinematic post-production</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/services/graphic-design"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/services/graphic-design')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <circle cx="13.5" cy="6.5" r="1" />
+                    <circle cx="17.5" cy="10.5" r="1" />
+                    <circle cx="8.5" cy="7.5" r="1" />
+                    <circle cx="6.5" cy="12.5" r="1" />
+                    <path d="M12 2a10 10 0 0 0 0 20c1 0 1.7-.8 1.7-1.7 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.9.8-1.7 1.7-1.7h2A5.6 5.6 0 0 0 22 13.9C22 7.3 17.5 2 12 2z" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Graphic Design &amp; Branding</b>
+                  <span>Visual identities &amp; modern UI/UX</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-btn dcs-btn-main"
+                href="/contact?type=quote&service=startup-package"
+                onClick={() => setMobileOpen(false)}
+                style={{ margin: '6px 12px 10px', display: 'flex', justifyContent: 'center' }}
+              >
+                Claim startup package
+              </Link>
+            </div>
+          </details>
+
+          {/* Mobile Academy */}
+          <details
+            open={openDetails === 'academy'}
+            onToggle={(e) => {
+              const isOpen = (e.currentTarget as HTMLDetailsElement).open;
+              if (isOpen) setOpenDetails('academy');
+              else if (openDetails === 'academy') setOpenDetails(null);
+            }}
           >
-            <span className="bottom-nav-icon">
-              <GraduationCap size={20} />
-            </span>
-            <span className="bottom-nav-label">Academy</span>
-            {(pathname === '/courses' || pathname.startsWith('/courses/')) && !mobileOpen && (
-              <span className="bottom-nav-indicator" />
-            )}
-          </Link>
+            <summary>
+              Academy
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <div className="sub">
+              <Link
+                className="dcs-item"
+                href="/courses/ai-automation"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/courses/ai-automation')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="4" y="8" width="16" height="12" rx="3" />
+                    <path d="M12 8V4M9 13v1M15 13v1M2 14h2M20 14h2" />
+                  </svg>
+                </span>
+                <div>
+                  <b>
+                    AI Automation &amp; Agents <em className="tag-hot">HOT</em>
+                  </b>
+                  <span>LLM workflows, agents &amp; n8n</span>
+                  <span>
+                    <em className="tag-wk">10 WEEKS</em>
+                  </span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/courses/web-development"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/courses/web-development')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="m8 9-4 3 4 3M16 9l4 3-4 3M13 6l-2 12" />
+                  </svg>
+                </span>
+                <div>
+                  <b>
+                    Enterprise Web Dev <em className="tag-career">CAREER</em>
+                  </b>
+                  <span>Full-stack React, Next.js &amp; APIs</span>
+                  <span>
+                    <em className="tag-wk">14 WEEKS</em>
+                  </span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/courses/video-editing-graphic-design"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/courses/video-editing-graphic-design')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="2" y="6" width="14" height="12" rx="2" />
+                    <path d="m16 10 6-3v10l-6-3" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Video Editing &amp; Design</b>
+                  <span>Premiere Pro, After Effects &amp; 3D</span>
+                  <span>
+                    <em className="tag-wk">8 WEEKS</em>
+                  </span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/courses/computer-basics"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/courses/computer-basics')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="M22 10 12 5 2 10l10 5 10-5z" />
+                    <path d="M6 12v5c3 2 9 2 12 0v-5" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Computer Basics &amp; Office</b>
+                  <span>Digital literacy &amp; cyber hygiene</span>
+                  <span>
+                    <em className="tag-wk">6 WEEKS</em>
+                  </span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-btn dcs-btn-main"
+                href="/courses"
+                onClick={() => setMobileOpen(false)}
+                style={{ margin: '6px 12px 10px', display: 'flex', justifyContent: 'center' }}
+              >
+                View all programs
+              </Link>
+            </div>
+          </details>
+
+          {/* Mobile Company */}
+          <details
+            open={openDetails === 'company'}
+            onToggle={(e) => {
+              const isOpen = (e.currentTarget as HTMLDetailsElement).open;
+              if (isOpen) setOpenDetails('company');
+              else if (openDetails === 'company') setOpenDetails(null);
+            }}
+          >
+            <summary>
+              Company
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <div className="sub">
+              <Link
+                className="dcs-item"
+                href="/about"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/about')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z" />
+                  </svg>
+                </span>
+                <div>
+                  <b>About Our Firm</b>
+                  <span>Our mission, security standards &amp; leadership</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/team"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/team')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Leadership &amp; Team</b>
+                  <span>Certified cybersecurity architects &amp; engineers</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/team#careers"
+                onClick={() => setMobileOpen(false)}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="2" y="7" width="20" height="14" rx="2" />
+                    <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Careers</b>
+                  <span>We’re hiring. Join our growing team</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+            </div>
+          </details>
+
+          {/* Mobile Insights */}
+          <details
+            open={openDetails === 'insights'}
+            onToggle={(e) => {
+              const isOpen = (e.currentTarget as HTMLDetailsElement).open;
+              if (isOpen) setOpenDetails('insights');
+              else if (openDetails === 'insights') setOpenDetails(null);
+            }}
+          >
+            <summary>
+              Insights
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <div className="sub">
+              <Link
+                className="dcs-item"
+                href="/portfolio"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/portfolio')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="2" y="7" width="20" height="14" rx="2" />
+                    <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Delivered Portfolio</b>
+                  <span>Real-world client case studies</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/videos"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/videos')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="3" y="3" width="18" height="18" rx="3" />
+                    <path d="m10 8 6 4-6 4z" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Video Gallery</b>
+                  <span>Showreels &amp; tech demos</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/blog"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/blog')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <path d="M14 2v6h6M16 13H8M16 17H8" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Threat Advisories &amp; Blog</b>
+                  <span>Latest insights &amp; articles</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+
+              <Link
+                className="dcs-item"
+                href="/faq"
+                onClick={() => setMobileOpen(false)}
+                style={itemStyle('/faq')}
+              >
+                <span className="dcs-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01" />
+                  </svg>
+                </span>
+                <div>
+                  <b>Knowledgebase &amp; FAQ</b>
+                  <span>Answers to common questions</span>
+                </div>
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+            </div>
+          </details>
 
           <Link
             href="/contact"
-            className={`bottom-nav-item ${pathname === '/contact' && !mobileOpen ? 'active' : ''}`}
+            className="top"
             onClick={() => setMobileOpen(false)}
           >
-            <span className="bottom-nav-icon">
-              <Phone size={20} />
-            </span>
-            <span className="bottom-nav-label">Contact</span>
-            {pathname === '/contact' && !mobileOpen && <span className="bottom-nav-indicator" />}
+            Contact
           </Link>
 
-          <button
-            type="button"
-            className={`bottom-nav-item bottom-nav-menu-btn ${mobileOpen ? 'active' : ''}`}
-            onClick={toggleMobileMenu}
-            aria-label={mobileOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
-            aria-expanded={mobileOpen}
-          >
-            <span className="bottom-nav-icon">
-              {mobileOpen ? <X size={20} /> : <LayoutGrid size={20} />}
-            </span>
-            <span className="bottom-nav-label">{mobileOpen ? 'Close' : 'Menu'}</span>
-            {mobileOpen && <span className="bottom-nav-indicator" />}
-          </button>
-        </div>
-      </nav>
-    </>
+          {/* Quick Action CTAs */}
+          <div className="cta">
+            <a
+              className="dcs-btn dcs-wa"
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaWhatsapp size={17} style={{ marginRight: '6px' }} />
+              <span>WhatsApp</span>
+            </a>
+            <Link
+              className="dcs-btn dcs-btn-main"
+              href="/contact"
+              onClick={() => setMobileOpen(false)}
+            >
+              <span className="dot" />
+              Consult Security
+            </Link>
+          </div>
+        </nav>
+      </div>
+    </header>
   );
 }

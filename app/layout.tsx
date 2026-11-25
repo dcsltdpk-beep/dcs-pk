@@ -205,7 +205,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 'International-standard cyber defense, custom software engineering, AI workflow automations, and enterprise technology solutions.',
               address: {
                 '@type': 'PostalAddress',
-                streetAddress: settings.company_address || 'Level 4, IT Tower, Hali Road, Gulberg III',
+                streetAddress: settings.company_address || 'Central Tower I, 90-B Hali Road, Block B, Gulberg II, Lahore-54660, Pakistan',
                 addressLocality: 'Lahore',
                 addressCountry: 'PK',
               },

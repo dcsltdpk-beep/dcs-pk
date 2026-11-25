@@ -1,11 +1,13 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import ContactClient from './ContactClient';
+import ContactPageClient from '@/components/ContactPageClient';
 import { getSettings } from '@/lib/data';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
-  const title = settings.contact_meta_title || 'Contact Us & Security Consultation | Dream Cyber Security Pakistan';
+  const title =
+    settings.contact_meta_title ||
+    'Contact Us & Security Consultation | Dream Cyber Security Pakistan';
   return {
     title: { absolute: title },
     description:
@@ -17,21 +19,35 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+export const revalidate = 60;
+
 export default async function ContactPage({
   searchParams,
 }: {
-  searchParams: { inquiry_type?: string; target?: string };
+  searchParams?: {
+    inquiry_type?: string;
+    type?: string;
+    target?: string;
+    course?: string;
+    service?: string;
+  };
 }) {
   const settings = await getSettings();
 
+  const initialType = searchParams?.type || searchParams?.inquiry_type || 'General Consultation';
+  const initialTarget = searchParams?.target || searchParams?.course || searchParams?.service || '';
+
   return (
-    <ContactClient
-      initialType={searchParams?.inquiry_type || 'contact'}
-      initialTarget={searchParams?.target || ''}
+    <ContactPageClient
+      initialType={initialType}
+      initialTarget={initialTarget}
       companyEmail={settings.company_email || 'dcsltd.pk@gmail.com'}
-      companyPhone={settings.company_phone || '+92 300 1234567'}
-      companyAddress={settings.company_address || 'Level 4, IT Tower, Hali Road, Gulberg III, Lahore, Pakistan'}
-      whatsappNumber={settings.whatsapp_number || '923001234567'}
+      companyPhone={settings.company_phone || '+92 316 5478855'}
+      companyAddress={
+        settings.company_address ||
+        'Central Tower I, 90-B Hali Road, Block B, Gulberg II, Lahore-54660, Pakistan'
+      }
+      whatsappNumber={settings.whatsapp_number || '923165478855'}
     />
   );
 }

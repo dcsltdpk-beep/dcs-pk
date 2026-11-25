@@ -61,10 +61,19 @@ export async function getServices(): Promise<any[]> {
 }
 
 const SERVICE_ALIASES: Record<string, string> = {
+  'cybersecurity': 'cybersecurity-services',
+  'cyber-security': 'cybersecurity-services',
+  'web-development': 'web-design-development',
+  'software-development': 'software-application-development',
+  'software': 'software-application-development',
   'cloud-devops': 'cloud-devops-solutions',
   'devops-solutions': 'cloud-devops-solutions',
   'cloud-hosting': 'domain-hosting-it-support',
   'it-support': 'domain-hosting-it-support',
+  'ai-automation': 'ai-automation-chatbot-development',
+  'ecommerce': 'ecommerce-development',
+  'video-motion': 'video-editing-motion-graphics',
+  'graphic-design': 'graphic-design-branding',
 };
 
 const COURSE_ALIASES: Record<string, string> = {
