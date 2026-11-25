@@ -528,7 +528,8 @@ export default function CoursesPageClient({
       {/* ========================================================
           1. HERO SHELL (Golden Warm Architecture & Network Visual)
           ======================================================== */}
-      <section className="hero-shell">
+      <section className="dcs-hero-section dcs-section-hero">
+        <div className="hero-shell">
         <canvas ref={heroParticlesRef} id="particles" />
 
         <div className="crumbs">
@@ -636,13 +637,15 @@ export default function CoursesPageClient({
             </div>
           </div>
         </div>
+      </div>
       </section>
 
       {/* ========================================================
           2. COURSES CATALOG GRID & FILTERS
           ======================================================== */}
-      <section className="block" id="courses">
-        <div className="head">
+      <section className="section dcs-stacked-section" id="courses">
+        <div className="block">
+          <div className="head">
           <span className="eyebrow">Our Courses</span>
           <h2>
             Career-focused courses, <span className="u">real projects</span>
@@ -767,12 +770,14 @@ export default function CoursesPageClient({
             </Link>
           </article>
         </div>
+        </div>
       </section>
 
       {/* ========================================================
           3. PROCESS: YOUR LEARNING JOURNEY
           ======================================================== */}
-      <section className="block process">
+      <section className="section dcs-stacked-section">
+        <div className="block process">
         <div className="head">
           <span className="eyebrow">Your Learning Journey</span>
           <h2>
@@ -828,12 +833,14 @@ export default function CoursesPageClient({
             <p>Earn a verified certificate and career guidance to land work.</p>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ========================================================
           4. WHY DCS ACADEMY (Split Card Architecture)
           ======================================================== */}
-      <section className="block why">
+      <section className="section dcs-stacked-section" id="courses-why">
+        <div className="block why">
         <div className="why-card">
           <div>
             <span className="eyebrow light">Why DCS Academy</span>
@@ -922,26 +929,14 @@ export default function CoursesPageClient({
             </div>
           </div>
         </div>
-      </section>
-
-      {/* ========================================================
-          5. TECH TOOLS MARQUEE
-          ======================================================== */}
-      <section className="tech">
-        <p>Tools you will master</p>
-        <div className="marquee">
-          <div className="track">
-            {TOOLS_LIST.concat(TOOLS_LIST).map((tool, idx) => (
-              <span key={`${tool}-${idx}`}>{tool}</span>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* ========================================================
-          6. FAQS (Interactive Accordion)
+          5. FAQS (Interactive Accordion)
           ======================================================== */}
-      <section className="block faqs">
+      <section className="section dcs-stacked-section" id="courses-faqs">
+        <div className="block faqs">
         <div className="head">
           <span className="eyebrow">FAQ</span>
           <h2>
@@ -982,28 +977,42 @@ export default function CoursesPageClient({
             <p>Click Enroll on any course or message us on WhatsApp and our admissions desk will share the schedule and fees.</p>
           </details>
         </div>
+        </div>
       </section>
 
       {/* ========================================================
-          7. WARM GOLD CTA BAND
+          6. TECH TOOLS MARQUEE & WARM GOLD CTA BAND
           ======================================================== */}
-      <section className="block" style={{ marginBottom: '40px' }}>
-        <div className="cta-band">
-          <canvas ref={ctaParticlesRef} id="cta-particles" />
-          <div>
-            <h2>Next batch is enrolling now</h2>
-            <p>Reserve your seat today — limited seats per batch for personal mentorship.</p>
+      <section className="section dcs-stacked-section" id="courses-cta">
+        <div className="block" style={{ marginBottom: '40px' }}>
+          <div className="tech">
+            <p>Tools you will master</p>
+            <div className="marquee">
+              <div className="track">
+                {TOOLS_LIST.concat(TOOLS_LIST).map((tool, idx) => (
+                  <span key={`${tool}-${idx}`}>{tool}</span>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="cta-actions">
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-              <FaWhatsapp size={17} style={{ color: '#25D366' }} />
-              <span>WhatsApp Us</span>
-              <ArrowUpRight size={16} />
-            </a>
-            <Link href="/contact?inquiry_type=course_inquiry" className="btn btn-blue">
-              <span>Submit Admission Inquiry</span>
-              <ArrowUpRight size={16} />
-            </Link>
+
+          <div className="cta-band">
+            <canvas ref={ctaParticlesRef} id="cta-particles" />
+            <div>
+              <h2>Next batch is enrolling now</h2>
+              <p>Reserve your seat today — limited seats per batch for personal mentorship.</p>
+            </div>
+            <div className="cta-actions">
+              <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                <FaWhatsapp size={17} style={{ color: '#25D366' }} />
+                <span>WhatsApp Us</span>
+                <ArrowUpRight size={16} />
+              </a>
+              <Link href="/contact?inquiry_type=course_inquiry" className="btn btn-blue">
+                <span>Submit Admission Inquiry</span>
+                <ArrowUpRight size={16} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

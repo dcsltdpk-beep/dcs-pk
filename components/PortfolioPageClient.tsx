@@ -392,7 +392,8 @@ export default function PortfolioPageClient({
   return (
     <div className="dcs-portfolio-page-deck">
       {/* ================= HERO SHELL ================= */}
-      <section className="hero-shell">
+      <section className="dcs-hero-section dcs-section-hero">
+        <div className="hero-shell">
         <canvas id="portfolio-hero-particles" ref={heroCanvasRef} />
 
         {/* Top Breadcrumb */}
@@ -517,10 +518,12 @@ export default function PortfolioPageClient({
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= CASE STUDIES GRID ================= */}
-      <section className="block" id="work">
+      <section className="section dcs-stacked-section" id="work">
+        <div className="block" id="work-content">
         <div className="head">
           <span className="eyebrow">Case Studies</span>
           <h2>
@@ -620,10 +623,12 @@ export default function PortfolioPageClient({
             <p style={{ fontSize: 18, fontWeight: 600 }}>No case studies found in this category.</p>
           </div>
         )}
+        </div>
       </section>
 
       {/* ================= NEWSLETTER CARD ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="portfolio-newsletter">
+        <div className="block">
         <div className="news">
           <div>
             <span className="eyebrow">Newsletter &amp; Briefings</span>
@@ -667,10 +672,12 @@ export default function PortfolioPageClient({
             </form>
           )}
         </div>
+        </div>
       </section>
 
       {/* ================= WARM GOLD CTA BAND ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="portfolio-cta">
+        <div className="block">
         <div className="cta-band">
           <canvas id="portfolio-cta-particles" ref={ctaCanvasRef} />
           <div>
@@ -696,6 +703,7 @@ export default function PortfolioPageClient({
               </svg>
             </Link>
           </div>
+        </div>
         </div>
       </section>
 

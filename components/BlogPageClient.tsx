@@ -482,7 +482,8 @@ export default function BlogPageClient({
   return (
     <div className="dcs-blog-page-deck">
       {/* ================= HERO SECTION ================= */}
-      <section className="hero-shell">
+      <section className="dcs-hero-section dcs-section-hero">
+        <div className="hero-shell">
         <canvas ref={heroParticlesRef} id="blog-hero-particles" />
 
         {/* Top Breadcrumb Bar */}
@@ -545,10 +546,12 @@ export default function BlogPageClient({
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= POSTS & ADVISORIES SECTION ================= */}
-      <section className="block" id="posts">
+      <section className="section dcs-stacked-section" id="posts">
+        <div className="block" id="posts-content">
         <div className="head">
           <span className="eyebrow">From the Desk</span>
           <h2>
@@ -635,10 +638,12 @@ export default function BlogPageClient({
             No advisories found in this category.
           </div>
         )}
+        </div>
       </section>
 
       {/* ================= NEWSLETTER & BRIEFINGS SECTION ================= */}
-      <section className="block" id="subscribe">
+      <section className="section dcs-stacked-section" id="subscribe">
+        <div className="block" id="subscribe-content">
         <div className="news">
           <div>
             <span className="eyebrow">Newsletter &amp; Briefings</span>
@@ -672,10 +677,12 @@ export default function BlogPageClient({
             )}
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= WARM GOLD CTA BAND ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="blog-cta">
+        <div className="block">
         <div className="cta-band">
           <canvas ref={ctaParticlesRef} id="blog-cta-particles" />
           <div>
@@ -690,6 +697,7 @@ export default function BlogPageClient({
               Submit Admission Inquiry <ArrowUpRight />
             </Link>
           </div>
+        </div>
         </div>
       </section>
     </div>

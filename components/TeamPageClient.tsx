@@ -502,7 +502,8 @@ export default function TeamPageClient({
   return (
     <div className="dcs-team-page-deck">
       {/* ================= HERO SECTION ================= */}
-      <section className="hero-shell">
+      <section className="dcs-hero-section dcs-section-hero">
+        <div className="hero-shell">
         <canvas ref={heroParticlesRef} id="team-hero-particles" />
 
         {/* Top Breadcrumb Bar */}
@@ -573,10 +574,12 @@ export default function TeamPageClient({
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= TEAM GRID SECTION ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="team-grid">
+        <div className="block">
         <div className="head">
           <span className="eyebrow">Our People</span>
           <h2>
@@ -688,10 +691,12 @@ export default function TeamPageClient({
             </div>
           </article>
         </div>
+        </div>
       </section>
 
       {/* ================= CULTURE & PROCESS SECTION ================= */}
-      <section className="block process">
+      <section className="section dcs-stacked-section" id="team-culture">
+        <div className="block process">
         <div className="head">
           <span className="eyebrow">How We Work Together</span>
           <h2>
@@ -732,10 +737,12 @@ export default function TeamPageClient({
             <p>Security, engineering and creative working side by side.</p>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= CAREERS SECTION ================= */}
-      <section className="block" id="careers">
+      <section className="section dcs-stacked-section" id="team-careers">
+        <div className="block" id="careers">
         <div className="join">
           <div>
             <span className="eyebrow light">Careers</span>
@@ -770,10 +777,12 @@ export default function TeamPageClient({
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= WARM GOLD CTA BAND ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="team-cta">
+        <div className="block">
         <div className="cta-band">
           <canvas ref={ctaParticlesRef} id="team-cta-particles" />
           <div>
@@ -788,6 +797,7 @@ export default function TeamPageClient({
               Submit Admission Inquiry <ArrowUpRight />
             </Link>
           </div>
+        </div>
         </div>
       </section>
     </div>

@@ -388,7 +388,8 @@ export default function ContactPageClient({
   return (
     <div className="dcs-contact-page-deck">
       {/* ================= HERO SHELL ================= */}
-      <section className="hero-shell">
+      <section className="dcs-hero-section dcs-section-hero">
+        <div className="hero-shell">
         <canvas id="contact-hero-particles" ref={heroCanvasRef} />
 
         {/* Top Breadcrumb */}
@@ -519,10 +520,12 @@ export default function ContactPageClient({
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= CONTACT FORM & DESK ================= */}
-      <section className="block" id="form">
+      <section className="section dcs-stacked-section" id="form">
+        <div className="block" id="form-content">
         <div className="c-grid">
           {/* Form Card */}
           <div className="form-card">
@@ -954,10 +957,12 @@ export default function ContactPageClient({
             </div>
           </aside>
         </div>
+        </div>
       </section>
 
       {/* ================= GOOGLE MAP ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="contact-map">
+        <div className="block">
         <div className="map">
           <iframe
             loading="lazy"
@@ -982,10 +987,12 @@ export default function ContactPageClient({
             </a>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= NEWSLETTER CARD ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="contact-newsletter">
+        <div className="block">
         <div className="news">
           <div>
             <span className="eyebrow">Newsletter &amp; Briefings</span>
@@ -1029,10 +1036,12 @@ export default function ContactPageClient({
             </form>
           )}
         </div>
+        </div>
       </section>
 
       {/* ================= WARM GOLD CTA BAND ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="contact-cta">
+        <div className="block">
         <div className="cta-band">
           <canvas id="contact-cta-particles" ref={ctaCanvasRef} />
           <div>
@@ -1058,6 +1067,7 @@ export default function ContactPageClient({
               </svg>
             </a>
           </div>
+        </div>
         </div>
       </section>
     </div>

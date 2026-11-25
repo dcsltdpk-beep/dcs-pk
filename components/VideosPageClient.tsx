@@ -407,7 +407,8 @@ export default function VideosPageClient({
   return (
     <div className="dcs-videos-page-deck">
       {/* ================= HERO SHELL ================= */}
-      <section className="hero-shell">
+      <section className="dcs-hero-section dcs-section-hero">
+        <div className="hero-shell">
         <canvas id="videos-hero-particles" ref={heroCanvasRef} />
 
         {/* Top Breadcrumb */}
@@ -529,10 +530,12 @@ export default function VideosPageClient({
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= VIDEOS SHOWCASE GRID ================= */}
-      <section className="block" id="gallery">
+      <section className="section dcs-stacked-section" id="gallery">
+        <div className="block" id="gallery-content">
         <div className="head">
           <span className="eyebrow">Watch &amp; Learn</span>
           <h2>
@@ -633,10 +636,12 @@ export default function VideosPageClient({
             <p style={{ fontSize: 18, fontWeight: 600 }}>No videos found in this category.</p>
           </div>
         )}
+        </div>
       </section>
 
       {/* ================= NEWSLETTER CARD ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="videos-newsletter">
+        <div className="block">
         <div className="news">
           <div>
             <span className="eyebrow">Newsletter &amp; Briefings</span>
@@ -680,10 +685,12 @@ export default function VideosPageClient({
             </form>
           )}
         </div>
+        </div>
       </section>
 
       {/* ================= WARM GOLD CTA BAND ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="videos-cta">
+        <div className="block">
         <div className="cta-band">
           <canvas id="videos-cta-particles" ref={ctaCanvasRef} />
           <div>
@@ -709,6 +716,7 @@ export default function VideosPageClient({
               </svg>
             </Link>
           </div>
+        </div>
         </div>
       </section>
 

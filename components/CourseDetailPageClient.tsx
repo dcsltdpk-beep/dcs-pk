@@ -873,7 +873,8 @@ export default function CourseDetailPageClient({
       {/* ===================================================================
           1. GOLDEN HERO SHELL
           =================================================================== */}
-      <section className="hero-shell">
+      <section className="dcs-hero-section dcs-section-hero">
+        <div className="hero-shell">
         <canvas ref={particlesRef} id="particles" />
 
         {/* Breadcrumb navigation */}
@@ -984,6 +985,7 @@ export default function CourseDetailPageClient({
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ===================================================================
@@ -1017,10 +1019,11 @@ export default function CourseDetailPageClient({
       {/* ===================================================================
           3. MAIN TWO-COLUMN CONTENT LAYOUT
           =================================================================== */}
-      <div className="layout">
-        <main>
-          {/* Outcomes: What you'll learn */}
-          <section className="block">
+      <section className="section dcs-stacked-section" id="course-curriculum">
+        <div className="layout">
+          <div className="course-main-content">
+            {/* Outcomes: What you'll learn */}
+            <section className="block">
             <span className="eyebrow">Outcomes</span>
             <h2 className="sec-title">What you’ll learn</h2>
             <div className="learn-grid">
@@ -1151,7 +1154,7 @@ export default function CourseDetailPageClient({
               ))}
             </div>
           </section>
-        </main>
+        </div>
 
         {/* ===================================================================
             SIDEBAR (STICKY)
@@ -1215,11 +1218,13 @@ export default function CourseDetailPageClient({
           </div>
         </aside>
       </div>
+      </section>
 
       {/* ===================================================================
           4. EXPLORE OTHER PROGRAMS
           =================================================================== */}
-      <section className="block" style={{ marginTop: '30px' }}>
+      <section className="section dcs-stacked-section" id="course-related">
+        <div className="block" style={{ marginTop: '30px' }}>
         <div className="head">
           <span className="eyebrow">Keep learning</span>
           <h2>
@@ -1238,12 +1243,14 @@ export default function CourseDetailPageClient({
             </Link>
           ))}
         </div>
+        </div>
       </section>
 
       {/* ===================================================================
           5. WARM GOLD CTA BAND
           =================================================================== */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="course-cta">
+        <div className="block">
         <div className="cta-band">
           <canvas ref={ctaParticlesRef} id="cta-particles" />
           <div>
@@ -1261,6 +1268,7 @@ export default function CourseDetailPageClient({
               <ArrowUpRight size={16} />
             </Link>
           </div>
+        </div>
         </div>
       </section>
     </div>

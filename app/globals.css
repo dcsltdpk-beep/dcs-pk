@@ -5345,7 +5345,24 @@ footer.site-footer {
   text-decoration: none;
 }
 
-/* Stacking section wrapper */
+/* Universal Deck Roots Setup: zero outer padding so stacked sections span full viewport width */
+.dcs-course-root,
+.dcs-academy-catalog-root,
+.dcs-about-page-deck,
+.dcs-team-page-deck,
+.dcs-blog-page-deck,
+.dcs-faq-page-deck,
+.dcs-portfolio-page-deck,
+.dcs-videos-page-deck,
+.dcs-contact-page-deck,
+.dcs-services-root-deck {
+  width: 100%;
+  position: relative;
+  padding: 0 !important;
+}
+
+/* Stacking section wrapper (Universal across Services, Academy, Company, Insights, Contact) */
+.dcs-stacked-section,
 .dcs-services-root-deck .dcs-stacked-section {
   position: sticky;
   top: 0;
@@ -5364,7 +5381,26 @@ footer.site-footer {
   overflow: visible;
 }
 
-/* Section 1: Hero Shell (Matching services.html) */
+.dcs-stacked-section .block {
+  max-width: 1320px;
+  margin: 0 auto !important;
+  padding: 0 10px;
+  width: 100%;
+}
+
+@media (max-width: 992px) {
+  .dcs-stacked-section {
+    position: relative !important;
+    top: auto !important;
+    min-height: auto !important;
+    padding: clamp(2rem, 4vh, 3rem) clamp(0.75rem, 2vw, 1.25rem) !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Section 1: Hero Shell (Universal across Services, Academy, Company, Insights, Contact) */
+.dcs-hero-section,
+.dcs-section-hero,
 .dcs-services-root-deck .dcs-hero-section,
 .dcs-services-root-deck .dcs-section-hero {
   position: relative !important;

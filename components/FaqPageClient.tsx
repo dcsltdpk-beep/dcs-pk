@@ -503,7 +503,8 @@ export default function FaqPageClient({
   return (
     <div className="dcs-faq-page-deck">
       {/* ================= HERO SECTION ================= */}
-      <section className="hero-shell">
+      <section className="dcs-hero-section dcs-section-hero">
+        <div className="hero-shell">
         <canvas ref={heroParticlesRef} id="faq-hero-particles" />
 
         {/* Top Breadcrumb Bar */}
@@ -570,10 +571,12 @@ export default function FaqPageClient({
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= SEARCH & KNOWLEDGEBASE SECTION ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="faq-list">
+        <div className="block">
         <div className="head">
           <span className="eyebrow">Help Center</span>
           <h2>
@@ -668,10 +671,12 @@ export default function FaqPageClient({
             )}
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= NEWSLETTER & BRIEFINGS SECTION ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="faq-newsletter">
+        <div className="block">
         <div className="news">
           <div>
             <span className="eyebrow">Newsletter &amp; Briefings</span>
@@ -705,10 +710,12 @@ export default function FaqPageClient({
             )}
           </div>
         </div>
+        </div>
       </section>
 
       {/* ================= WARM GOLD CTA BAND ================= */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="faq-cta">
+        <div className="block">
         <div className="cta-band">
           <canvas ref={ctaParticlesRef} id="faq-cta-particles" />
           <div>
@@ -723,6 +730,7 @@ export default function FaqPageClient({
               Submit Admission Inquiry <ArrowUpRight />
             </Link>
           </div>
+        </div>
         </div>
       </section>
     </div>

@@ -32,7 +32,7 @@ export default function WebsiteScrollAnimations() {
 
       // Select all content sections across the page (Hero sections and footer remain in normal document flow)
       const directSections = Array.from(
-        main.querySelectorAll<HTMLElement>('section.section, section.cyber-wheel-track')
+        main.querySelectorAll<HTMLElement>('section.section, section.dcs-stacked-section, section.cyber-wheel-track')
       ).filter((sec) => {
         return (
           !sec.parentElement?.closest('section') &&
@@ -154,7 +154,7 @@ export default function WebsiteScrollAnimations() {
     const setupCardEntranceAnimation = () => {
       const cardNodes = Array.from(
         document.querySelectorAll<HTMLElement>(
-          '.card, .stat-item, .video-card-compact'
+          '.card, .stat-item, .video-card-compact, .svc, .course-card, .crs-card, .team-card, .post-card, .faq-card, .map-card, .desk-card, .step, .why-card'
         )
       ).filter((el) => {
         return (

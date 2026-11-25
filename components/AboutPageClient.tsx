@@ -406,7 +406,8 @@ export default function AboutPageClient({
       {/* ========================================================
           1. HERO SHELL (Golden Warm Architecture & Cyber Shield)
           ======================================================== */}
-      <section className="hero-shell">
+      <section className="dcs-hero-section dcs-section-hero">
+        <div className="hero-shell">
         <canvas ref={heroParticlesRef} id="particles" />
 
         <div className="crumbs">
@@ -508,12 +509,14 @@ export default function AboutPageClient({
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ========================================================
           2. CORPORATE VIDEO SHOWCASE (Interactive 21:9 Card)
           ======================================================== */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="about-video">
+        <div className="block">
         <div
           className="video-wide"
           onClick={() => setIsPlayingVideo(true)}
@@ -554,12 +557,14 @@ export default function AboutPageClient({
             </>
           )}
         </div>
+        </div>
       </section>
 
       {/* ========================================================
           3. MISSION & VISION (Split Cards)
           ======================================================== */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="about-mission">
+        <div className="block">
         <div className="head">
           <span className="eyebrow">Mission &amp; Vision</span>
           <h2>
@@ -601,12 +606,14 @@ export default function AboutPageClient({
             </ul>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ========================================================
           4. OUR CORE VALUES (3-Column Principles)
           ======================================================== */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="about-values">
+        <div className="block">
         <div className="head">
           <span className="eyebrow">Our Values</span>
           <h2>
@@ -662,12 +669,14 @@ export default function AboutPageClient({
             </p>
           </article>
         </div>
+        </div>
       </section>
 
       {/* ========================================================
           5. WHAT WE DO: FOUR PILLARS
           ======================================================== */}
-      <section className="block process">
+      <section className="section dcs-stacked-section" id="about-pillars">
+        <div className="block process">
         <div className="head">
           <span className="eyebrow">What We Do</span>
           <h2>
@@ -722,12 +731,14 @@ export default function AboutPageClient({
             <p>Training the next generation</p>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ========================================================
           6. SECURITY STANDARDS (Why Us Split Card)
           ======================================================== */}
-      <section className="block why">
+      <section className="section dcs-stacked-section" id="about-why">
+        <div className="block why">
         <div className="why-card">
           <div>
             <span className="eyebrow light">Security Standards</span>
@@ -811,17 +822,19 @@ export default function AboutPageClient({
             <div>
               <b>
                 24<em>/</em>7
-              </b>
+                </b>
               <span>SOC Monitoring</span>
             </div>
           </div>
+        </div>
         </div>
       </section>
 
       {/* ========================================================
           7. LEADERSHIP & TEAM CALLOUT
           ======================================================== */}
-      <section className="block">
+      <section className="section dcs-stacked-section" id="about-team">
+        <div className="block">
         <div className="join">
           <div>
             <span className="eyebrow light">Leadership &amp; Team</span>
@@ -848,12 +861,14 @@ export default function AboutPageClient({
             <div>+</div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ========================================================
           8. WARM GOLD CTA BAND
           ======================================================== */}
-      <section className="block" style={{ marginBottom: '40px' }}>
+      <section className="section dcs-stacked-section" id="about-cta">
+        <div className="block" style={{ marginBottom: '40px' }}>
         <div className="cta-band">
           <canvas ref={ctaParticlesRef} id="cta-particles" />
           <div>
@@ -871,6 +886,7 @@ export default function AboutPageClient({
               <ArrowUpRight size={16} />
             </Link>
           </div>
+        </div>
         </div>
       </section>
     </div>
