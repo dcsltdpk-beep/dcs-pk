@@ -11,15 +11,19 @@ import { LandingPage } from './models/LandingPage';
 import seedData from '@/database/seed-data.json';
 
 // Helper to guarantee plain objects are passed across Server/Client boundary
-function toPlain<T>(data: T): T {
+export function toPlain<T>(data: T): T {
   if (!data) return data;
   return JSON.parse(
     JSON.stringify(data, (key, value) => {
+      if (key === '_id' && value) {
+        return typeof value === 'object' && value.toString ? value.toString() : String(value);
+      }
       if (value && typeof value === 'object') {
-        if (value._bsontype === 'ObjectID' || value._bsontype === 'ObjectId' || (value.type === 'Buffer' && Array.isArray(value.data))) {
-          return value.toString ? value.toString() : '';
-        }
-        if (key === '_id' && typeof value === 'object') {
+        if (
+          value._bsontype === 'ObjectID' ||
+          value._bsontype === 'ObjectId' ||
+          (value.type === 'Buffer' && Array.isArray(value.data))
+        ) {
           return value.toString ? value.toString() : String(value);
         }
       }
@@ -96,12 +100,13 @@ export async function getServiceBySlug(slug: string): Promise<any | null> {
         $or: [{ slug: resolvedSlug }, { slug }],
         status: 'active',
       }).lean();
-      if (item) return item;
+      if (item) return toPlain(item);
     }
   } catch (err) {
     console.warn(`Using fallback service for slug: ${slug}`);
   }
-  return seedData.services.find((s) => s.slug === resolvedSlug || s.slug === slug) || null;
+  const fallback = seedData.services.find((s) => s.slug === resolvedSlug || s.slug === slug) || null;
+  return toPlain(fallback);
 }
 
 export async function getCourses(): Promise<any[]> {
@@ -126,12 +131,13 @@ export async function getCourseBySlug(slug: string): Promise<any | null> {
         $or: [{ slug: resolvedSlug }, { slug }],
         status: 'active',
       }).lean();
-      if (item) return item;
+      if (item) return toPlain(item);
     }
   } catch (err) {
     console.warn(`Using fallback course for slug: ${slug}`);
   }
-  return seedData.courses.find((c) => c.slug === resolvedSlug || c.slug === slug) || null;
+  const fallback = seedData.courses.find((c) => c.slug === resolvedSlug || c.slug === slug) || null;
+  return toPlain(fallback);
 }
 
 export function slugifyName(text: string): string {
@@ -183,7 +189,7 @@ export async function getTeamMemberBySlug(slug: string): Promise<any | null> {
         ) || null;
       }
       if (item) {
-        return { ...item, slug: item.slug || slugifyName(item.name) };
+        return toPlain({ ...item, slug: item.slug || slugifyName(item.name) });
       }
     }
   } catch (err) {
@@ -194,7 +200,7 @@ export async function getTeamMemberBySlug(slug: string): Promise<any | null> {
       (m.slug && m.slug.toLowerCase() === normalizedSlug) ||
       slugifyName(m.name) === normalizedSlug
   );
-  return fallback ? { ...fallback, slug: fallback.slug || slugifyName(fallback.name) } : null;
+  return fallback ? toPlain({ ...fallback, slug: fallback.slug || slugifyName(fallback.name) }) : null;
 }
 
 export async function getPortfolio(category?: string): Promise<any[]> {
@@ -280,10 +286,11 @@ export async function getLandingPageBySlug(slug: string): Promise<any | null> {
     const conn = await connectDB();
     if (conn) {
       const item = await LandingPage.findOne({ slug, is_active: true }).lean();
-      if (item) return item;
+      if (item) return toPlain(item);
     }
   } catch (err) {
     console.warn(`Using fallback landing page for slug: ${slug}`);
   }
-  return seedData.landingPages.find((l) => l.slug === slug) || null;
+  const fallback = seedData.landingPages.find((l) => l.slug === slug) || null;
+  return toPlain(fallback);
 }

@@ -331,6 +331,21 @@
       "github": "https://github.com",
       "email": "info@dreamcybersecurity.pk",
       "order_num": 5
+    },
+    {
+      "name": "Md Masrur Nakib",
+      "slug": "md-masrur-nakib",
+      "designation": "Cybersecurity Specialist & Systems Architect",
+      "department": "Security & Defense",
+      "initials": "MN",
+      "bio": "Dedicated cybersecurity practitioner specializing in vulnerability assessment, threat intelligence, cloud infrastructure hardening, and defensive security architectures.",
+      "quote": "Proactive defense and zero-trust engineering are the foundation of modern digital resilience.",
+      "photo": "",
+      "linkedin": "https://linkedin.com",
+      "twitter": "https://twitter.com",
+      "github": "https://github.com",
+      "email": "info@dreamcybersecurity.pk",
+      "order_num": 6
     }
   ],
   "portfolio": [

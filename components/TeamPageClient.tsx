@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { FaWhatsapp, FaLinkedinIn, FaEnvelope } from 'react-icons/fa6';
+import { FaWhatsapp, FaEnvelope } from 'react-icons/fa6';
 import { ArrowUpRight, Lock, Code2, GraduationCap, Users2, ShieldCheck } from 'lucide-react';
 
 interface TeamMember {
@@ -89,6 +89,19 @@ const DEFAULT_TEAM_MEMBERS: TeamMember[] = [
     linkedin: 'https://linkedin.com',
     email: 'info@dreamcybersecurity.pk',
     order_num: 5,
+  },
+  {
+    name: 'Md Masrur Nakib',
+    slug: 'md-masrur-nakib',
+    designation: 'Cybersecurity Specialist & Systems Architect',
+    department: 'Security & Defense',
+    initials: 'MN',
+    bio: 'Dedicated cybersecurity practitioner specializing in vulnerability assessment, threat intelligence, cloud infrastructure hardening, and defensive security architectures.',
+    quote: '“Proactive defense and zero-trust engineering are the foundation of modern digital resilience.”',
+    photo: '',
+    linkedin: 'https://linkedin.com',
+    email: 'info@dreamcybersecurity.pk',
+    order_num: 6,
   },
 ];
 
@@ -610,16 +623,6 @@ export default function TeamPageClient({
                   <Link href={`/team/${featuredLeader.slug}`} className="m-profile-btn">
                     View Profile <ArrowUpRight size={14} />
                   </Link>
-                  {featuredLeader.linkedin && (
-                    <a
-                      href={featuredLeader.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${featuredLeader.name} LinkedIn`}
-                    >
-                      <FaLinkedinIn />
-                    </a>
-                  )}
                   {featuredLeader.email && (
                     <a href={`mailto:${featuredLeader.email}`} aria-label={`Email ${featuredLeader.name}`}>
                       <FaEnvelope />
@@ -650,16 +653,6 @@ export default function TeamPageClient({
                   <Link href={`/team/${member.slug}`} className="m-profile-btn">
                     Profile <ArrowUpRight size={14} />
                   </Link>
-                  {member.linkedin && (
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${member.name} LinkedIn`}
-                    >
-                      <FaLinkedinIn />
-                    </a>
-                  )}
                   {member.email && (
                     <a href={`mailto:${member.email}`} aria-label={`Email ${member.name}`}>
                       <FaEnvelope />
