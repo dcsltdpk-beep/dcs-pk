@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import VideosPageClient from '@/components/VideosPageClient';
 import { getVideos, getSettings } from '@/lib/data';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -16,6 +17,9 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords:
       settings.videos_meta_keywords ||
       'cybersecurity videos, tech showcase pakistan, ethical hacking demos, course introductions lahore',
+    alternates: {
+      canonical: getCanonicalUrl('/videos'),
+    },
   };
 }
 

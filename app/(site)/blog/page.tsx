@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { getPosts, getSettings } from '@/lib/data';
 import BlogPageClient from '@/components/BlogPageClient';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -14,6 +15,9 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords:
       settings.blog_meta_keywords ||
       'cyber threat intelligence, pakistani cybersecurity advisories, zero-day alerts, security blog',
+    alternates: {
+      canonical: getCanonicalUrl('/blog'),
+    },
   };
 }
 

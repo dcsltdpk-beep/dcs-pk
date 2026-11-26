@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import CoursesPageClient from '@/components/CoursesPageClient';
 import { getCourses, getSettings } from '@/lib/data';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -16,6 +17,9 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords:
       settings.courses_meta_keywords ||
       'cybersecurity courses lahore, ethical hacking training pakistan, ai automation course, web development training, graphic design course lahore',
+    alternates: {
+      canonical: getCanonicalUrl('/courses'),
+    },
   };
 }
 

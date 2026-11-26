@@ -2,6 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { getCourseBySlug, getCourses, getSettings } from '@/lib/data';
 import CourseDetailPageClient, { CourseData } from '@/components/CourseDetailPageClient';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const revalidate = 60;
 
@@ -44,6 +45,9 @@ export async function generateMetadata({ params }: Props) {
     description:
       course?.overview ||
       `Professional certification and live project curriculum for ${title} at Dream Cyber Security Skill Academy Pakistan.`,
+    alternates: {
+      canonical: getCanonicalUrl(`/courses/${params.slug}`),
+    },
   };
 }
 

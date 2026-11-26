@@ -1,13 +1,32 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ShieldCheck, Terminal } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa6';
 import { getSettings, getServices, getCourses, getPortfolio, getPosts } from '@/lib/data';
+import { getCanonicalUrl } from '@/lib/seo';
 import HeroGlobeExperience from '@/components/HeroGlobeExperience';
 import CyberServiceWheel from '@/components/CyberServiceWheel';
 import { HomeWhoWeAre, HomeLowerSections } from '@/components/HomeSections';
 
 export const revalidate = 60; // ISR cache
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const siteName = settings.site_name || 'Dream Cyber Security Pakistan';
+  const metaTitle = settings.meta_title || `${siteName} | Cyber Defense & IT Solutions`;
+  const metaDesc =
+    settings.meta_description ||
+    'Premier international-standard cybersecurity firm, bespoke software engineering, AI workflow automations, and training academy in Pakistan.';
+
+  return {
+    title: { absolute: metaTitle },
+    description: metaDesc,
+    alternates: {
+      canonical: getCanonicalUrl('/'),
+    },
+  };
+}
 
 async function getData() {
   const [settings, allServices, allCourses, allPortfolio, allPosts] = await Promise.all([

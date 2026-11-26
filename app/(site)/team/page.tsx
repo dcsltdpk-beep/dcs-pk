@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { getTeam, getSettings } from '@/lib/data';
 import TeamPageClient from '@/components/TeamPageClient';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -14,6 +15,9 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords:
       settings.team_meta_keywords ||
       'cybersecurity team pakistan, ethical hackers lahore, full stack developers, AI automation experts',
+    alternates: {
+      canonical: getCanonicalUrl('/team'),
+    },
   };
 }
 

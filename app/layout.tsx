@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import TopProgressBar from '@/components/TopProgressBar';
 import { getSettings } from '@/lib/data';
+import { SITE_URL, getCanonicalUrl } from '@/lib/seo';
 
 export const viewport: Viewport = {
   themeColor: '#28245F',
@@ -30,10 +31,13 @@ export async function generateMetadata(): Promise<Metadata> {
     settings.google_verification || 'pewPU0U99OKBT9gp2PI4t2h_uS--HT4ISi200Px3K9E';
   const ogImage = settings.og_image || '/icon.png';
 
-  const metadataBaseUrl = new URL(siteUrl.startsWith('http') ? siteUrl : `https://${siteUrl}`);
+  const metadataBaseUrl = new URL(SITE_URL);
 
   return {
     metadataBase: metadataBaseUrl,
+    alternates: {
+      canonical: SITE_URL,
+    },
     title: {
       default: metaTitle,
       template: `%s | ${siteName}`,

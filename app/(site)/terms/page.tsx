@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { getSettings } from '@/lib/data';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -9,6 +10,9 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { absolute: title },
     description: settings.terms_meta_description || 'Terms of service, engagement conditions, and legal policies of Dream Cyber Security Pakistan.',
     keywords: settings.terms_meta_keywords || 'terms of service, legal policy, sla commitments',
+    alternates: {
+      canonical: getCanonicalUrl('/terms'),
+    },
   };
 }
 

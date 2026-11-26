@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getLandingPageBySlug } from '@/lib/data';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const revalidate = 60;
 
@@ -15,6 +16,9 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: page.meta_title || `${page.title} | Dream Cyber Security`,
     description: page.meta_description || page.subheadline,
+    alternates: {
+      canonical: getCanonicalUrl(`/landing/${params.slug}`),
+    },
   };
 }
 

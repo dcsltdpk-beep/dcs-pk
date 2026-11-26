@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import AboutPageClient from '@/components/AboutPageClient';
 import { getSettings } from '@/lib/data';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -15,6 +16,9 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords:
       settings.about_meta_keywords ||
       'about dream cyber security, cybersecurity company lahore, enterprise defense leadership pakistan, zero trust architecture',
+    alternates: {
+      canonical: getCanonicalUrl('/about'),
+    },
   };
 }
 

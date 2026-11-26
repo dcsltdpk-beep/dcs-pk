@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import ServicesPageClient from '@/components/ServicesPageClient';
 import { getSettings } from '@/lib/data';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -16,6 +17,9 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords:
       settings.services_meta_keywords ||
       'cybersecurity services pakistan, software development lahore, SOC monitoring, penetration testing, AI automation',
+    alternates: {
+      canonical: getCanonicalUrl('/services'),
+    },
   };
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import PortfolioPageClient from '@/components/PortfolioPageClient';
 import { getPortfolio, getSettings } from '@/lib/data';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -16,6 +17,9 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords:
       settings.portfolio_meta_keywords ||
       'cybersecurity portfolio pakistan, enterprise web projects lahore, threat explainer 3d video, autonomous ai agents karachi',
+    alternates: {
+      canonical: getCanonicalUrl('/portfolio'),
+    },
   };
 }
 

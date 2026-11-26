@@ -1,11 +1,9 @@
 import { MetadataRoute } from 'next';
 import { getServices, getCourses, getPosts, getTeam } from '@/lib/data';
 import seedData from '@/database/seed-data.json';
+import { SITE_URL, getCanonicalUrl } from '@/lib/seo';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
-  const baseUrl = (rawUrl && !rawUrl.includes('localhost') ? rawUrl : 'https://www.dreamcybersecurity.pk').replace(/\/+$/, '');
-
   const staticPages = [
     '',
     '/about',
@@ -20,7 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/privacy',
     '/terms',
   ].map((route) => ({
-    url: `${baseUrl}${route}`,
+    url: getCanonicalUrl(route),
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: route === '' ? 1.0 : 0.8,
@@ -35,35 +33,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ]);
 
     const serviceUrls = services.map((s: any) => ({
-      url: `${baseUrl}/services/${s.slug}`,
+      url: getCanonicalUrl(`/services/${s.slug}`),
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.85,
     }));
 
     const courseUrls = courses.map((c: any) => ({
-      url: `${baseUrl}/courses/${c.slug}`,
+      url: getCanonicalUrl(`/courses/${c.slug}`),
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.85,
     }));
 
     const postUrls = posts.map((p: any) => ({
-      url: `${baseUrl}/blog/${p.slug}`,
+      url: getCanonicalUrl(`/blog/${p.slug}`),
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.75,
     }));
 
     const teamUrls = team.map((m: any) => ({
-      url: `${baseUrl}/team/${m.slug}`,
+      url: getCanonicalUrl(`/team/${m.slug}`),
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.75,
     }));
 
     const landingUrls = seedData.landingPages.map((l: any) => ({
-      url: `${baseUrl}/landing/${l.slug}`,
+      url: getCanonicalUrl(`/landing/${l.slug}`),
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.7,

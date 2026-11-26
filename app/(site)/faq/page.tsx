@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { getFaqs, getSettings } from '@/lib/data';
 import FaqPageClient from '@/components/FaqPageClient';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -14,6 +15,9 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords:
       settings.faq_meta_keywords ||
       'cybersecurity faq pakistan, penetration testing questions, enterprise IT pricing faq, dcs academy inquiries',
+    alternates: {
+      canonical: getCanonicalUrl('/faq'),
+    },
   };
 }
 

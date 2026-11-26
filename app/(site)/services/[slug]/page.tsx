@@ -2,6 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import ServiceDetailPageClient from '@/components/ServiceDetailPageClient';
 import { getServiceBySlug, getServices, getSettings } from '@/lib/data';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const revalidate = 60;
 
@@ -31,6 +32,9 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${service.title} | Dream Cyber Security Pakistan`,
     description: service.summary,
+    alternates: {
+      canonical: getCanonicalUrl(`/services/${params.slug}`),
+    },
   };
 }
 

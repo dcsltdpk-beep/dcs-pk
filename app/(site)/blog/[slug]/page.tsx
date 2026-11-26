@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { getPostBySlug, getPosts } from '@/lib/data';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const revalidate = 60;
 
@@ -19,8 +20,7 @@ export async function generateMetadata({ params }: Props) {
   const post = await getPostBySlug(params.slug);
   if (!post) return { title: 'Post Not Found | Dream Cyber Security' };
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dreamcybersecurity.pk';
-  const postUrl = `${siteUrl}/blog/${post.slug}`;
+  const postUrl = getCanonicalUrl(`/blog/${post.slug}`);
   const ogImages = post.featured_image
     ? [{ url: post.featured_image, width: 1200, height: 630, alt: post.title }]
     : undefined;

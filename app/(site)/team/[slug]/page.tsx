@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getTeam, getTeamMemberBySlug, getSettings, toPlain } from '@/lib/data';
 import TeamMemberDetailClient, { TeamMemberData } from '@/components/TeamMemberDetailClient';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const revalidate = 60;
 
@@ -25,6 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${member.name} | Dream Cyber Security Pakistan`,
       description: member.bio,
       images: member.photo ? [{ url: member.photo }] : [],
+    },
+    alternates: {
+      canonical: getCanonicalUrl(`/team/${params.slug}`),
     },
   };
 }

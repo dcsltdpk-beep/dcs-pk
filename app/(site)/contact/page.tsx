@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import ContactPageClient from '@/components/ContactPageClient';
 import { getSettings } from '@/lib/data';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -16,6 +17,9 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords:
       settings.contact_meta_keywords ||
       'contact dream cyber security, hire penetration testers pakistan, cybersecurity consultation lahore',
+    alternates: {
+      canonical: getCanonicalUrl('/contact'),
+    },
   };
 }
 
