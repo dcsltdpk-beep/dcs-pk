@@ -848,7 +848,7 @@ export default function Header({
 
           <button
             type="button"
-            className="dcs-burger"
+            className={`dcs-burger ${mobileOpen ? 'active' : ''}`}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
             onClick={(e) => {

@@ -15674,51 +15674,75 @@ footer.site-footer {
   height: 14px;
 }
 
-/* ---------- mobile ---------- */
+/* ---------- mobile burger & drawer ---------- */
 .dcs-burger {
   display: none;
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  border: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(249, 172, 67, 0.45);
   cursor: pointer;
-  background: var(--navy-700);
+  background: var(--navy-800, #1c1949);
   position: relative;
+  flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 4px 14px -3px rgba(28, 25, 73, 0.35);
+  transition: all 0.25s ease;
+}
+
+.dcs-burger:hover {
+  background: var(--navy-700, #25225c);
+  border-color: var(--gold, #f9ac43);
+  transform: translateY(-1px);
 }
 
 .dcs-burger i {
   position: absolute;
-  left: 13px;
-  width: 20px;
-  height: 2px;
+  left: 11px;
+  width: 22px;
+  height: 2.5px;
   border-radius: 2px;
-  background: var(--gold);
-  transition: transform .3s, opacity .3s, top .3s;
+  background: var(--gold, #f9ac43);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease, top 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dcs-burger i:nth-child(1) {
-  top: 16px;
+  top: 13px;
 }
 
 .dcs-burger i:nth-child(2) {
-  top: 22px;
+  top: 20.5px;
 }
 
 .dcs-burger i:nth-child(3) {
   top: 28px;
 }
 
-.dcs-header.menu-open .dcs-burger i:nth-child(1) {
-  top: 22px;
+.dcs-header.menu-open .dcs-burger,
+.dcs-burger.active {
+  background: var(--navy-900, #14132b);
+  border-color: var(--gold, #f9ac43);
+  box-shadow: 0 4px 16px rgba(249, 172, 67, 0.35);
+}
+
+.dcs-header.menu-open .dcs-burger i:nth-child(1),
+.dcs-burger.active i:nth-child(1) {
+  top: 20.5px;
   transform: rotate(45deg);
 }
 
-.dcs-header.menu-open .dcs-burger i:nth-child(2) {
+.dcs-header.menu-open .dcs-burger i:nth-child(2),
+.dcs-burger.active i:nth-child(2) {
   opacity: 0;
+  transform: scaleX(0);
 }
 
-.dcs-header.menu-open .dcs-burger i:nth-child(3) {
-  top: 22px;
+.dcs-header.menu-open .dcs-burger i:nth-child(3),
+.dcs-burger.active i:nth-child(3) {
+  top: 20.5px;
   transform: rotate(-45deg);
 }
 
@@ -15726,73 +15750,96 @@ footer.site-footer {
   display: none;
 }
 
-@media (max-width: 1180px) {
-  .dcs-btn-ghost {
-    display: none;
+/* Tablet & Laptop Nav Adjustments (1081px - 1240px) */
+@media (max-width: 1240px) and (min-width: 1081px) {
+  .dcs-bar {
+    gap: 10px;
+    padding: 8px 10px 8px 16px;
   }
-
   .dcs-link {
-    padding: 10px 11px;
-    font-size: 14px;
+    padding: 9px 10px;
+    font-size: 13.5px;
   }
-
+  .dcs-btn {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
   .dcs-cols-3 {
     grid-template-columns: 1fr 1fr;
   }
-
   .dcs-cols-3 .dcs-promo {
     grid-column: 1 / -1;
   }
 }
 
-@media (max-width: 1020px) {
+/* ========================================================
+   RESPONSIVE MOBILE & TABLET NAVBAR (< 1080px)
+   - Replaces WhatsApp button with Burger icon
+   - Prevents scroll shifting (constant horizontal padding)
+   - Clean, professional drawer navigation
+   ======================================================== */
+@media (max-width: 1080px) {
   .dcs-header {
-    padding: 8px 12px 10px;
+    padding: 10px 16px !important;
+  }
+
+  .dcs-header.scrolled {
+    padding: 6px 16px !important;
   }
 
   .dcs-bar {
-    padding: 8px 10px 8px 14px;
-    border-radius: 18px;
+    padding: 8px 12px 8px 16px !important;
+    border-radius: 20px !important;
+    gap: 12px !important;
   }
 
   .dcs-header.scrolled .dcs-bar {
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding: 6px 12px 6px 16px !important;
+    border-radius: 18px !important;
   }
 
+  /* Hide desktop menu, mega panels, and top-bar actions */
   .dcs-nav,
   .dcs-mega,
-  .dcs-actions .dcs-btn-main {
-    display: none;
+  .dcs-actions .dcs-btn-main,
+  .dcs-header a.dcs-btn-ghost,
+  .dcs-header .dcs-btn-ghost {
+    display: none !important;
   }
 
+  /* Show mobile hamburger icon cleanly */
   .dcs-burger {
-    display: block;
+    display: flex !important;
   }
 
+  /* Mobile slide-down drawer */
   .dcs-drawer {
     display: block;
     position: absolute;
-    left: 12px;
-    right: 12px;
+    left: 0;
+    right: 0;
     top: calc(100% + 8px);
-    max-height: calc(100vh - 90px);
-    overflow: auto;
-    padding: 12px;
+    max-height: min(calc(100vh - 85px), 720px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px 14px 20px;
     border-radius: 20px;
-    background: #fff;
-    border: 1px solid rgba(249, 172, 67, 0.28);
-    box-shadow: 0 40px 80px -30px rgba(28, 25, 73, .5);
+    background: #ffffff;
+    border: 1px solid rgba(249, 172, 67, 0.35);
+    box-shadow: 0 24px 60px -15px rgba(28, 25, 73, 0.45);
+    z-index: 1001;
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transform: translateY(-8px);
-    transition: all .3s;
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.25s ease;
   }
 
   .dcs-header.menu-open .dcs-drawer {
     opacity: 1;
     visibility: visible;
-    transform: none;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
   .dcs-drawer details {
@@ -15800,23 +15847,23 @@ footer.site-footer {
   }
 
   .dcs-drawer summary,
-  .dcs-drawer>a.top {
+  .dcs-drawer > a.top {
     list-style: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 12px;
+    padding: 14px 12px;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 15.5px;
     color: var(--navy-800);
     text-decoration: none;
     cursor: pointer;
     text-shadow: none !important;
-    transition: color .2s;
+    transition: color 0.2s;
   }
 
   .dcs-drawer summary:hover,
-  .dcs-drawer>a.top:hover {
+  .dcs-drawer > a.top:hover {
     color: var(--blue) !important;
     text-shadow: none !important;
   }
@@ -15828,7 +15875,7 @@ footer.site-footer {
   .dcs-drawer summary svg {
     width: 18px;
     height: 18px;
-    transition: transform .3s;
+    transition: transform 0.3s;
   }
 
   .dcs-drawer details[open] summary svg {
@@ -15853,7 +15900,7 @@ footer.site-footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    padding: 14px 4px 4px;
+    padding: 16px 4px 4px;
   }
 
   .dcs-drawer .cta a {
@@ -15862,23 +15909,48 @@ footer.site-footer {
 
   .dcs-wa {
     color: #fff !important;
-    background: #1faa59 !important;
+    background: #25D366 !important;
     text-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 700;
+    padding: 12px 16px;
+    border-radius: 14px;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .dcs-wa:hover {
+    background: #20bd5a !important;
+    color: #fff !important;
+    transform: translateY(-1px);
   }
 }
 
-@media (max-width: 420px) {
+/* Medium & Small Mobile Screens (<= 540px) */
+@media (max-width: 540px) {
   .dcs-header {
-    padding: 6px 8px 8px;
+    padding: 8px 12px !important;
+  }
+
+  .dcs-header.scrolled {
+    padding: 6px 12px !important;
   }
 
   .dcs-bar {
-    padding: 6px 8px 6px 12px;
-    border-radius: 16px;
+    padding: 6px 10px 6px 12px !important;
+    border-radius: 18px !important;
+    gap: 8px !important;
   }
 
-  .dcs-logo b {
-    font-size: 13.5px;
+  .dcs-header.scrolled .dcs-bar {
+    padding: 5px 10px 5px 12px !important;
+    border-radius: 16px !important;
+  }
+
+  .dcs-logo {
+    gap: 8px;
   }
 
   .dcs-logo img {
@@ -15886,13 +15958,123 @@ footer.site-footer {
     height: 36px;
   }
 
+  .dcs-logo b {
+    font-size: 13.5px;
+    line-height: 1.1;
+  }
+
+  .dcs-logo small {
+    font-size: 8.5px;
+    padding: 1px 5px;
+  }
+
+  .dcs-burger {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .dcs-burger i {
+    left: 9px;
+    width: 20px;
+    height: 2.2px;
+  }
+
+  .dcs-burger i:nth-child(1) {
+    top: 12px;
+  }
+
+  .dcs-burger i:nth-child(2) {
+    top: 18.5px;
+  }
+
+  .dcs-burger i:nth-child(3) {
+    top: 25px;
+  }
+
+  .dcs-header.menu-open .dcs-burger i:nth-child(1),
+  .dcs-burger.active i:nth-child(1) {
+    top: 18.5px;
+  }
+
+  .dcs-header.menu-open .dcs-burger i:nth-child(3),
+  .dcs-burger.active i:nth-child(3) {
+    top: 18.5px;
+  }
+
   .dcs-drawer {
-    left: 8px;
-    right: 8px;
+    padding: 10px 12px 16px;
   }
 
   .dcs-drawer .cta {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Extra Small Phones (<= 380px) */
+@media (max-width: 380px) {
+  .dcs-header {
+    padding: 6px 8px !important;
+  }
+
+  .dcs-header.scrolled {
+    padding: 5px 8px !important;
+  }
+
+  .dcs-bar {
+    padding: 5px 8px 5px 10px !important;
+    border-radius: 16px !important;
+    gap: 6px !important;
+  }
+
+  .dcs-header.scrolled .dcs-bar {
+    padding: 4px 8px 4px 10px !important;
+    border-radius: 14px !important;
+  }
+
+  .dcs-logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .dcs-logo b {
+    font-size: 12px;
+  }
+
+  .dcs-logo small {
+    display: none;
+  }
+
+  .dcs-burger {
+    width: 38px;
+    height: 38px;
+  }
+
+  .dcs-burger i {
+    left: 9px;
+    width: 18px;
+  }
+
+  .dcs-burger i:nth-child(1) {
+    top: 11px;
+  }
+
+  .dcs-burger i:nth-child(2) {
+    top: 17.5px;
+  }
+
+  .dcs-burger i:nth-child(3) {
+    top: 24px;
+  }
+
+  .dcs-header.menu-open .dcs-burger i:nth-child(1),
+  .dcs-burger.active i:nth-child(1) {
+    top: 17.5px;
+  }
+
+  .dcs-header.menu-open .dcs-burger i:nth-child(3),
+  .dcs-burger.active i:nth-child(3) {
+    top: 17.5px;
   }
 }
 
