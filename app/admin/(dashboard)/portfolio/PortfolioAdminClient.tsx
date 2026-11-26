@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePermissions } from '@/app/admin/AdminContext';
 
 interface PortfolioItem {
   _id?: string;
@@ -14,6 +15,7 @@ interface PortfolioItem {
 }
 
 export default function PortfolioAdminClient({ initialItems }: { initialItems: PortfolioItem[] }) {
+  const { canCreate, canEdit, canDelete } = usePermissions('portfolio');
   const [items, setItems] = useState<PortfolioItem[]>(initialItems);
   const [editing, setEditing] = useState<PortfolioItem | null>(null);
   const [loading, setLoading] = useState(false);
@@ -71,9 +73,11 @@ export default function PortfolioAdminClient({ initialItems }: { initialItems: P
           <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Case Studies</span>
           <h1>Manage <span className="text-gradient">Portfolio Work</span></h1>
         </div>
-        <button onClick={() => setEditing(emptyForm)} className="btn btn-primary">
-          + Add New Project
-        </button>
+        {canCreate && (
+          <button onClick={() => setEditing(emptyForm)} className="btn btn-primary">
+            + Add New Project
+          </button>
+        )}
       </div>
 
       {editing && (
@@ -174,20 +178,27 @@ export default function PortfolioAdminClient({ initialItems }: { initialItems: P
                 <td><span className="badge badge-cyan">{item.category}</span></td>
                 <td>{item.client_name || '—'}</td>
                 <td style={{ display: 'flex', gap: '8px' }}>
-                  <button
-                    onClick={() => setEditing(item)}
-                    className="btn btn-outline"
-                    style={{ padding: '4px 10px', fontSize: '0.8rem' }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => item._id && handleDelete(item._id)}
-                    className="btn btn-danger"
-                    style={{ padding: '4px 10px', fontSize: '0.8rem' }}
-                  >
-                    Delete
-                  </button>
+                  {canEdit && (
+                    <button
+                      onClick={() => setEditing(item)}
+                      className="btn btn-outline"
+                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                    >
+                      Edit
+                    </button>
+                  )}
+                  {canDelete && (
+                    <button
+                      onClick={() => item._id && handleDelete(item._id)}
+                      className="btn btn-danger"
+                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                    >
+                      Delete
+                    </button>
+                  )}
+                  {!canEdit && !canDelete && (
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>View Only</span>
+                  )}
                 </td>
               </tr>
             ))}

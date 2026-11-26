@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import { usePermissions } from '@/app/admin/AdminContext';
 
 interface PostItem {
   _id?: string;
@@ -18,6 +19,7 @@ interface PostItem {
 }
 
 export default function PostsAdminClient({ initialPosts }: { initialPosts: PostItem[] }) {
+  const { canCreate, canEdit, canDelete } = usePermissions('posts');
   const [posts, setPosts] = useState<PostItem[]>(initialPosts);
   const [editing, setEditing] = useState<PostItem | null>(null);
   const [loading, setLoading] = useState(false);
@@ -146,9 +148,11 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
           <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Advisories & News</span>
           <h1>Manage <span className="text-gradient">Blog Articles</span></h1>
         </div>
-        <button onClick={() => { setEditing(emptyForm); setImageError(null); }} className="btn btn-primary">
-          + Create New Article
-        </button>
+        {canCreate && (
+          <button onClick={() => { setEditing(emptyForm); setImageError(null); }} className="btn btn-primary">
+            + Create New Article
+          </button>
+        )}
       </div>
 
       {editing && (
@@ -570,20 +574,27 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                     >
                       View ↗
                     </a>
-                    <button
-                      onClick={() => { setEditing(post); setImageError(null); }}
-                      className="btn btn-outline"
-                      style={{ padding: '4px 10px', fontSize: '0.78rem' }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => post._id && handleDelete(post._id)}
-                      className="btn btn-danger"
-                      style={{ padding: '4px 10px', fontSize: '0.78rem' }}
-                    >
-                      Delete
-                    </button>
+                    {canEdit && (
+                      <button
+                        onClick={() => { setEditing(post); setImageError(null); }}
+                        className="btn btn-outline"
+                        style={{ padding: '4px 10px', fontSize: '0.78rem' }}
+                      >
+                        Edit
+                      </button>
+                    )}
+                    {canDelete && (
+                      <button
+                        onClick={() => post._id && handleDelete(post._id)}
+                        className="btn btn-danger"
+                        style={{ padding: '4px 10px', fontSize: '0.78rem' }}
+                      >
+                        Delete
+                      </button>
+                    )}
+                    {!canEdit && !canDelete && (
+                      <span style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>View Only</span>
+                    )}
                   </div>
                 </td>
               </tr>

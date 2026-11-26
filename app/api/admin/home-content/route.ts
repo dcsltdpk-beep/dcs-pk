@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
-import { getAdminSession } from '@/lib/auth';
+import { requireApiPermission } from '@/lib/auth';
 import { connectDB } from '@/lib/db';
 import { Setting } from '@/lib/models/Setting';
 
 export async function GET() {
+  const auth = await requireApiPermission('home-content', 'view');
+  if ('error' in auth) return auth.error;
+
   await connectDB();
   const settings = await Setting.find({}).lean();
   const map: Record<string, string> = {};
@@ -14,8 +17,8 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = await getAdminSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const auth = await requireApiPermission('home-content', 'edit');
+  if ('error' in auth) return auth.error;
 
   const body = await req.json();
   await connectDB();

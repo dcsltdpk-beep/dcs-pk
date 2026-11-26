@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePermissions } from '@/app/admin/AdminContext';
 
 interface FaqItem {
   _id?: string;
@@ -11,6 +12,7 @@ interface FaqItem {
 }
 
 export default function FaqsAdminClient({ initialFaqs }: { initialFaqs: FaqItem[] }) {
+  const { canCreate, canEdit, canDelete } = usePermissions('faqs');
   const [faqs, setFaqs] = useState<FaqItem[]>(initialFaqs);
   const [editing, setEditing] = useState<FaqItem | null>(null);
   const [loading, setLoading] = useState(false);
@@ -65,9 +67,11 @@ export default function FaqsAdminClient({ initialFaqs }: { initialFaqs: FaqItem[
           <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Knowledge Base</span>
           <h1>Manage <span className="text-gradient">Frequently Asked Questions</span></h1>
         </div>
-        <button onClick={() => setEditing(emptyForm)} className="btn btn-primary">
-          + Add FAQ Entry
-        </button>
+        {canCreate && (
+          <button onClick={() => setEditing(emptyForm)} className="btn btn-primary">
+            + Add FAQ Entry
+          </button>
+        )}
       </div>
 
       {editing && (
@@ -152,20 +156,27 @@ export default function FaqsAdminClient({ initialFaqs }: { initialFaqs: FaqItem[
                 <td><span className="badge badge-cyan">{faq.category}</span></td>
                 <td style={{ fontWeight: 600 }}>{faq.question}</td>
                 <td style={{ display: 'flex', gap: '8px' }}>
-                  <button
-                    onClick={() => setEditing(faq)}
-                    className="btn btn-outline"
-                    style={{ padding: '4px 10px', fontSize: '0.8rem' }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => faq._id && handleDelete(faq._id)}
-                    className="btn btn-danger"
-                    style={{ padding: '4px 10px', fontSize: '0.8rem' }}
-                  >
-                    Delete
-                  </button>
+                  {canEdit && (
+                    <button
+                      onClick={() => setEditing(faq)}
+                      className="btn btn-outline"
+                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                    >
+                      Edit
+                    </button>
+                  )}
+                  {canDelete && (
+                    <button
+                      onClick={() => faq._id && handleDelete(faq._id)}
+                      className="btn btn-danger"
+                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                    >
+                      Delete
+                    </button>
+                  )}
+                  {!canEdit && !canDelete && (
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>View Only</span>
+                  )}
                 </td>
               </tr>
             ))}

@@ -4514,7 +4514,7 @@ footer.site-footer {
   filter: drop-shadow(0 0 16px rgba(249, 172, 67, 0.85));
 }
 
-.label,
+.services-dial-node-btn .label,
 .services-dial-node-label {
   position: absolute;
   top: calc(100% + 6px);
@@ -4529,6 +4529,7 @@ footer.site-footer {
 }
 
 .icon.is-top .label,
+.services-dial-node-btn.is-top .label,
 .services-dial-node-btn.is-top .services-dial-node-label {
   opacity: 0;
   transform: translateY(-4px);
@@ -17260,6 +17261,156 @@ footer.site-footer {
   }
 }
 
+
+
+/* ==========================================================================
+   Admin Sub-Admin Management & Modal Responsive Styles
+   ========================================================================== */
+.admin-subadmin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(6, 8, 22, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  overflow-y: auto;
+}
+
+.admin-subadmin-modal-card {
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background: #110e2e;
+  border: 1px solid rgba(0, 245, 255, 0.35);
+  border-radius: var(--radius-md, 12px);
+  box-shadow: 0 10px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 245, 255, 0.15);
+  overflow: hidden;
+}
+
+.admin-subadmin-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  background: #17133f;
+  border-bottom: 1px solid rgba(63, 57, 131, 0.8);
+  flex-shrink: 0;
+}
+
+.admin-subadmin-modal-body {
+  padding: 1.75rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.admin-subadmin-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  background: #17133f;
+  border-top: 1px solid rgba(63, 57, 131, 0.8);
+  flex-shrink: 0;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admin-field-group {
+  margin-bottom: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.admin-field-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  position: static !important;
+  letter-spacing: 0.2px !important;
+}
+
+.admin-field-hint {
+  font-size: 0.78rem !important;
+  color: #a5a2cc !important;
+  margin: 0 0 0.25rem 0 !important;
+  line-height: 1.4 !important;
+}
+
+.admin-field-error {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #ff6b6b;
+  font-size: 0.78rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+.admin-input-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: #0d0a27;
+  border: 1px solid rgba(63, 57, 131, 0.9);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.admin-input-control:focus {
+  outline: none;
+  border-color: var(--accent-cyan, #00f5ff);
+  box-shadow: 0 0 12px rgba(0, 245, 255, 0.25);
+  background: #100d30;
+}
+
+.admin-input-control.is-invalid {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.25) !important;
+}
+
+.admin-input-control.is-valid {
+  border-color: #10b981;
+}
+
+.admin-input-control:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(13, 10, 39, 0.5);
+}
+
+.admin-matrix-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #00f5ff;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .admin-subadmin-modal-card {
+    max-height: 95vh;
+  }
+  .admin-subadmin-modal-header,
+  .admin-subadmin-modal-body,
+  .admin-subadmin-modal-footer {
+    padding: 1rem;
+  }
+}
+
+
 /* ========================================================
    HOME PAGE MODERN SECTIONS (Sora Typography & Yellow/Light Panels)
    ======================================================== */
@@ -18277,3 +18428,151 @@ footer.site-footer {
     margin-left: 0;
   }
 }
+
+/* ==========================================================================
+   Admin Sub-Admin Management & Modal Responsive Styles
+   ========================================================================== */
+.admin-subadmin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(6, 8, 22, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  overflow-y: auto;
+}
+
+.admin-subadmin-modal-card {
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background: #110e2e;
+  border: 1px solid rgba(0, 245, 255, 0.35);
+  border-radius: var(--radius-md, 12px);
+  box-shadow: 0 10px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 245, 255, 0.15);
+  overflow: hidden;
+}
+
+.admin-subadmin-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  background: #17133f;
+  border-bottom: 1px solid rgba(63, 57, 131, 0.8);
+  flex-shrink: 0;
+}
+
+.admin-subadmin-modal-body {
+  padding: 1.75rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.admin-subadmin-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  background: #17133f;
+  border-top: 1px solid rgba(63, 57, 131, 0.8);
+  flex-shrink: 0;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admin-field-group {
+  margin-bottom: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.admin-field-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  position: static !important;
+  letter-spacing: 0.2px !important;
+}
+
+.admin-field-hint {
+  font-size: 0.78rem !important;
+  color: #a5a2cc !important;
+  margin: 0 0 0.25rem 0 !important;
+  line-height: 1.4 !important;
+}
+
+.admin-field-error {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #ff6b6b;
+  font-size: 0.78rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+.admin-input-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: #0d0a27;
+  border: 1px solid rgba(63, 57, 131, 0.9);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.admin-input-control:focus {
+  outline: none;
+  border-color: var(--accent-cyan, #00f5ff);
+  box-shadow: 0 0 12px rgba(0, 245, 255, 0.25);
+  background: #100d30;
+}
+
+.admin-input-control.is-invalid {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.25) !important;
+}
+
+.admin-input-control.is-valid {
+  border-color: #10b981;
+}
+
+.admin-input-control:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(13, 10, 39, 0.5);
+}
+
+.admin-matrix-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #00f5ff;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .admin-subadmin-modal-card {
+    max-height: 95vh;
+  }
+  .admin-subadmin-modal-header,
+  .admin-subadmin-modal-body,
+  .admin-subadmin-modal-footer {
+    padding: 1rem;
+  }
+}
+

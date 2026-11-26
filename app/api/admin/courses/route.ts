@@ -1,19 +1,23 @@
 import { NextResponse } from 'next/server';
-import { getAdminSession } from '@/lib/auth';
+import { requireApiPermission } from '@/lib/auth';
 import { connectDB } from '@/lib/db';
 import { Course } from '@/lib/models/Course';
 
 export async function GET() {
+  const auth = await requireApiPermission('courses', 'view');
+  if ('error' in auth) return auth.error;
+
   await connectDB();
   const courses = await Course.find().sort({ order_num: 1 }).lean();
   return NextResponse.json(courses);
 }
 
 export async function POST(req: Request) {
-  const session = await getAdminSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
   const data = await req.json();
+  const action = data._id ? 'edit' : 'create';
+  const auth = await requireApiPermission('courses', action);
+  if ('error' in auth) return auth.error;
+
   await connectDB();
 
   if (!data.slug) {
@@ -31,8 +35,8 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const session = await getAdminSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const auth = await requireApiPermission('courses', 'delete');
+  if ('error' in auth) return auth.error;
 
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');

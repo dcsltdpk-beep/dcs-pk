@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Icon from '@/components/Icon';
+import { usePermissions } from '@/app/admin/AdminContext';
 
 interface Inquiry {
   _id: string;
@@ -17,6 +18,7 @@ interface Inquiry {
 }
 
 export default function InquiriesClient({ initialInquiries }: { initialInquiries: Inquiry[] }) {
+  const { canEdit, canDelete } = usePermissions('inquiries');
   const [inquiries, setInquiries] = useState<Inquiry[]>(initialInquiries);
   const [selected, setSelected] = useState<Inquiry | null>(null);
 
@@ -77,7 +79,7 @@ export default function InquiriesClient({ initialInquiries }: { initialInquiries
             <div>
               <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>{selected.type}</span>
               <h2 style={{ fontSize: '1.5rem', margin: 0 }}>{selected.name}</h2>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: '4px 0 0 0' }}>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: '4px 0 0 0' }} suppressHydrationWarning>
                 {selected.email} {selected.phone && `• ${selected.phone}`} • Received: {new Date(selected.createdAt).toLocaleString()}
               </p>
             </div>
@@ -96,12 +98,12 @@ export default function InquiriesClient({ initialInquiries }: { initialInquiries
           </div>
 
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-            {selected.status !== 'read' && (
+            {canEdit && selected.status !== 'read' && (
               <button onClick={() => handleUpdateStatus(selected._id, 'read')} className="btn btn-outline">
                 Mark as Read
               </button>
             )}
-            {selected.status !== 'responded' && (
+            {canEdit && selected.status !== 'responded' && (
               <button onClick={() => handleUpdateStatus(selected._id, 'responded')} className="btn btn-primary">
                 Mark as Responded
               </button>
@@ -114,9 +116,11 @@ export default function InquiriesClient({ initialInquiries }: { initialInquiries
                 <Icon name="whatsapp" size={16} /> WhatsApp Client
               </a>
             )}
-            <button onClick={() => handleDelete(selected._id)} className="btn btn-danger" style={{ marginLeft: 'auto' }}>
-              Delete Lead
-            </button>
+            {canDelete && (
+              <button onClick={() => handleDelete(selected._id)} className="btn btn-danger" style={{ marginLeft: 'auto' }}>
+                Delete Lead
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -138,7 +142,7 @@ export default function InquiriesClient({ initialInquiries }: { initialInquiries
           <tbody>
             {inquiries.map((inq) => (
               <tr key={inq._id}>
-                <td>{new Date(inq.createdAt).toLocaleDateString()}</td>
+                <td suppressHydrationWarning>{new Date(inq.createdAt).toLocaleDateString()}</td>
                 <td><span className="badge badge-cyan">{inq.type}</span></td>
                 <td style={{ fontWeight: 600 }}>{inq.name}</td>
                 <td>
@@ -159,13 +163,15 @@ export default function InquiriesClient({ initialInquiries }: { initialInquiries
                   >
                     View
                   </button>
-                  <button
-                    onClick={() => handleDelete(inq._id)}
-                    className="btn btn-danger"
-                    style={{ padding: '4px 8px', fontSize: '0.8rem' }}
-                  >
-                    Delete
-                  </button>
+                  {canDelete && (
+                    <button
+                      onClick={() => handleDelete(inq._id)}
+                      className="btn btn-danger"
+                      style={{ padding: '4px 8px', fontSize: '0.8rem' }}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

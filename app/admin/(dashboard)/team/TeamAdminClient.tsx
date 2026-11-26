@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import QRCode from 'qrcode';
+import { usePermissions } from '@/app/admin/AdminContext';
 
 interface TeamMember {
   _id?: string;
@@ -18,6 +19,7 @@ interface TeamMember {
 }
 
 export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMember[] }) {
+  const { canCreate, canEdit, canDelete } = usePermissions('team');
   const [team, setTeam] = useState<TeamMember[]>(initialTeam);
   const [editing, setEditing] = useState<TeamMember | null>(null);
   const [loading, setLoading] = useState(false);
@@ -198,9 +200,11 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
           <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Company Roster</span>
           <h1>Manage <span className="text-gradient">Team Members</span></h1>
         </div>
-        <button onClick={() => { setEditing(emptyForm); setUploadError(null); }} className="btn btn-primary">
-          + Add Team Member
-        </button>
+        {canCreate && (
+          <button onClick={() => { setEditing(emptyForm); setUploadError(null); }} className="btn btn-primary">
+            + Add Team Member
+          </button>
+        )}
       </div>
 
       {editing && (
@@ -532,20 +536,27 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                     >
                       📱 QR Code
                     </button>
-                    <button
-                      onClick={() => { setEditing(member); setUploadError(null); }}
-                      className="btn btn-outline"
-                      style={{ padding: '3px 8px', fontSize: '0.78rem' }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => member._id && handleDelete(member._id)}
-                      className="btn btn-danger"
-                      style={{ padding: '3px 8px', fontSize: '0.78rem' }}
-                    >
-                      Delete
-                    </button>
+                    {canEdit && (
+                      <button
+                        onClick={() => { setEditing(member); setUploadError(null); }}
+                        className="btn btn-outline"
+                        style={{ padding: '3px 8px', fontSize: '0.78rem' }}
+                      >
+                        Edit
+                      </button>
+                    )}
+                    {canDelete && (
+                      <button
+                        onClick={() => member._id && handleDelete(member._id)}
+                        className="btn btn-danger"
+                        style={{ padding: '3px 8px', fontSize: '0.78rem' }}
+                      >
+                        Delete
+                      </button>
+                    )}
+                    {!canEdit && !canDelete && (
+                      <span style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>View Only</span>
+                    )}
                   </div>
                 </td>
               </tr>

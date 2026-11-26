@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
+import { usePermissions } from '@/app/admin/AdminContext';
 
 interface SeoPageConfig {
   id: string;
@@ -129,6 +130,7 @@ const SEO_PAGES: SeoPageConfig[] = [
 ];
 
 export default function SettingsClient({ initialSettings }: { initialSettings: Record<string, string> }) {
+  const { canEdit } = usePermissions('settings');
   const [settings, setSettings] = useState<Record<string, string>>({
     ...initialSettings,
     site_url: initialSettings.site_url || 'https://www.dreamcybersecurity.pk',
@@ -666,9 +668,15 @@ export default function SettingsClient({ initialSettings }: { initialSettings: R
           </div>
         </div>
 
-        <button type="submit" disabled={loading || uploadingOg} className="btn btn-primary" style={{ padding: '0.85rem 2.5rem', fontSize: '1rem' }}>
-          {loading ? 'Saving All Settings & SEO...' : 'Save All Settings & SEO to Database'}
-        </button>
+        {canEdit ? (
+          <button type="submit" disabled={loading || uploadingOg} className="btn btn-primary" style={{ padding: '0.85rem 2.5rem', fontSize: '1rem' }}>
+            {loading ? 'Saving All Settings & SEO...' : 'Save All Settings & SEO to Database'}
+          </button>
+        ) : (
+          <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontStyle: 'italic' }}>
+            View-only mode: You do not have permission to modify global settings or SEO.
+          </div>
+        )}
       </form>
     </div>
   );

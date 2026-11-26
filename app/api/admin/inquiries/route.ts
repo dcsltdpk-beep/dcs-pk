@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getAdminSession } from '@/lib/auth';
+import { requireApiPermission } from '@/lib/auth';
 import { connectDB } from '@/lib/db';
 import { Inquiry } from '@/lib/models/Inquiry';
 
 export async function GET(req: Request) {
-  const session = await getAdminSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const auth = await requireApiPermission('inquiries', 'view');
+  if ('error' in auth) return auth.error;
 
   const { searchParams } = new URL(req.url);
   const action = searchParams.get('action');
@@ -43,8 +43,8 @@ export async function GET(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  const session = await getAdminSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const auth = await requireApiPermission('inquiries', 'edit');
+  if ('error' in auth) return auth.error;
 
   const { id, status } = await req.json();
   await connectDB();
@@ -53,13 +53,11 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const session = await getAdminSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const auth = await requireApiPermission('inquiries', 'delete');
+  if ('error' in auth) return auth.error;
 
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
-  if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
-
   await connectDB();
   await Inquiry.findByIdAndDelete(id);
   return NextResponse.json({ success: true });

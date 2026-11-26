@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Icon from '@/components/Icon';
+import { usePermissions } from '@/app/admin/AdminContext';
 
 interface ServiceItem {
   _id?: string;
@@ -17,6 +18,7 @@ interface ServiceItem {
 }
 
 export default function ServicesClient({ initialServices }: { initialServices: ServiceItem[] }) {
+  const { canCreate, canEdit, canDelete } = usePermissions('services');
   const [services, setServices] = useState<ServiceItem[]>(initialServices);
   const [editing, setEditing] = useState<ServiceItem | null>(null);
   const [loading, setLoading] = useState(false);
@@ -76,9 +78,11 @@ export default function ServicesClient({ initialServices }: { initialServices: S
           <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Catalog Management</span>
           <h1>Manage <span className="text-gradient">Core Services</span></h1>
         </div>
-        <button onClick={() => setEditing(emptyForm)} className="btn btn-primary">
-          + Add New Service
-        </button>
+        {canCreate && (
+          <button onClick={() => setEditing(emptyForm)} className="btn btn-primary">
+            + Add New Service
+          </button>
+        )}
       </div>
 
       {/* Editor Modal / Card */}
@@ -241,20 +245,27 @@ export default function ServicesClient({ initialServices }: { initialServices: S
                   </span>
                 </td>
                 <td style={{ display: 'flex', gap: '8px' }}>
-                  <button
-                    onClick={() => setEditing(srv)}
-                    className="btn btn-outline"
-                    style={{ padding: '4px 10px', fontSize: '0.8rem' }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => srv._id && handleDelete(srv._id)}
-                    className="btn btn-danger"
-                    style={{ padding: '4px 10px', fontSize: '0.8rem' }}
-                  >
-                    Delete
-                  </button>
+                  {canEdit && (
+                    <button
+                      onClick={() => setEditing(srv)}
+                      className="btn btn-outline"
+                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                    >
+                      Edit
+                    </button>
+                  )}
+                  {canDelete && (
+                    <button
+                      onClick={() => srv._id && handleDelete(srv._id)}
+                      className="btn btn-danger"
+                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                    >
+                      Delete
+                    </button>
+                  )}
+                  {!canEdit && !canDelete && (
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>View Only</span>
+                  )}
                 </td>
               </tr>
             ))}

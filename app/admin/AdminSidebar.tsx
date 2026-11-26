@@ -4,11 +4,23 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { AdminModule, AuthenticatedAdmin, hasModuleAccess } from '@/lib/rbac';
+import { useAdmin } from './AdminContext';
 
-export default function AdminSidebar() {
+interface NavItemDef {
+  href: string;
+  label: string;
+  icon: string;
+  module: AdminModule;
+}
+
+export default function AdminSidebar({ admin: propAdmin }: { admin?: AuthenticatedAdmin | null }) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const contextAdmin = useAdmin();
+  const admin = propAdmin || contextAdmin;
 
   // Defense-in-depth: Never render sidebar on login page
   if (pathname === '/admin/login') {
@@ -21,20 +33,27 @@ export default function AdminSidebar() {
     router.refresh();
   };
 
-  const navItems = [
-    { href: '/admin', label: 'Dashboard', icon: 'layout' },
-    { href: '/admin/inquiries', label: 'Inquiries Inbox', icon: 'inbox' },
-    { href: '/admin/services', label: 'Core Services', icon: 'shield' },
-    { href: '/admin/courses', label: 'Academy Courses', icon: 'award' },
-    { href: '/admin/portfolio', label: 'Portfolio Works', icon: 'briefcase' },
-    { href: '/admin/videos', label: 'Video Gallery', icon: 'video' },
-    { href: '/admin/posts', label: 'News & Advisories', icon: 'file-text' },
-    { href: '/admin/team', label: 'Team Profiles', icon: 'users' },
-    { href: '/admin/faqs', label: 'FAQ Database', icon: 'help-circle' },
-    { href: '/admin/landing-pages', label: 'Campaign Pages', icon: 'trending-up' },
-    { href: '/admin/home-content', label: 'Home Page Editor', icon: 'layout' },
-    { href: '/admin/settings', label: 'Global Settings & SEO', icon: 'settings' },
+  const allNavItems: NavItemDef[] = [
+    { href: '/admin', label: 'Dashboard', icon: 'layout', module: 'dashboard' },
+    { href: '/admin/sub-admins', label: 'Sub-Admins & RBAC', icon: 'shield-check', module: 'sub-admins' },
+    { href: '/admin/inquiries', label: 'Inquiries Inbox', icon: 'inbox', module: 'inquiries' },
+    { href: '/admin/services', label: 'Core Services', icon: 'shield', module: 'services' },
+    { href: '/admin/courses', label: 'Academy Courses', icon: 'award', module: 'courses' },
+    { href: '/admin/portfolio', label: 'Portfolio Works', icon: 'briefcase', module: 'portfolio' },
+    { href: '/admin/videos', label: 'Video Gallery', icon: 'video', module: 'videos' },
+    { href: '/admin/posts', label: 'News & Advisories', icon: 'file-text', module: 'posts' },
+    { href: '/admin/team', label: 'Team Profiles', icon: 'users', module: 'team' },
+    { href: '/admin/faqs', label: 'FAQ Database', icon: 'help-circle', module: 'faqs' },
+    { href: '/admin/landing-pages', label: 'Campaign Pages', icon: 'trending-up', module: 'landing-pages' },
+    { href: '/admin/home-content', label: 'Home Page Editor', icon: 'layout', module: 'home-content' },
+    { href: '/admin/settings', label: 'Global Settings & SEO', icon: 'settings', module: 'settings' },
   ];
+
+  // RBAC Navigation Filtering: Only show modules the current admin is authorized to view
+  const visibleNavItems = allNavItems.filter((item) => {
+    if (!admin) return true;
+    return hasModuleAccess(admin, item.module);
+  });
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
@@ -57,19 +76,32 @@ export default function AdminSidebar() {
               alt="DCS Control"
               style={{ width: '24px', height: '24px', objectFit: 'contain', borderRadius: '50%' }}
             />
-            <span style={{ fontWeight: 800, color: '#fff', fontSize: '1rem', letterSpacing: '0.5px' }}>DCS CONTROL</span>
+            <span style={{ fontWeight: 800, color: '#fff', fontSize: '1rem', letterSpacing: '0.5px' }}>
+              DCS CONTROL
+            </span>
           </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Link
-            href="/"
-            target="_blank"
-            style={{ color: 'var(--accent-cyan)', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-          >
-            <Icon name="external-link" size={14} />
-            <span className="hidden-xs">Public Site</span>
-          </Link>
+          {admin && (
+            <span
+              style={{
+                fontSize: '0.72rem',
+                padding: '2px 8px',
+                borderRadius: '12px',
+                backgroundColor: admin.isSuperAdmin
+                  ? 'rgba(192, 132, 252, 0.15)'
+                  : 'rgba(0, 245, 255, 0.12)',
+                color: admin.isSuperAdmin ? '#c084fc' : 'var(--accent-cyan)',
+                border: `1px solid ${
+                  admin.isSuperAdmin ? 'rgba(192, 132, 252, 0.3)' : 'rgba(0, 245, 255, 0.3)'
+                }`,
+                fontWeight: 600,
+              }}
+            >
+              {admin.isSuperAdmin ? 'Super Admin' : 'Sub-Admin'}
+            </span>
+          )}
           <button
             onClick={handleLogout}
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ff7b7b', fontSize: '0.85rem' }}
@@ -81,10 +113,7 @@ export default function AdminSidebar() {
 
       {/* Mobile Backdrop Overlay */}
       {mobileMenuOpen && (
-        <div
-          className="admin-mobile-backdrop"
-          onClick={closeMobileMenu}
-        />
+        <div className="admin-mobile-backdrop" onClick={closeMobileMenu} />
       )}
 
       {/* Desktop & Mobile Drawer Sidebar */}
@@ -92,14 +121,16 @@ export default function AdminSidebar() {
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100%', justifyContent: 'space-between' }}>
           <div>
             {/* Brand Logo Header */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.75rem', padding: '0 0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', padding: '0 0.5rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <img
                   src="/logo.png"
                   alt="DCS Control"
                   style={{ width: '28px', height: '28px', objectFit: 'contain', borderRadius: '50%' }}
                 />
-                <span style={{ fontWeight: 800, color: '#fff', fontSize: '1.15rem', letterSpacing: '0.5px' }}>DCS CONTROL</span>
+                <span style={{ fontWeight: 800, color: '#fff', fontSize: '1.15rem', letterSpacing: '0.5px' }}>
+                  DCS CONTROL
+                </span>
               </div>
               {/* Close button inside mobile drawer */}
               <button
@@ -111,9 +142,84 @@ export default function AdminSidebar() {
               </button>
             </div>
 
+            {/* Authenticated Admin Identity Badge */}
+            {admin && (
+              <div
+                style={{
+                  margin: '0 0.25rem 1.5rem',
+                  padding: '0.75rem',
+                  borderRadius: '8px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid var(--border-color)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
+              >
+                <div
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    backgroundColor: admin.isSuperAdmin
+                      ? 'rgba(192, 132, 252, 0.2)'
+                      : 'rgba(0, 245, 255, 0.15)',
+                    border: `1px solid ${
+                      admin.isSuperAdmin ? '#c084fc' : 'var(--accent-cyan)'
+                    }`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: admin.isSuperAdmin ? '#c084fc' : 'var(--accent-cyan)',
+                    fontWeight: 700,
+                    fontSize: '0.85rem',
+                    flexShrink: 0,
+                  }}
+                >
+                  {admin.name ? admin.name.charAt(0).toUpperCase() : admin.username.charAt(0).toUpperCase()}
+                </div>
+                <div style={{ overflow: 'hidden', flex: 1 }}>
+                  <div
+                    style={{
+                      fontWeight: 600,
+                      color: '#fff',
+                      fontSize: '0.85rem',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    {admin.name || admin.username}
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
+                    <span
+                      style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        backgroundColor: '#34d399',
+                        boxShadow: '0 0 6px #34d399',
+                      }}
+                    />
+                    <span
+                      style={{
+                        fontSize: '0.7rem',
+                        color: admin.isSuperAdmin ? '#c084fc' : 'var(--accent-cyan)',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px',
+                      }}
+                    >
+                      {admin.isSuperAdmin ? 'Super Admin' : 'Sub-Admin'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Navigation Items */}
             <nav>
-              {navItems.map((item) => {
+              {visibleNavItems.map((item) => {
                 const isActive = pathname === item.href;
                 return (
                   <Link

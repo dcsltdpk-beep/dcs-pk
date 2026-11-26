@@ -35,10 +35,14 @@ if (!targetUri) {
 }
 
 const userSchema = new mongoose.Schema({
+  name: { type: String, default: '' },
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, default: 'admin' },
+  role: { type: String, default: 'super_admin' },
+  status: { type: String, default: 'active' },
+  permissions: [{ module: String, actions: [String] }],
+  lastLogin: { type: Date },
 }, { timestamps: true });
 
 const settingSchema = new mongoose.Schema({
@@ -181,10 +185,13 @@ async function seed() {
   if (!existingUser) {
     const hashedPassword = await bcrypt.hash('admin123', 10);
     await User.create({
+      name: 'Super Administrator',
       username: 'admin',
       email: 'dcsltd.pk@gmail.com',
       password: hashedPassword,
-      role: 'admin',
+      role: 'super_admin',
+      status: 'active',
+      permissions: [],
     });
     console.log('✓ Admin user verified/created (username: admin, password: admin123).');
   } else {

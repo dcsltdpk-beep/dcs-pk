@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePermissions } from '@/app/admin/AdminContext';
 
 interface VideoItem {
   _id?: string;
@@ -17,6 +18,7 @@ interface VideoItem {
 }
 
 export default function VideosAdminClient({ initialVideos }: { initialVideos: VideoItem[] }) {
+  const { canCreate, canEdit, canDelete } = usePermissions('videos');
   const [videos, setVideos] = useState<VideoItem[]>(initialVideos);
   const [editing, setEditing] = useState<VideoItem | null>(null);
   const [loading, setLoading] = useState(false);
@@ -73,9 +75,11 @@ export default function VideosAdminClient({ initialVideos }: { initialVideos: Vi
           <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Media Gallery</span>
           <h1>Manage <span className="text-gradient">Video Content</span></h1>
         </div>
-        <button onClick={() => setEditing(emptyForm)} className="btn btn-primary">
-          + Add New Video
-        </button>
+        {canCreate && (
+          <button onClick={() => setEditing(emptyForm)} className="btn btn-primary">
+            + Add New Video
+          </button>
+        )}
       </div>
 
       {editing && (
@@ -175,20 +179,27 @@ export default function VideosAdminClient({ initialVideos }: { initialVideos: Vi
                 <td><span className="badge badge-cyan">{vid.category}</span></td>
                 <td style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{vid.video_source}</td>
                 <td style={{ display: 'flex', gap: '8px' }}>
-                  <button
-                    onClick={() => setEditing(vid)}
-                    className="btn btn-outline"
-                    style={{ padding: '4px 10px', fontSize: '0.8rem' }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => vid._id && handleDelete(vid._id)}
-                    className="btn btn-danger"
-                    style={{ padding: '4px 10px', fontSize: '0.8rem' }}
-                  >
-                    Delete
-                  </button>
+                  {canEdit && (
+                    <button
+                      onClick={() => setEditing(vid)}
+                      className="btn btn-outline"
+                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                    >
+                      Edit
+                    </button>
+                  )}
+                  {canDelete && (
+                    <button
+                      onClick={() => vid._id && handleDelete(vid._id)}
+                      className="btn btn-danger"
+                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                    >
+                      Delete
+                    </button>
+                  )}
+                  {!canEdit && !canDelete && (
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>View Only</span>
+                  )}
                 </td>
               </tr>
             ))}

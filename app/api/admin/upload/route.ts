@@ -1,12 +1,34 @@
 import { NextResponse } from 'next/server';
-import { getAdminSession } from '@/lib/auth';
+import { getAuthenticatedAdmin } from '@/lib/auth';
+import { hasPermission } from '@/lib/rbac';
 import cloudinary from '@/lib/cloudinary';
 
 export async function POST(req: Request) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const admin = await getAuthenticatedAdmin();
+    if (!admin) {
+      return NextResponse.json({ error: 'Unauthorized: Authentication required.' }, { status: 401 });
+    }
+
+    // Ensure admin has create/edit permission on at least one content module or is super admin
+    const canUpload =
+      admin.isSuperAdmin ||
+      hasPermission(admin, 'posts', 'create') ||
+      hasPermission(admin, 'posts', 'edit') ||
+      hasPermission(admin, 'team', 'create') ||
+      hasPermission(admin, 'team', 'edit') ||
+      hasPermission(admin, 'courses', 'create') ||
+      hasPermission(admin, 'courses', 'edit') ||
+      hasPermission(admin, 'services', 'create') ||
+      hasPermission(admin, 'services', 'edit') ||
+      hasPermission(admin, 'settings', 'edit') ||
+      hasPermission(admin, 'home-content', 'edit');
+
+    if (!canUpload) {
+      return NextResponse.json(
+        { error: 'Forbidden: You do not have permission to upload assets.' },
+        { status: 403 }
+      );
     }
 
     const formData = await req.formData();

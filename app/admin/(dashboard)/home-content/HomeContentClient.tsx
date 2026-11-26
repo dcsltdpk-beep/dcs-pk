@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePermissions } from '@/app/admin/AdminContext';
 
 export default function HomeContentClient({ initialSettings }: { initialSettings: Record<string, string> }) {
+  const { canEdit } = usePermissions('home-content');
   const [settings, setSettings] = useState<Record<string, string>>(initialSettings);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState('');
@@ -175,9 +177,15 @@ export default function HomeContentClient({ initialSettings }: { initialSettings
           </div>
         </div>
 
-        <button type="submit" disabled={loading} className="btn btn-primary" style={{ padding: '0.85rem 2.5rem', fontSize: '1rem' }}>
-          {loading ? 'Updating Homepage...' : 'Save All Homepage Settings'}
-        </button>
+        {canEdit ? (
+          <button type="submit" disabled={loading} className="btn btn-primary" style={{ padding: '0.85rem 2.5rem', fontSize: '1rem' }}>
+            {loading ? 'Updating Homepage...' : 'Save All Homepage Settings'}
+          </button>
+        ) : (
+          <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontStyle: 'italic' }}>
+            View-only mode: You do not have permission to modify homepage content.
+          </div>
+        )}
       </form>
     </div>
   );

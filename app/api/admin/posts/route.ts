@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
-import { getAdminSession } from '@/lib/auth';
+import { requireApiPermission } from '@/lib/auth';
 import { connectDB } from '@/lib/db';
 import { Post } from '@/lib/models/Post';
 
 export async function GET() {
+  const auth = await requireApiPermission('posts', 'view');
+  if ('error' in auth) return auth.error;
+
   await connectDB();
   const posts = await Post.find().sort({ published_at: -1 }).lean();
   return NextResponse.json(posts);
@@ -11,10 +14,11 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const session = await getAdminSession();
-    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
     const data = await req.json();
+    const action = data._id ? 'edit' : 'create';
+    const auth = await requireApiPermission('posts', action);
+    if ('error' in auth) return auth.error;
+
     await connectDB();
 
     // Sanitize slug
@@ -58,8 +62,8 @@ export async function POST(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    const session = await getAdminSession();
-    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const auth = await requireApiPermission('posts', 'delete');
+    if ('error' in auth) return auth.error;
 
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');

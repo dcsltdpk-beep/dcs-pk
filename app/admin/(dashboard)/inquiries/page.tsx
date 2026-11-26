@@ -1,15 +1,19 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
-import { getAdminSession } from '@/lib/auth';
+import { getAuthenticatedAdmin } from '@/lib/auth';
 import { connectDB } from '@/lib/db';
 import { Inquiry } from '@/lib/models/Inquiry';
+import { hasModuleAccess } from '@/lib/rbac';
 import InquiriesClient from './InquiriesClient';
 
 export const revalidate = 0;
 
 export default async function InquiriesAdminPage() {
-  const session = await getAdminSession();
-  if (!session) redirect('/admin/login');
+  const admin = await getAuthenticatedAdmin();
+  if (!admin) redirect('/admin/login');
+  if (!hasModuleAccess(admin, 'inquiries')) {
+    redirect('/admin?error=access_denied&module=inquiries');
+  }
 
   await connectDB();
   const inquiries = await Inquiry.find().sort({ createdAt: -1 }).lean();

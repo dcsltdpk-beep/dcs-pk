@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { usePermissions } from '@/app/admin/AdminContext';
 
 interface LandingItem {
   _id?: string;
@@ -16,6 +17,7 @@ interface LandingItem {
 }
 
 export default function LandingPagesAdminClient({ initialPages }: { initialPages: LandingItem[] }) {
+  const { canCreate, canEdit, canDelete } = usePermissions('landing-pages');
   const [pages, setPages] = useState<LandingItem[]>(initialPages);
   const [editing, setEditing] = useState<LandingItem | null>(null);
   const [loading, setLoading] = useState(false);
@@ -74,9 +76,11 @@ export default function LandingPagesAdminClient({ initialPages }: { initialPages
           <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Growth Engine</span>
           <h1>Campaign <span className="text-gradient">Landing Pages</span></h1>
         </div>
-        <button onClick={() => setEditing(emptyForm)} className="btn btn-primary">
-          + Create Landing Page
-        </button>
+        {canCreate && (
+          <button onClick={() => setEditing(emptyForm)} className="btn btn-primary">
+            + Create Landing Page
+          </button>
+        )}
       </div>
 
       {editing && (
@@ -201,20 +205,27 @@ export default function LandingPagesAdminClient({ initialPages }: { initialPages
                   </span>
                 </td>
                 <td style={{ display: 'flex', gap: '8px' }}>
-                  <button
-                    onClick={() => setEditing(p)}
-                    className="btn btn-outline"
-                    style={{ padding: '4px 10px', fontSize: '0.8rem' }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => p._id && handleDelete(p._id)}
-                    className="btn btn-danger"
-                    style={{ padding: '4px 10px', fontSize: '0.8rem' }}
-                  >
-                    Delete
-                  </button>
+                  {canEdit && (
+                    <button
+                      onClick={() => setEditing(p)}
+                      className="btn btn-outline"
+                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                    >
+                      Edit
+                    </button>
+                  )}
+                  {canDelete && (
+                    <button
+                      onClick={() => p._id && handleDelete(p._id)}
+                      className="btn btn-danger"
+                      style={{ padding: '4px 10px', fontSize: '0.8rem' }}
+                    >
+                      Delete
+                    </button>
+                  )}
+                  {!canEdit && !canDelete && (
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>View Only</span>
+                  )}
                 </td>
               </tr>
             ))}

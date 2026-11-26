@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAdminSession } from '@/lib/auth';
+import { requireApiPermission } from '@/lib/auth';
 import { connectDB } from '@/lib/db';
 import { Team } from '@/lib/models/Team';
 
@@ -12,6 +12,9 @@ function slugify(text: string): string {
 }
 
 export async function GET() {
+  const auth = await requireApiPermission('team', 'view');
+  if ('error' in auth) return auth.error;
+
   await connectDB();
   const team = await Team.find().sort({ order_num: 1 }).lean();
   // Ensure slug is always present in API response
@@ -23,10 +26,11 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = await getAdminSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
   const data = await req.json();
+  const action = data._id ? 'edit' : 'create';
+  const auth = await requireApiPermission('team', action);
+  if ('error' in auth) return auth.error;
+
   await connectDB();
 
   // Auto-generate slug from name if not provided
@@ -55,8 +59,8 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const session = await getAdminSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const auth = await requireApiPermission('team', 'delete');
+  if ('error' in auth) return auth.error;
 
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');

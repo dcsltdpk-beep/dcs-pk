@@ -64,8 +64,25 @@ export async function POST(req: Request) {
       );
     }
 
-    // 4. Token generation & Remember Me configuration
-    const token = await signAdminToken({ username: user.username, role: user.role });
+    // 4. Account Status Check (Inactive Sub-Admins cannot log in)
+    if (user.status === 'inactive') {
+      return NextResponse.json(
+        { error: 'Account suspended. This administrative account has been deactivated by the Super Admin.' },
+        { status: 403 }
+      );
+    }
+
+    // 5. Update last login timestamp asynchronously
+    await User.updateOne({ _id: user._id }, { $set: { lastLogin: new Date() } }).catch((err) => {
+      console.warn('Failed to update lastLogin for admin:', err);
+    });
+
+    // 6. Token generation & Remember Me configuration
+    const token = await signAdminToken({
+      username: user.username,
+      role: user.role,
+      userId: user._id.toString(),
+    });
 
     // Remember Me: 30 days if checked, otherwise 24 hours
     const maxAge = rememberMe ? 60 * 60 * 24 * 30 : 60 * 60 * 24;
@@ -73,6 +90,8 @@ export async function POST(req: Request) {
     const response = NextResponse.json({
       success: true,
       username: user.username,
+      role: user.role,
+      name: user.name || user.username,
       rememberMe,
     });
 
