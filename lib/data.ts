@@ -241,7 +241,24 @@ export async function getPosts(): Promise<any[]> {
   try {
     const conn = await connectDB();
     if (conn) {
-      const items = await Post.find({ is_published: true }).sort({ published_at: -1 }).lean();
+      const now = new Date();
+      const items = await Post.find({
+        is_published: true,
+        $or: [
+          { status: 'published' },
+          { status: { $exists: false } },
+        ],
+        $and: [
+          {
+            $or: [
+              { published_at: { $lte: now } },
+              { published_at: { $exists: false } },
+            ],
+          },
+        ],
+      })
+        .sort({ is_featured: -1, published_at: -1 })
+        .lean();
       if (items && items.length > 0) return toPlain(items);
     }
   } catch (err) {
@@ -250,18 +267,91 @@ export async function getPosts(): Promise<any[]> {
   return toPlain(seedData.posts);
 }
 
-export async function getPostBySlug(slug: string): Promise<any | null> {
+export async function getPostBySlug(slug: string, options?: { preview?: boolean }): Promise<any | null> {
+  const normalizedSlug = (slug || '').toLowerCase().trim();
   try {
     const conn = await connectDB();
     if (conn) {
-      const item = await Post.findOne({ slug, is_published: true }).lean();
+      const now = new Date();
+      const query: any = { slug: normalizedSlug };
+
+      // If not in preview mode, enforce that article must be published and not scheduled in the future
+      if (!options?.preview) {
+        query.is_published = true;
+        query.$or = [{ status: 'published' }, { status: { $exists: false } }];
+        query.$and = [
+          {
+            $or: [
+              { published_at: { $lte: now } },
+              { published_at: { $exists: false } },
+            ],
+          },
+        ];
+      }
+
+      const item = await Post.findOne(query).lean();
       if (item) return toPlain(item);
     }
   } catch (err) {
     console.warn(`Using fallback post for slug: ${slug}`);
   }
-  const fallback = seedData.posts.find((p) => p.slug === slug) || null;
+  const fallback = (seedData.posts as any[]).find((p) => p.slug === normalizedSlug) || null;
   return toPlain(fallback);
+}
+
+export async function getRelatedPosts(currentSlug: string, category?: string, limit = 3): Promise<any[]> {
+  const normalizedSlug = (currentSlug || '').toLowerCase().trim();
+  try {
+    const conn = await connectDB();
+    if (conn) {
+      const now = new Date();
+      const baseFilter: any = {
+        slug: { $ne: normalizedSlug },
+        is_published: true,
+        $or: [{ status: 'published' }, { status: { $exists: false } }],
+        $and: [
+          {
+            $or: [
+              { published_at: { $lte: now } },
+              { published_at: { $exists: false } },
+            ],
+          },
+        ],
+      };
+
+      if (category) {
+        const sameCategory = await Post.find({ ...baseFilter, category })
+          .sort({ published_at: -1 })
+          .limit(limit)
+          .lean();
+
+        if (sameCategory && sameCategory.length >= limit) {
+          return toPlain(sameCategory);
+        }
+
+        const existingIds = (sameCategory || []).map((p: any) => p._id);
+        const remainingCount = limit - (sameCategory ? sameCategory.length : 0);
+
+        const additional = await Post.find({
+          ...baseFilter,
+          _id: { $nin: existingIds },
+        })
+          .sort({ published_at: -1 })
+          .limit(remainingCount)
+          .lean();
+
+        return toPlain([...(sameCategory || []), ...(additional || [])]);
+      }
+
+      const items = await Post.find(baseFilter).sort({ published_at: -1 }).limit(limit).lean();
+      if (items && items.length > 0) return toPlain(items);
+    }
+  } catch (err) {
+    console.warn('Using fallback related posts');
+  }
+
+  const fallbackAll = (seedData.posts as any[]).filter((p) => p.slug !== normalizedSlug);
+  return toPlain(fallbackAll.slice(0, limit));
 }
 
 export async function getFaqs(category?: string): Promise<any[]> {

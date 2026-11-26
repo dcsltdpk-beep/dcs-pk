@@ -151,8 +151,8 @@ export default function TeamPageClient({
     });
   }, [initialTeam]);
 
-  const featuredLeader = teamList[0] || DEFAULT_TEAM_MEMBERS[0];
-  const otherMembers = teamList.slice(1);
+  const leadershipMembers = teamList.slice(0, 3);
+  const teamMembers = teamList.slice(3);
 
   // WhatsApp link
   const waLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
@@ -590,100 +590,114 @@ export default function TeamPageClient({
         </div>
       </section>
 
-      {/* ================= TEAM GRID SECTION ================= */}
+      {/* ================= 1. LEADERSHIP SECTION (First 3 Cards) ================= */}
+      <section className="section dcs-stacked-section" id="team-leadership">
+        <div className="block">
+          <div className="head">
+            <span className="eyebrow">Executive Leadership</span>
+            <h2>
+              The Vision &amp; <span className="u">Steering Force</span>
+            </h2>
+            <p>Guiding Dream Cyber Security with strategic foresight, executive governance, and a commitment to digital resilience.</p>
+          </div>
+
+          <div className="team-grid">
+            {leadershipMembers.map((member) => (
+              <article key={member.slug || member.name} className="member leadership-card">
+                <div className="photo">
+                  <span className="dept">{member.department || 'Leadership'}</span>
+                  {member.photo ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={member.photo} alt={member.name} />
+                  ) : (
+                    <div className="ini">{member.initials || 'LD'}</div>
+                  )}
+                </div>
+                <div className="m-body">
+                  <h3>{member.name}</h3>
+                  <em>{member.designation}</em>
+                  <p>{member.bio}</p>
+                  {member.quote && <blockquote>{member.quote}</blockquote>}
+                  <div className="m-social">
+                    <Link href={`/team/${member.slug}`} className="m-profile-btn">
+                      View Profile <ArrowUpRight size={14} />
+                    </Link>
+                    {member.email && (
+                      <a href={`mailto:${member.email}`} aria-label={`Email ${member.name}`}>
+                        <FaEnvelope />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 2. TEAM / SPECIALISTS SECTION (Remaining Cards) ================= */}
       <section className="section dcs-stacked-section" id="team-grid">
         <div className="block">
-        <div className="head">
-          <span className="eyebrow">Our People</span>
-          <h2>
-            The minds behind <span className="u">your security</span>
-          </h2>
-          <p>Every specialist brings hands-on experience delivering real projects for our clients.</p>
-        </div>
+          <div className="head">
+            <span className="eyebrow">Our Team</span>
+            <h2>
+              The Minds Behind <span className="u">Your Security</span>
+            </h2>
+            <p>Every specialist brings hands-on experience delivering enterprise defense, scalable software, and intelligent automation.</p>
+          </div>
 
-        <div className="team-grid">
-          {/* Member 1: Featured Leader */}
-          {featuredLeader && (
-            <article className="member featured">
+          <div className="team-grid">
+            {teamMembers.map((member) => (
+              <article key={member.slug || member.name} className="member">
+                <div className="photo">
+                  <span className="dept">{member.department || 'Specialist'}</span>
+                  {member.photo ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={member.photo} alt={member.name} />
+                  ) : (
+                    <div className="ini">{member.initials || 'SP'}</div>
+                  )}
+                </div>
+                <div className="m-body">
+                  <h3>{member.name}</h3>
+                  <em>{member.designation}</em>
+                  <p>{member.bio}</p>
+                  {member.quote && <blockquote>{member.quote}</blockquote>}
+                  <div className="m-social">
+                    <Link href={`/team/${member.slug}`} className="m-profile-btn">
+                      View Profile <ArrowUpRight size={14} />
+                    </Link>
+                    {member.email && (
+                      <a href={`mailto:${member.email}`} aria-label={`Email ${member.name}`}>
+                        <FaEnvelope />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
+
+            {/* Hiring Callout Card */}
+            <article className="member hiring-card">
               <div className="photo">
-                <span className="dept">{featuredLeader.department || 'Leadership'}</span>
-                {featuredLeader.photo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={featuredLeader.photo} alt={featuredLeader.name} />
-                ) : (
-                  <div className="ini">{featuredLeader.initials || 'AH'}</div>
-                )}
+                <div className="ini">+</div>
               </div>
               <div className="m-body">
-                <h3>{featuredLeader.name}</h3>
-                <em>{featuredLeader.designation}</em>
-                <p>{featuredLeader.bio}</p>
-                {featuredLeader.quote && <blockquote>{featuredLeader.quote}</blockquote>}
+                <h3>This could be you</h3>
+                <em>We’re hiring</em>
+                <p>Passionate about security, code or creativity? Join our growing team.</p>
                 <div className="m-social">
-                  <Link href={`/team/${featuredLeader.slug}`} className="m-profile-btn">
-                    View Profile <ArrowUpRight size={14} />
-                  </Link>
-                  {featuredLeader.email && (
-                    <a href={`mailto:${featuredLeader.email}`} aria-label={`Email ${featuredLeader.name}`}>
-                      <FaEnvelope />
-                    </a>
-                  )}
+                  <a
+                    href="#careers"
+                    className="btn btn-sm"
+                    style={{ width: 'auto', padding: '0 18px', background: 'var(--gold)', color: 'var(--navy-900)' }}
+                  >
+                    See open roles
+                  </a>
                 </div>
               </div>
             </article>
-          )}
-
-          {/* Other Specialists */}
-          {otherMembers.map((member) => (
-            <article key={member.slug || member.name} className="member">
-              <div className="photo">
-                <span className="dept">{member.department || 'Specialist'}</span>
-                {member.photo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={member.photo} alt={member.name} />
-                ) : (
-                  <div className="ini">{member.initials || 'SP'}</div>
-                )}
-              </div>
-              <div className="m-body">
-                <h3>{member.name}</h3>
-                <em>{member.designation}</em>
-                <p>{member.bio}</p>
-                <div className="m-social">
-                  <Link href={`/team/${member.slug}`} className="m-profile-btn">
-                    Profile <ArrowUpRight size={14} />
-                  </Link>
-                  {member.email && (
-                    <a href={`mailto:${member.email}`} aria-label={`Email ${member.name}`}>
-                      <FaEnvelope />
-                    </a>
-                  )}
-                </div>
-              </div>
-            </article>
-          ))}
-
-          {/* 6th Card: Hiring Callout */}
-          <article className="member hiring-card">
-            <div className="photo">
-              <div className="ini">+</div>
-            </div>
-            <div className="m-body">
-              <h3>This could be you</h3>
-              <em>We’re hiring</em>
-              <p>Passionate about security, code or creativity? Join our growing team.</p>
-              <div className="m-social">
-                <a
-                  href="#careers"
-                  className="btn btn-sm"
-                  style={{ width: 'auto', padding: '0 18px', background: 'var(--gold)', color: 'var(--navy-900)' }}
-                >
-                  See open roles
-                </a>
-              </div>
-            </div>
-          </article>
-        </div>
+          </div>
         </div>
       </section>
 
