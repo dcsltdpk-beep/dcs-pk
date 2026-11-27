@@ -499,7 +499,7 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                       <img
                         src={member.photo}
                         alt={member.name}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
                       />
                     ) : (
                       <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>👤</span>

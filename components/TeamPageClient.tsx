@@ -517,76 +517,76 @@ export default function TeamPageClient({
       {/* ================= HERO SECTION ================= */}
       <section className="dcs-hero-section dcs-section-hero">
         <div className="hero-shell">
-        <canvas ref={heroParticlesRef} id="team-hero-particles" />
+          <canvas ref={heroParticlesRef} id="team-hero-particles" />
 
-        {/* Top Breadcrumb Bar */}
-        <div className="hero-top-bar">
-          <div className="hero-crumbs">
-            <Link href="/">Home</Link>
-            <span>/</span>
-            <strong>Leadership &amp; Team</strong>
-          </div>
-        </div>
-
-        <div className="hero">
-          <div>
-            <span className="tag">
-              <i /> Leadership &amp; Engineers
-            </span>
-            <h1>
-              Meet our <span className="hl">specialist</span> <span className="gold">team</span>
-            </h1>
-            <p className="lead">
-              Cybersecurity architects, engineers, automation experts and creatives — working together from our Lahore headquarters to keep your business secure and growing.
-            </p>
-            <div className="actions">
-              <a href="#careers" className="btn btn-outline">
-                Join Our Team <ArrowUpRight />
-              </a>
-              <Link href="/contact" className="btn btn-blue">
-                Work With Us <ArrowUpRight />
-              </Link>
-            </div>
-            <div className="stats">
-              <div className="stat">
-                <b>
-                  {statSpecialists}
-                  <em>+</em>
-                </b>
-                <span>Specialists</span>
-              </div>
-              <div className="stat">
-                <b>{statDepartments}</b>
-                <span>Departments</span>
-              </div>
-              <div className="stat">
-                <b>{statMission}</b>
-                <span>Mission</span>
-              </div>
+          {/* Top Breadcrumb Bar */}
+          <div className="hero-top-bar">
+            <div className="hero-crumbs">
+              <Link href="/">Home</Link>
+              <span>/</span>
+              <strong>Leadership &amp; Team</strong>
             </div>
           </div>
 
-          {/* Visual Card with Avatars Grid */}
-          <div ref={visualCardRef} className="visual">
-            <canvas ref={netCanvasRef} id="net" />
-            <div className="hero-visual-grid">
-              <div className="avatars">
-                <div>AH</div>
-                <div>AQ</div>
-                <div>MR</div>
-                <div>HN</div>
-                <div>RA</div>
-                <div>+</div>
+          <div className="hero">
+            <div>
+              <span className="tag">
+                <i /> Leadership &amp; Engineers
+              </span>
+              <h1>
+                Meet our <span className="hl">specialist</span> <span className="gold">team</span>
+              </h1>
+              <p className="lead">
+                Cybersecurity architects, engineers, automation experts and creatives — working together from our Lahore headquarters to keep your business secure and growing.
+              </p>
+              <div className="actions">
+                <a href="#careers" className="btn btn-outline">
+                  Join Our Team <ArrowUpRight />
+                </a>
+                <Link href="/contact" className="btn btn-blue">
+                  Work With Us <ArrowUpRight />
+                </Link>
+              </div>
+              <div className="stats">
+                <div className="stat">
+                  <b>
+                    {statSpecialists}
+                    <em>+</em>
+                  </b>
+                  <span>Specialists</span>
+                </div>
+                <div className="stat">
+                  <b>{statDepartments}</b>
+                  <span>Departments</span>
+                </div>
+                <div className="stat">
+                  <b>{statMission}</b>
+                  <span>Mission</span>
+                </div>
               </div>
             </div>
-            <div className="chip c1">
-              <Users2 size={18} /> Lahore HQ
-            </div>
-            <div className="chip c2">
-              <ShieldCheck size={18} /> Security-First Culture
+
+            {/* Visual Card with Avatars Grid */}
+            <div ref={visualCardRef} className="visual">
+              <canvas ref={netCanvasRef} id="net" />
+              <div className="hero-visual-grid">
+                <div className="avatars">
+                  <div>AH</div>
+                  <div>AQ</div>
+                  <div>MR</div>
+                  <div>HN</div>
+                  <div>RA</div>
+                  <div>+</div>
+                </div>
+              </div>
+              <div className="chip c1">
+                <Users2 size={18} /> Lahore HQ
+              </div>
+              <div className="chip c2">
+                <ShieldCheck size={18} /> Security-First Culture
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </section>
 
@@ -608,7 +608,11 @@ export default function TeamPageClient({
                   <span className="dept">{member.department || 'Leadership'}</span>
                   {member.photo ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={member.photo} alt={member.name} />
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      style={{ objectPosition: 'center top' }}
+                    />
                   ) : (
                     <div className="ini">{member.initials || 'LD'}</div>
                   )}
@@ -653,7 +657,11 @@ export default function TeamPageClient({
                   <span className="dept">{member.department || 'Specialist'}</span>
                   {member.photo ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={member.photo} alt={member.name} />
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      style={{ objectPosition: 'center top' }}
+                    />
                   ) : (
                     <div className="ini">{member.initials || 'SP'}</div>
                   )}
@@ -704,107 +712,107 @@ export default function TeamPageClient({
       {/* ================= CULTURE & PROCESS SECTION ================= */}
       <section className="section dcs-stacked-section" id="team-culture">
         <div className="block process">
-        <div className="head">
-          <span className="eyebrow">How We Work Together</span>
-          <h2>
-            A culture built on <span className="u">trust</span>
-          </h2>
-        </div>
-        <div className="steps">
-          <div className="step">
-            <span className="step-n">01</span>
-            <span className="step-ic">
-              <Lock size={24} />
-            </span>
-            <h4>Confidentiality</h4>
-            <p>Strict NDAs and zero-leakage protocols on every engagement.</p>
+          <div className="head">
+            <span className="eyebrow">How We Work Together</span>
+            <h2>
+              A culture built on <span className="u">trust</span>
+            </h2>
           </div>
-          <div className="step">
-            <span className="step-n">02</span>
-            <span className="step-ic">
-              <Code2 size={24} />
-            </span>
-            <h4>Peer review</h4>
-            <p>Code, rules and pipelines are tested by multiple engineers.</p>
+          <div className="steps">
+            <div className="step">
+              <span className="step-n">01</span>
+              <span className="step-ic">
+                <Lock size={24} />
+              </span>
+              <h4>Confidentiality</h4>
+              <p>Strict NDAs and zero-leakage protocols on every engagement.</p>
+            </div>
+            <div className="step">
+              <span className="step-n">02</span>
+              <span className="step-ic">
+                <Code2 size={24} />
+              </span>
+              <h4>Peer review</h4>
+              <p>Code, rules and pipelines are tested by multiple engineers.</p>
+            </div>
+            <div className="step">
+              <span className="step-n">03</span>
+              <span className="step-ic">
+                <GraduationCap size={24} />
+              </span>
+              <h4>Always learning</h4>
+              <p>Continuous training through our own Skill Academy.</p>
+            </div>
+            <div className="step">
+              <span className="step-n">04</span>
+              <span className="step-ic">
+                <Users2 size={24} />
+              </span>
+              <h4>One team</h4>
+              <p>Security, engineering and creative working side by side.</p>
+            </div>
           </div>
-          <div className="step">
-            <span className="step-n">03</span>
-            <span className="step-ic">
-              <GraduationCap size={24} />
-            </span>
-            <h4>Always learning</h4>
-            <p>Continuous training through our own Skill Academy.</p>
-          </div>
-          <div className="step">
-            <span className="step-n">04</span>
-            <span className="step-ic">
-              <Users2 size={24} />
-            </span>
-            <h4>One team</h4>
-            <p>Security, engineering and creative working side by side.</p>
-          </div>
-        </div>
         </div>
       </section>
 
       {/* ================= CAREERS SECTION ================= */}
       <section className="section dcs-stacked-section" id="team-careers">
         <div className="block" id="careers">
-        <div className="join">
-          <div>
-            <span className="eyebrow light">Careers</span>
-            <h2>
-              Build your career at <span>Dream Cyber Security</span>
-            </h2>
-            <p>
-              We’re always looking for talented engineers, marketers and creatives. Send your CV and portfolio — top Academy graduates get priority internship access.
-            </p>
-            <div className="actions">
-              <a
-                href="mailto:info@dreamcybersecurity.pk?subject=Job%20Application"
-                className="btn"
-                style={{ background: 'linear-gradient(135deg, var(--gold-light), var(--gold))', color: 'var(--navy-900)' }}
-              >
-                Send Your CV <ArrowUpRight />
-              </a>
+          <div className="join">
+            <div>
+              <span className="eyebrow light">Careers</span>
+              <h2>
+                Build your career at <span>Dream Cyber Security</span>
+              </h2>
+              <p>
+                We’re always looking for talented engineers, marketers and creatives. Send your CV and portfolio — top Academy graduates get priority internship access.
+              </p>
+              <div className="actions">
+                <a
+                  href="mailto:info@dreamcybersecurity.pk?subject=Job%20Application"
+                  className="btn"
+                  style={{ background: 'linear-gradient(135deg, var(--gold-light), var(--gold))', color: 'var(--navy-900)' }}
+                >
+                  Send Your CV <ArrowUpRight />
+                </a>
+              </div>
+            </div>
+            <div className="roles">
+              <div>
+                Performance Marketing Executive <span>Open</span>
+              </div>
+              <div>
+                Cybersecurity Analyst <span>Open</span>
+              </div>
+              <div>
+                Full Stack Developer <span>Open</span>
+              </div>
+              <div>
+                Academy Internship Program <span>Rolling</span>
+              </div>
             </div>
           </div>
-          <div className="roles">
-            <div>
-              Performance Marketing Executive <span>Open</span>
-            </div>
-            <div>
-              Cybersecurity Analyst <span>Open</span>
-            </div>
-            <div>
-              Full Stack Developer <span>Open</span>
-            </div>
-            <div>
-              Academy Internship Program <span>Rolling</span>
-            </div>
-          </div>
-        </div>
         </div>
       </section>
 
       {/* ================= WARM GOLD CTA BAND ================= */}
       <section className="section dcs-stacked-section" id="team-cta">
         <div className="block">
-        <div className="cta-band">
-          <canvas ref={ctaParticlesRef} id="team-cta-particles" />
-          <div>
-            <h2>Next batch is enrolling now</h2>
-            <p>Reserve your seat today — limited seats per batch for personal mentorship.</p>
+          <div className="cta-band">
+            <canvas ref={ctaParticlesRef} id="team-cta-particles" />
+            <div>
+              <h2>Next batch is enrolling now</h2>
+              <p>Reserve your seat today — limited seats per batch for personal mentorship.</p>
+            </div>
+            <div className="cta-actions">
+              <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                <FaWhatsapp size={17} style={{ color: '#25D366' }} /> WhatsApp Us <ArrowUpRight />
+              </a>
+              <Link href="/contact?type=admission" className="btn btn-blue">
+                Submit Admission Inquiry <ArrowUpRight />
+              </Link>
+            </div>
           </div>
-          <div className="cta-actions">
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-              <FaWhatsapp size={17} style={{ color: '#25D366' }} /> WhatsApp Us <ArrowUpRight />
-            </a>
-            <Link href="/contact?type=admission" className="btn btn-blue">
-              Submit Admission Inquiry <ArrowUpRight />
-            </Link>
-          </div>
-        </div>
         </div>
       </section>
     </div>

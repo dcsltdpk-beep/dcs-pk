@@ -701,7 +701,11 @@ export default function TeamMemberDetailClient({
                     <span className="dept">{c.department || 'Specialist'}</span>
                     {c.photo ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={c.photo} alt={c.name} />
+                      <img
+                        src={c.photo}
+                        alt={c.name}
+                        style={{ objectPosition: 'center top' }}
+                      />
                     ) : (
                       <div className="ini">{c.initials || c.name.substring(0, 2).toUpperCase()}</div>
                     )}
