@@ -6679,17 +6679,27 @@ footer.site-footer {
   pointer-events: none;
 }
 
+.dcs-course-root .dcs-hero-section {
+  padding: clamp(20px, 3vh, 32px) clamp(16px, 2.5vw, 24px) 0 !important;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+}
+
 .dcs-course-root .hero-shell {
   max-width: 1320px;
   margin: 0 auto;
   border-radius: 34px;
-  padding: clamp(24px, 4vh, 32px) clamp(20px, 4vw, 46px) clamp(36px, 6vh, 56px);
+  padding: clamp(28px, 4vh, 44px) clamp(20px, 4vw, 48px) clamp(36px, 5vh, 52px);
   position: relative;
   overflow: hidden;
   isolation: isolate;
   background: radial-gradient(circle at 25% 30%, #ffd98f, transparent 55%),
     linear-gradient(135deg, #ffc65e, var(--gold) 50%, #f09a2a);
   box-shadow: 0 40px 80px -30px rgba(240, 154, 42, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .dcs-course-root .crumbs {
@@ -7005,35 +7015,52 @@ footer.site-footer {
 }
 
 /* Sticky Info Bar */
+.dcs-course-root .infobar-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 clamp(16px, 2.5vw, 24px);
+  margin: clamp(28px, 4vh, 44px) 0 clamp(36px, 5vh, 52px);
+  position: relative;
+  z-index: 10;
+}
+
 .dcs-course-root .infobar {
   max-width: 1320px;
-  margin: -40px auto 0;
+  margin: 0 auto;
   position: relative;
   z-index: 5;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr) 1.25fr;
   background: #fff;
   border-radius: 24px;
-  box-shadow: 0 30px 60px -30px rgba(28, 25, 73, 0.4);
+  border: 1px solid rgba(28, 25, 73, 0.08);
+  box-shadow: 0 18px 40px -18px rgba(28, 25, 73, 0.14), 0 4px 12px -2px rgba(28, 25, 73, 0.04);
   overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .dcs-course-root .infobar>div {
-  padding: 22px 24px;
+  padding: 20px 24px;
   border-right: 1px solid var(--grey-100);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .dcs-course-root .infobar>div:last-child {
-  border: 0;
+  border-right: 0;
+  border-bottom: 0;
   background: var(--navy-700);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 16px 24px;
 }
 
 .dcs-course-root .infobar span {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--grey-500);
@@ -7042,14 +7069,15 @@ footer.site-footer {
 .dcs-course-root .infobar b {
   display: block;
   margin-top: 4px;
-  font-size: 17px;
+  font-size: 16px;
+  font-weight: 800;
   color: var(--navy-800);
 }
 
 .dcs-course-root .btn-gold-pill {
   background: var(--gold);
   color: var(--navy-900);
-  padding: 12px 22px;
+  padding: 12px 24px;
   border-radius: 99px;
   font-weight: 700;
   font-size: 14px;
@@ -7057,6 +7085,7 @@ footer.site-footer {
   align-items: center;
   gap: 8px;
   transition: transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
 }
 
 .dcs-course-root .btn-gold-pill:hover {
@@ -7064,18 +7093,102 @@ footer.site-footer {
   box-shadow: 0 10px 24px -6px rgba(249, 172, 67, 0.6);
 }
 
+/* Stacking Sections & Content Flow in Course Detail Page */
+.dcs-course-root #course-curriculum.section.dcs-stacked-section,
+.dcs-course-root #course-curriculum.layered-scroll-section,
+.dcs-course-root #course-curriculum {
+  display: block !important;
+  min-height: auto !important;
+  height: auto !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  padding-top: clamp(2rem, 3.5vh, 3.5rem) !important;
+  padding-bottom: clamp(3.5rem, 5vh, 5.5rem) !important;
+  padding-left: clamp(16px, 2.5vw, 24px) !important;
+  padding-right: clamp(16px, 2.5vw, 24px) !important;
+  overflow: visible !important;
+  box-sizing: border-box;
+  background: radial-gradient(circle at 80% 10%, #ffffff 0%, var(--grey-100) 45%, var(--grey-200) 100%) !important;
+}
+
+.dcs-course-root .course-main-content {
+  min-width: 0;
+  width: 100%;
+}
+
+.dcs-course-root #course-curriculum .block {
+  margin: 0 0 clamp(44px, 5.5vh, 60px) !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.dcs-course-root #course-curriculum .block:last-child {
+  margin-bottom: 0 !important;
+}
+
+.dcs-course-root #course-related.section.dcs-stacked-section,
+.dcs-course-root #course-related.layered-scroll-section,
+.dcs-course-root #course-related {
+  display: block !important;
+  min-height: auto !important;
+  height: auto !important;
+  padding-top: clamp(3.5rem, 6vh, 5rem) !important;
+  padding-bottom: clamp(3.5rem, 6vh, 5rem) !important;
+  padding-left: clamp(16px, 2.5vw, 24px) !important;
+  padding-right: clamp(16px, 2.5vw, 24px) !important;
+  overflow: visible !important;
+  background: radial-gradient(circle at 80% 10%, #ffffff 0%, var(--grey-100) 45%, var(--grey-200) 100%) !important;
+  box-shadow: 0 -24px 60px -15px rgba(28, 25, 73, 0.25) !important;
+  border-top: 1px solid rgba(249, 172, 67, 0.25);
+  box-sizing: border-box;
+}
+
+.dcs-course-root #course-related .block {
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+.dcs-course-root #course-cta.section.dcs-stacked-section,
+.dcs-course-root #course-cta.layered-scroll-section,
+.dcs-course-root #course-cta {
+  display: block !important;
+  min-height: auto !important;
+  height: auto !important;
+  padding-top: clamp(2rem, 4vh, 3.5rem) !important;
+  padding-bottom: clamp(3.5rem, 6vh, 5rem) !important;
+  padding-left: clamp(16px, 2.5vw, 24px) !important;
+  padding-right: clamp(16px, 2.5vw, 24px) !important;
+  overflow: visible !important;
+  background: radial-gradient(circle at 80% 10%, #ffffff 0%, var(--grey-100) 45%, var(--grey-200) 100%) !important;
+  box-shadow: 0 -24px 60px -15px rgba(28, 25, 73, 0.25) !important;
+  border-top: 1px solid rgba(249, 172, 67, 0.25);
+  box-sizing: border-box;
+}
+
+.dcs-course-root #course-cta .block {
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
 /* Two-Column Layout */
 .dcs-course-root .layout {
   max-width: 1320px;
-  margin: 80px auto 0;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 380px;
-  gap: 36px;
+  gap: clamp(28px, 3.5vw, 44px);
   align-items: start;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .dcs-course-root .block {
-  margin: 0 0 65px;
+  margin: 0 0 clamp(44px, 5.5vh, 60px);
   padding: 0;
 }
 
@@ -7478,9 +7591,10 @@ footer.site-footer {
 /* Sidebar */
 .dcs-course-root .side {
   position: sticky;
-  top: 24px;
+  top: 100px;
   display: grid;
   gap: 20px;
+  z-index: 5;
 }
 
 .dcs-course-root .enroll {
@@ -7800,6 +7914,7 @@ footer.site-footer {
 @media (max-width: 1080px) {
   .dcs-course-root .hero {
     grid-template-columns: 1fr;
+    gap: 32px;
   }
 
   .dcs-course-root .visual.video {
@@ -7808,21 +7923,45 @@ footer.site-footer {
     margin: 0 auto;
   }
 
+  .dcs-course-root .infobar-wrapper {
+    margin: clamp(24px, 3vh, 32px) 0 clamp(28px, 3.5vh, 38px);
+  }
+
   .dcs-course-root .infobar {
     grid-template-columns: repeat(2, 1fr);
-    margin: 30px 10px 0;
+  }
+
+  .dcs-course-root .infobar>div {
+    border-right: none;
+    border-bottom: 1px solid var(--grey-100);
+  }
+
+  .dcs-course-root .infobar>div:nth-child(odd) {
+    border-right: 1px solid var(--grey-100);
+  }
+
+  .dcs-course-root .infobar>div:nth-child(3),
+  .dcs-course-root .infobar>div:nth-child(4) {
+    border-bottom: 1px solid var(--grey-100);
   }
 
   .dcs-course-root .infobar>div:last-child {
     grid-column: 1 / -1;
+    border-bottom: none;
+    border-right: none;
+    padding: 18px 24px;
   }
 
   .dcs-course-root .layout {
     grid-template-columns: 1fr;
+    gap: 40px;
   }
 
   .dcs-course-root .side {
     position: static;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
   }
 
   .dcs-course-root .guarantee {
@@ -7835,41 +7974,124 @@ footer.site-footer {
 }
 
 @media (max-width: 640px) {
-  .dcs-course-root {
-    padding: 12px;
+  .dcs-course-root .dcs-hero-section {
+    padding: 12px 10px 0 !important;
   }
 
   .dcs-course-root .hero-shell {
-    padding: 20px 20px 36px;
+    padding: 20px 16px 28px;
+    border-radius: 22px;
+  }
+
+  .dcs-course-root .hero-heading {
+    font-size: clamp(28px, 7vw, 36px);
+  }
+
+  .dcs-course-root .lead {
+    font-size: 15px;
+  }
+
+  .dcs-course-root .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .dcs-course-root .actions .btn {
+    width: 100%;
+    justify-content: center;
   }
 
   .dcs-course-root .stats {
     display: flex;
     width: 100%;
+    justify-content: space-between;
   }
 
   .dcs-course-root .stat {
-    padding: 0 12px;
+    padding: 0 8px;
+    flex: 1;
+    text-align: center;
   }
 
   .dcs-course-root .stat b {
-    font-size: 22px;
+    font-size: 20px;
+  }
+
+  .dcs-course-root .infobar-wrapper {
+    padding: 0 10px;
+    margin: 20px 0 28px;
+  }
+
+  .dcs-course-root .infobar {
+    border-radius: 18px;
+  }
+
+  .dcs-course-root .infobar>div {
+    padding: 14px 14px;
+  }
+
+  .dcs-course-root .infobar span {
+    font-size: 10.5px;
+  }
+
+  .dcs-course-root .infobar b {
+    font-size: 15px;
+  }
+
+  .dcs-course-root .infobar>div:last-child {
+    padding: 14px 16px;
+  }
+
+  .dcs-course-root .btn-gold-pill {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dcs-course-root .layout {
+    gap: 32px;
   }
 
   .dcs-course-root .learn-grid,
   .dcs-course-root .for-grid,
   .dcs-course-root .related {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .dcs-course-root .tools-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
-  .dcs-course-root .module ul,
-  .dcs-course-root .module .proj {
+  .dcs-course-root .module summary {
+    grid-template-columns: 46px 1fr auto;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .dcs-course-root .module .wk {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    font-size: 10px;
+  }
+
+  .dcs-course-root .module .wk b {
+    font-size: 15px;
+  }
+
+  .dcs-course-root .module h4 {
+    font-size: 15px;
+  }
+
+  .dcs-course-root .module ul {
     padding-left: 20px;
+    padding-right: 16px;
     margin-left: 0;
+  }
+
+  .dcs-course-root .module .proj {
+    margin: 0 16px 16px 20px;
   }
 
   .dcs-course-root .instructor {
@@ -7879,7 +8101,27 @@ footer.site-footer {
 
   .dcs-course-root .guarantee,
   .dcs-course-root .cta-band {
-    padding: 30px 20px;
+    padding: 26px 18px;
+    border-radius: 20px;
+  }
+
+  .dcs-course-root .cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .dcs-course-root .cta-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dcs-course-root #course-curriculum,
+  .dcs-course-root #course-related,
+  .dcs-course-root #course-cta {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: clamp(1.75rem, 3vh, 2.5rem) !important;
+    padding-bottom: clamp(2rem, 3.5vh, 3rem) !important;
   }
 }
 

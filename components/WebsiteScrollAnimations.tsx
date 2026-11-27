@@ -118,12 +118,36 @@ export default function WebsiteScrollAnimations() {
 
       window.addEventListener('resize', onResize, { passive: true });
 
+      // ResizeObserver to dynamically update sticky tops when content size changes
+      // (e.g. accordion modules/FAQs open/close, lazy images, web fonts)
+      let resizeObserver: ResizeObserver | null = null;
+      if (typeof ResizeObserver !== 'undefined') {
+        resizeObserver = new ResizeObserver(() => {
+          updateStickyTops();
+        });
+        allSections.forEach((sec) => {
+          resizeObserver?.observe(sec);
+        });
+      }
+
+      // Event listener for <details> toggle events (modules and FAQs) across the page
+      const onToggle = () => {
+        updateStickyTops();
+        requestAnimationFrame(updateStickyTops);
+      };
+      main.addEventListener('toggle', onToggle, true);
+
       // Secondary check after web fonts and late images settle
       const settleTimer = setTimeout(updateStickyTops, 600);
 
       return () => {
         clearTimeout(settleTimer);
         window.removeEventListener('resize', onResize);
+        main.removeEventListener('toggle', onToggle, true);
+        if (resizeObserver) {
+          resizeObserver.disconnect();
+          resizeObserver = null;
+        }
         allSections.forEach((sec) => {
           sec.style.position = '';
           sec.style.top = '';

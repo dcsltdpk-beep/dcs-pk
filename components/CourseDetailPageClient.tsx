@@ -991,28 +991,30 @@ export default function CourseDetailPageClient({
       {/* ===================================================================
           2. STICKY INFO BAR
           =================================================================== */}
-      <div className="infobar">
-        <div>
-          <span>Duration</span>
-          <b>{duration}</b>
-        </div>
-        <div>
-          <span>Level</span>
-          <b>{level}</b>
-        </div>
-        <div>
-          <span>Schedule</span>
-          <b>{schedule}</b>
-        </div>
-        <div>
-          <span>Certificate</span>
-          <b>Verified Diploma</b>
-        </div>
-        <div>
-          <a href="#enroll-sidebar" className="btn btn-gold-pill">
-            <span>Reserve Seat</span>
-            <ArrowUpRight size={15} />
-          </a>
+      <div className="infobar-wrapper">
+        <div className="infobar">
+          <div>
+            <span>Duration</span>
+            <b>{duration}</b>
+          </div>
+          <div>
+            <span>Level</span>
+            <b>{level}</b>
+          </div>
+          <div>
+            <span>Schedule</span>
+            <b>{schedule}</b>
+          </div>
+          <div>
+            <span>Certificate</span>
+            <b>Verified Diploma</b>
+          </div>
+          <div>
+            <a href="#enroll-sidebar" className="btn btn-gold-pill">
+              <span>Reserve Seat</span>
+              <ArrowUpRight size={15} />
+            </a>
+          </div>
         </div>
       </div>
 
@@ -1224,7 +1226,7 @@ export default function CourseDetailPageClient({
           4. EXPLORE OTHER PROGRAMS
           =================================================================== */}
       <section className="section dcs-stacked-section" id="course-related">
-        <div className="block" style={{ marginTop: '30px' }}>
+        <div className="block">
         <div className="head">
           <span className="eyebrow">Keep learning</span>
           <h2>
