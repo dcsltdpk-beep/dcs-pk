@@ -23,7 +23,7 @@ export default function AdminLoading() {
 
         <div className="loader-brand-title" style={{ fontSize: '1.1rem', letterSpacing: '2px' }}>
           <span style={{ color: '#FBAE43', fontWeight: 800 }}>DCS</span>{' '}
-          <span style={{ color: '#fff', fontWeight: 700 }}>CONTROL CENTER</span>
+          <span style={{ color: '#1c1949', fontWeight: 800 }}>CONTROL CENTER</span>
         </div>
 
         <div className="loader-status-bar">

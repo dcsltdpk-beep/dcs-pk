@@ -120,26 +120,27 @@ export default async function AdminDashboardPage({
           <span className="badge badge-cyan">Control Center</span>
           <span
             style={{
-              fontSize: '0.75rem',
-              padding: '2px 8px',
-              borderRadius: '12px',
+              fontSize: '0.72rem',
+              padding: '3px 10px',
+              borderRadius: '99px',
               backgroundColor: admin.isSuperAdmin
-                ? 'rgba(192, 132, 252, 0.15)'
-                : 'rgba(0, 245, 255, 0.12)',
-              color: admin.isSuperAdmin ? '#c084fc' : 'var(--accent-cyan)',
+                ? '#fef6ea'
+                : 'rgba(58, 63, 184, 0.08)',
+              color: admin.isSuperAdmin ? '#1c1949' : '#3a3fb8',
               border: `1px solid ${
-                admin.isSuperAdmin ? 'rgba(192, 132, 252, 0.3)' : 'rgba(0, 245, 255, 0.3)'
+                admin.isSuperAdmin ? 'rgba(249, 172, 67, 0.45)' : 'rgba(58, 63, 184, 0.22)'
               }`,
-              fontWeight: 600,
+              fontFamily: "var(--font-sora, 'Sora', sans-serif)",
+              fontWeight: 700,
             }}
           >
             {admin.isSuperAdmin ? 'Super Administrator' : 'Sub-Administrator'}
           </span>
         </div>
-        <h1>
-          Welcome, <span className="text-gradient">{admin.name || admin.username}</span>
+        <h1 style={{ color: '#1c1949', fontSize: '2.1rem', fontWeight: 800 }}>
+          Welcome, {admin.name || admin.username}
         </h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', margin: 0 }}>
+        <p style={{ color: '#64748b', fontSize: '1.02rem', margin: 0 }}>
           {admin.isSuperAdmin
             ? 'Complete administrative authority over corporate services, academy training, lead funnels, and sub-admin accounts.'
             : 'Access granted to your assigned website operational modules and workflows.'}
@@ -149,16 +150,16 @@ export default async function AdminDashboardPage({
       {/* Primary Stats Grid */}
       <div className="grid grid-4" style={{ marginBottom: '2.5rem' }}>
         {isSuper && (
-          <div className="card" style={{ borderColor: 'rgba(192, 132, 252, 0.3)' }}>
-            <span style={{ color: '#c084fc', fontSize: '0.85rem', textTransform: 'uppercase', fontWeight: 600 }}>
+          <div className="card">
+            <span style={{ color: '#f9ac43', fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px', fontFamily: "var(--font-sora, 'Sora', sans-serif)" }}>
               Staff & Sub-Admins
             </span>
-            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#c084fc', marginTop: '0.25rem' }}>
+            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1c1949', marginTop: '0.25rem' }}>
               {countSubAdmins}
             </div>
             <Link
               href="/admin/sub-admins"
-              style={{ fontSize: '0.85rem', fontWeight: 600, display: 'inline-block', marginTop: '0.5rem', color: '#c084fc' }}
+              style={{ fontSize: '0.85rem', fontWeight: 700, display: 'inline-block', marginTop: '0.5rem', color: '#3a3fb8' }}
             >
               Manage RBAC &rarr;
             </Link>
@@ -167,15 +168,15 @@ export default async function AdminDashboardPage({
 
         {canInquiries && (
           <div className="card">
-            <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
+            <span style={{ color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>
               Unread Inquiries
             </span>
-            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--accent-gold, #FBAE44)', marginTop: '0.25rem' }}>
-              {unreadInquiries} <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>/ {totalInquiries} total</span>
+            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#f9ac43', marginTop: '0.25rem' }}>
+              {unreadInquiries} <span style={{ fontSize: '1rem', color: '#64748b', fontWeight: 500 }}>/ {totalInquiries} total</span>
             </div>
             <Link
               href="/admin/inquiries"
-              style={{ fontSize: '0.85rem', fontWeight: 600, display: 'inline-block', marginTop: '0.5rem' }}
+              style={{ fontSize: '0.85rem', fontWeight: 700, display: 'inline-block', marginTop: '0.5rem', color: '#3a3fb8' }}
             >
               View Inbox &rarr;
             </Link>
@@ -184,15 +185,15 @@ export default async function AdminDashboardPage({
 
         {canServices && (
           <div className="card">
-            <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
+            <span style={{ color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>
               Core Services
             </span>
-            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#fff', marginTop: '0.25rem' }}>
+            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1c1949', marginTop: '0.25rem' }}>
               {countServices}
             </div>
             <Link
               href="/admin/services"
-              style={{ fontSize: '0.85rem', fontWeight: 600, display: 'inline-block', marginTop: '0.5rem' }}
+              style={{ fontSize: '0.85rem', fontWeight: 700, display: 'inline-block', marginTop: '0.5rem', color: '#3a3fb8' }}
             >
               Manage Services &rarr;
             </Link>
@@ -201,15 +202,15 @@ export default async function AdminDashboardPage({
 
         {canCourses && (
           <div className="card">
-            <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
+            <span style={{ color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>
               Academy Courses
             </span>
-            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#fff', marginTop: '0.25rem' }}>
+            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1c1949', marginTop: '0.25rem' }}>
               {countCourses}
             </div>
             <Link
               href="/admin/courses"
-              style={{ fontSize: '0.85rem', fontWeight: 600, display: 'inline-block', marginTop: '0.5rem' }}
+              style={{ fontSize: '0.85rem', fontWeight: 700, display: 'inline-block', marginTop: '0.5rem', color: '#3a3fb8' }}
             >
               Manage Courses &rarr;
             </Link>
@@ -218,15 +219,15 @@ export default async function AdminDashboardPage({
 
         {canTeam && (
           <div className="card">
-            <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
+            <span style={{ color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>
               Team Profiles
             </span>
-            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#fff', marginTop: '0.25rem' }}>
+            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1c1949', marginTop: '0.25rem' }}>
               {countTeam}
             </div>
             <Link
               href="/admin/team"
-              style={{ fontSize: '0.85rem', fontWeight: 600, display: 'inline-block', marginTop: '0.5rem' }}
+              style={{ fontSize: '0.85rem', fontWeight: 700, display: 'inline-block', marginTop: '0.5rem', color: '#3a3fb8' }}
             >
               Manage Team &rarr;
             </Link>
@@ -239,30 +240,30 @@ export default async function AdminDashboardPage({
         <div className="grid grid-4" style={{ marginBottom: '3rem' }}>
           {canPortfolio && (
             <div className="card">
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Portfolio Projects</span>
-              <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff' }}>{countPortfolio}</div>
-              <Link href="/admin/portfolio" style={{ fontSize: '0.85rem' }}>Manage &rarr;</Link>
+              <span style={{ color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>Portfolio Projects</span>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1c1949', marginTop: '0.25rem' }}>{countPortfolio}</div>
+              <Link href="/admin/portfolio" style={{ fontSize: '0.85rem', fontWeight: 700, color: '#3a3fb8' }}>Manage &rarr;</Link>
             </div>
           )}
           {canVideos && (
             <div className="card">
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Video Showcase</span>
-              <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff' }}>{countVideos}</div>
-              <Link href="/admin/videos" style={{ fontSize: '0.85rem' }}>Manage &rarr;</Link>
+              <span style={{ color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>Video Showcase</span>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1c1949', marginTop: '0.25rem' }}>{countVideos}</div>
+              <Link href="/admin/videos" style={{ fontSize: '0.85rem', fontWeight: 700, color: '#3a3fb8' }}>Manage &rarr;</Link>
             </div>
           )}
           {canPosts && (
             <div className="card">
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Blog & Advisories</span>
-              <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff' }}>{countPosts}</div>
-              <Link href="/admin/posts" style={{ fontSize: '0.85rem' }}>Manage &rarr;</Link>
+              <span style={{ color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>Blog & Advisories</span>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1c1949', marginTop: '0.25rem' }}>{countPosts}</div>
+              <Link href="/admin/posts" style={{ fontSize: '0.85rem', fontWeight: 700, color: '#3a3fb8' }}>Manage &rarr;</Link>
             </div>
           )}
           {canFaqs && (
             <div className="card">
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Frequently Asked Questions</span>
-              <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff' }}>{countFaqs}</div>
-              <Link href="/admin/faqs" style={{ fontSize: '0.85rem' }}>Manage &rarr;</Link>
+              <span style={{ color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>FAQ Database</span>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1c1949', marginTop: '0.25rem' }}>{countFaqs}</div>
+              <Link href="/admin/faqs" style={{ fontSize: '0.85rem', fontWeight: 700, color: '#3a3fb8' }}>Manage &rarr;</Link>
             </div>
           )}
         </div>
@@ -271,15 +272,15 @@ export default async function AdminDashboardPage({
       {/* Recent Inquiries Section */}
       {canInquiries && (
         <div className="card" style={{ padding: '2rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <h3 style={{ marginBottom: '0.25rem' }}>Recent Client Inquiries & Leads</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: 0 }}>
+              <h3 style={{ marginBottom: '0.25rem', color: '#1c1949', fontSize: '1.25rem', fontWeight: 800 }}>Recent Client Inquiries & Leads</h3>
+              <p style={{ color: '#64748b', fontSize: '0.88rem', margin: 0 }}>
                 Latest incoming leads from contact and course inquiry forms
               </p>
             </div>
             <Link href="/admin/inquiries" className="btn btn-outline" style={{ fontSize: '0.85rem' }}>
-              View All Leads
+              View All Leads &rarr;
             </Link>
           </div>
 
@@ -299,21 +300,21 @@ export default async function AdminDashboardPage({
               <tbody>
                 {latestInquiries.map((inq: any) => (
                   <tr key={inq._id}>
-                    <td suppressHydrationWarning>{new Date(inq.createdAt).toLocaleDateString()}</td>
+                    <td suppressHydrationWarning style={{ color: '#64748b', fontSize: '0.85rem' }}>{new Date(inq.createdAt).toLocaleDateString()}</td>
                     <td><span className="badge badge-cyan">{inq.type}</span></td>
-                    <td style={{ fontWeight: 600 }}>{inq.name}</td>
+                    <td style={{ fontWeight: 700, color: '#1c1949' }}>{inq.name}</td>
                     <td>
-                      <div>{inq.email}</div>
-                      {inq.phone && <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{inq.phone}</div>}
+                      <div style={{ color: '#1c1949' }}>{inq.email}</div>
+                      {inq.phone && <div style={{ color: '#64748b', fontSize: '0.82rem' }}>{inq.phone}</div>}
                     </td>
-                    <td>{inq.target_name || inq.subject || 'General'}</td>
+                    <td style={{ color: '#334155' }}>{inq.target_name || inq.subject || 'General'}</td>
                     <td>
                       <span className={`badge ${inq.status === 'unread' ? 'badge-cyan' : ''}`}>
                         {inq.status}
                       </span>
                     </td>
                     <td>
-                      <Link href={`/admin/inquiries?id=${inq._id}`} className="btn btn-outline" style={{ padding: '4px 8px', fontSize: '0.8rem' }}>
+                      <Link href={`/admin/inquiries?id=${inq._id}`} className="btn btn-outline" style={{ padding: '4px 10px', fontSize: '0.8rem', fontWeight: 600 }}>
                         View Details
                       </Link>
                     </td>

@@ -71,14 +71,26 @@ export default function AdminSidebar({ admin: propAdmin }: { admin?: Authenticat
             <Icon name="menu" size={24} />
           </button>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <img
-              src="/logo.png"
-              alt="DCS Control"
-              style={{ width: '24px', height: '24px', objectFit: 'contain', borderRadius: '50%' }}
-            />
-            <span style={{ fontWeight: 800, color: '#fff', fontSize: '1rem', letterSpacing: '0.5px' }}>
-              DCS CONTROL
-            </span>
+            <div style={{
+              padding: '2px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #ffd27a, #f9ac43)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: 'none'
+            }}>
+              <img
+                src="/logo.png"
+                alt="DCS Control"
+                style={{ width: '22px', height: '22px', objectFit: 'contain', borderRadius: '50%', display: 'block' }}
+              />
+            </div>
+            <div>
+              <span style={{ fontWeight: 800, color: '#1c1949', fontSize: '0.95rem', letterSpacing: '0.5px', display: 'block', lineHeight: 1.1, fontFamily: "var(--font-sora, 'Sora', sans-serif)" }}>
+                DCS CONTROL
+              </span>
+            </div>
           </div>
         </div>
 
@@ -87,16 +99,17 @@ export default function AdminSidebar({ admin: propAdmin }: { admin?: Authenticat
             <span
               style={{
                 fontSize: '0.72rem',
-                padding: '2px 8px',
-                borderRadius: '12px',
+                padding: '3px 10px',
+                borderRadius: '99px',
                 backgroundColor: admin.isSuperAdmin
-                  ? 'rgba(192, 132, 252, 0.15)'
-                  : 'rgba(0, 245, 255, 0.12)',
-                color: admin.isSuperAdmin ? '#c084fc' : 'var(--accent-cyan)',
+                  ? '#fef6ea'
+                  : 'rgba(58, 63, 184, 0.08)',
+                color: admin.isSuperAdmin ? '#1c1949' : '#3a3fb8',
                 border: `1px solid ${
-                  admin.isSuperAdmin ? 'rgba(192, 132, 252, 0.3)' : 'rgba(0, 245, 255, 0.3)'
+                  admin.isSuperAdmin ? 'rgba(249, 172, 67, 0.45)' : 'rgba(58, 63, 184, 0.22)'
                 }`,
-                fontWeight: 600,
+                fontFamily: "var(--font-sora, 'Sora', sans-serif)",
+                fontWeight: 700,
               }}
             >
               {admin.isSuperAdmin ? 'Super Admin' : 'Sub-Admin'}
@@ -104,7 +117,7 @@ export default function AdminSidebar({ admin: propAdmin }: { admin?: Authenticat
           )}
           <button
             onClick={handleLogout}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ff7b7b', fontSize: '0.85rem' }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ef4444', fontSize: '0.85rem', fontWeight: 600 }}
           >
             Logout
           </button>
@@ -123,14 +136,29 @@ export default function AdminSidebar({ admin: propAdmin }: { admin?: Authenticat
             {/* Brand Logo Header */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', padding: '0 0.5rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <img
-                  src="/logo.png"
-                  alt="DCS Control"
-                  style={{ width: '28px', height: '28px', objectFit: 'contain', borderRadius: '50%' }}
-                />
-                <span style={{ fontWeight: 800, color: '#fff', fontSize: '1.15rem', letterSpacing: '0.5px' }}>
-                  DCS CONTROL
-                </span>
+                <div style={{
+                  padding: '2px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #ffd27a, #f9ac43)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: 'none'
+                }}>
+                  <img
+                    src="/logo.png"
+                    alt="DCS Control"
+                    style={{ width: '28px', height: '28px', objectFit: 'contain', borderRadius: '50%', display: 'block' }}
+                  />
+                </div>
+                <div>
+                  <span style={{ fontWeight: 800, color: '#1c1949', fontSize: '1.05rem', letterSpacing: '0.5px', display: 'block', lineHeight: 1.1, fontFamily: "var(--font-sora, 'Sora', sans-serif)" }}>
+                    DCS CONTROL
+                  </span>
+                  <span style={{ fontSize: '0.68rem', color: '#f9ac43', fontWeight: 800, letterSpacing: '0.8px', textTransform: 'uppercase', fontFamily: "var(--font-sora, 'Sora', sans-serif)" }}>
+                    Security Portal
+                  </span>
+                </div>
               </div>
               {/* Close button inside mobile drawer */}
               <button
@@ -148,9 +176,9 @@ export default function AdminSidebar({ admin: propAdmin }: { admin?: Authenticat
                 style={{
                   margin: '0 0.25rem 1.5rem',
                   padding: '0.75rem',
-                  borderRadius: '8px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid var(--border-color)',
+                  borderRadius: '12px',
+                  backgroundColor: '#f8fafc',
+                  border: '1px solid #e2e8f0',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '10px',
@@ -158,21 +186,21 @@ export default function AdminSidebar({ admin: propAdmin }: { admin?: Authenticat
               >
                 <div
                   style={{
-                    width: '32px',
-                    height: '32px',
+                    width: '34px',
+                    height: '34px',
                     borderRadius: '50%',
                     backgroundColor: admin.isSuperAdmin
-                      ? 'rgba(192, 132, 252, 0.2)'
-                      : 'rgba(0, 245, 255, 0.15)',
-                    border: `1px solid ${
-                      admin.isSuperAdmin ? '#c084fc' : 'var(--accent-cyan)'
+                      ? '#fef6ea'
+                      : 'rgba(58, 63, 184, 0.08)',
+                    border: `1.5px solid ${
+                      admin.isSuperAdmin ? '#f9ac43' : '#3a3fb8'
                     }`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: admin.isSuperAdmin ? '#c084fc' : 'var(--accent-cyan)',
+                    color: admin.isSuperAdmin ? '#1c1949' : '#3a3fb8',
                     fontWeight: 700,
-                    fontSize: '0.85rem',
+                    fontSize: '0.88rem',
                     flexShrink: 0,
                   }}
                 >
@@ -181,8 +209,8 @@ export default function AdminSidebar({ admin: propAdmin }: { admin?: Authenticat
                 <div style={{ overflow: 'hidden', flex: 1 }}>
                   <div
                     style={{
-                      fontWeight: 600,
-                      color: '#fff',
+                      fontWeight: 700,
+                      color: '#1c1949',
                       fontSize: '0.85rem',
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
@@ -197,17 +225,18 @@ export default function AdminSidebar({ admin: propAdmin }: { admin?: Authenticat
                         width: '6px',
                         height: '6px',
                         borderRadius: '50%',
-                        backgroundColor: '#34d399',
-                        boxShadow: '0 0 6px #34d399',
+                        backgroundColor: '#10b981',
+                        boxShadow: 'none',
                       }}
                     />
                     <span
                       style={{
                         fontSize: '0.7rem',
-                        color: admin.isSuperAdmin ? '#c084fc' : 'var(--accent-cyan)',
-                        fontWeight: 600,
+                        color: admin.isSuperAdmin ? '#1c1949' : '#3a3fb8',
+                        fontWeight: 700,
                         textTransform: 'uppercase',
                         letterSpacing: '0.5px',
+                        fontFamily: "var(--font-sora, 'Sora', sans-serif)",
                       }}
                     >
                       {admin.isSuperAdmin ? 'Super Admin' : 'Sub-Admin'}
@@ -237,12 +266,12 @@ export default function AdminSidebar({ admin: propAdmin }: { admin?: Authenticat
           </div>
 
           {/* Bottom Actions */}
-          <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.25rem', marginTop: '1.5rem' }}>
+          <div style={{ borderTop: '1px solid #e5e9f2', paddingTop: '1.25rem', marginTop: '1.5rem' }}>
             <Link
               href="/"
               target="_blank"
               className="admin-nav-item"
-              style={{ color: 'var(--accent-cyan)' }}
+              style={{ color: '#3a3fb8', fontWeight: 700 }}
               onClick={closeMobileMenu}
             >
               <Icon name="external-link" size={16} />
@@ -251,7 +280,7 @@ export default function AdminSidebar({ admin: propAdmin }: { admin?: Authenticat
             <button
               onClick={handleLogout}
               className="admin-nav-item"
-              style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', color: '#ff7b7b' }}
+              style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', color: '#ef4444', fontWeight: 600 }}
             >
               <Icon name="user" size={16} />
               <span>Sign Out</span>

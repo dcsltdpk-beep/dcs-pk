@@ -212,7 +212,7 @@ export default function SettingsClient({ initialSettings }: { initialSettings: R
     <div>
       <div style={{ marginBottom: '2rem' }}>
         <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Configuration</span>
-        <h1>Site Settings & <span className="text-gradient">Per-Page SEO Intelligence</span></h1>
+        <h1 style={{ color: '#1c1949', fontWeight: 800 }}>Site Settings & Per-Page SEO Intelligence</h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
           Configure custom meta titles, meta descriptions, and primary keywords for every individual page on the website.
         </p>
@@ -228,16 +228,16 @@ export default function SettingsClient({ initialSettings }: { initialSettings: R
         {/* ================================================================== */}
         {/* SECTION 1: PER-PAGE SEO INTELLIGENCE (META TITLES, DESCS, KEYWORDS) */}
         {/* ================================================================== */}
-        <div className="card" style={{ padding: '2rem', marginBottom: '2.5rem', border: '1px solid var(--accent-cyan)' }}>
+        <div className="card" style={{ padding: '2rem', marginBottom: '2.5rem', border: '1.5px solid #f9ac43', boxShadow: '0 10px 30px -10px rgba(28, 25, 73, 0.08)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
             <div>
               <span className="badge badge-cyan" style={{ marginBottom: '0.4rem', fontSize: '0.72rem' }}>Frontend Pages</span>
-              <h3 style={{ margin: 0, color: 'var(--accent-cyan)' }}>1. Per-Page SEO & Meta Management</h3>
+              <h3 style={{ margin: 0, color: '#1c1949', fontWeight: 800 }}>1. Per-Page SEO & Meta Management</h3>
             </div>
             <Link
               href="/admin/posts"
               className="btn btn-outline"
-              style={{ padding: '6px 14px', fontSize: '0.82rem', borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)' }}
+              style={{ padding: '6px 14px', fontSize: '0.82rem' }}
             >
               ✍️ Manage Individual Blog Post Slugs & SEO &rarr;
             </Link>
@@ -255,9 +255,9 @@ export default function SettingsClient({ initialSettings }: { initialSettings: R
               flexWrap: 'wrap',
               marginBottom: '1.75rem',
               padding: '6px',
-              background: 'rgba(255, 255, 255, 0.03)',
-              borderRadius: 'var(--radius-sm)',
-              border: '1px solid var(--border-color)',
+              background: '#f8fafc',
+              borderRadius: '10px',
+              border: '1px solid #e2e8f0',
             }}
           >
             {SEO_PAGES.map((page) => {
@@ -271,8 +271,8 @@ export default function SettingsClient({ initialSettings }: { initialSettings: R
                     padding: '8px 14px',
                     borderRadius: '6px',
                     border: 'none',
-                    background: isActive ? 'var(--accent-cyan)' : 'transparent',
-                    color: isActive ? '#0a0e1a' : 'var(--text-muted)',
+                    background: isActive ? '#f9ac43' : 'transparent',
+                    color: isActive ? '#1c1949' : '#64748b',
                     fontWeight: isActive ? 700 : 500,
                     fontSize: '0.84rem',
                     cursor: 'pointer',
@@ -290,20 +290,20 @@ export default function SettingsClient({ initialSettings }: { initialSettings: R
             style={{
               padding: '1.75rem',
               borderRadius: 'var(--radius-sm)',
-              background: 'rgba(0, 240, 255, 0.02)',
-              border: '1px solid rgba(0, 240, 255, 0.2)',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff' }}>
-                Editing SEO for: <span style={{ color: 'var(--accent-cyan)' }}>{currentPage.label}</span>
+              <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#1c1949' }}>
+                Editing SEO for: <span style={{ color: '#3a3fb8' }}>{currentPage.label}</span>
               </div>
               <span
                 style={{
                   fontSize: '0.78rem',
-                  color: 'var(--accent-cyan)',
+                  color: '#3a3fb8',
                   fontFamily: 'var(--font-mono, monospace)',
-                  background: 'rgba(0, 240, 255, 0.08)',
+                  background: 'rgba(58, 63, 184, 0.08)',
                   padding: '3px 8px',
                   borderRadius: '4px',
                 }}
@@ -316,32 +316,33 @@ export default function SettingsClient({ initialSettings }: { initialSettings: R
             <div
               style={{
                 padding: '1.25rem',
-                borderRadius: '6px',
-                background: '#0a0d1a',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '12px',
+                background: '#ffffff',
+                border: '1px solid #e2e8f0',
+                boxShadow: '0 4px 12px rgba(28, 25, 73, 0.04)',
                 marginBottom: '1.5rem',
               }}
             >
-              <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--accent-cyan)', fontWeight: 700, marginBottom: '6px' }}>
+              <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#f9ac43', fontWeight: 800, marginBottom: '6px', fontFamily: "var(--font-sora, 'Sora', sans-serif)" }}>
                 🔍 Google SERP Snippet Preview for {currentPage.label}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'var(--accent-cyan)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', color: '#000', fontWeight: 900 }}>
+                <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: 'linear-gradient(135deg, #f9ac43, #f09a2a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#1c1949', fontWeight: 900 }}>
                   D
                 </div>
                 <div>
-                  <span style={{ fontSize: '0.82rem', color: '#e6edf3', fontWeight: 500 }}>
+                  <span style={{ fontSize: '0.84rem', color: '#202124', fontWeight: 600 }}>
                     {settings.site_name || 'Dream Cyber Security Pakistan'}
                   </span>
-                  <span style={{ fontSize: '0.74rem', color: '#8b949e', marginLeft: '6px' }}>
+                  <span style={{ fontSize: '0.76rem', color: '#5f6368', marginLeft: '6px' }}>
                     {settings.site_url ? settings.site_url.replace(/^https?:\/\//, '').replace(/\/$/, '') : 'dreamcybersecurity.pk'}{currentPage.path}
                   </span>
                 </div>
               </div>
-              <div style={{ color: '#58a6ff', fontSize: '1.15rem', fontWeight: 500, lineHeight: '1.3', marginBottom: '6px' }}>
+              <div style={{ color: '#1a0dab', fontSize: '1.15rem', fontWeight: 500, lineHeight: '1.3', marginBottom: '6px' }}>
                 {currentTitle}
               </div>
-              <div style={{ color: '#8b949e', fontSize: '0.86rem', lineHeight: '1.5' }}>
+              <div style={{ color: '#4d5156', fontSize: '0.86rem', lineHeight: '1.5' }}>
                 {currentDesc}
               </div>
             </div>
@@ -440,7 +441,7 @@ export default function SettingsClient({ initialSettings }: { initialSettings: R
         {/* SECTION 2: GLOBAL DOMAIN, SOCIAL & VERIFICATION SETTINGS */}
         {/* ================================================================== */}
         <div className="card" style={{ padding: '2rem', marginBottom: '2.5rem' }}>
-          <h3 style={{ marginBottom: '1.25rem', color: 'var(--accent-cyan)' }}>2. Canonical Base URL & Google Search Console</h3>
+          <h3 style={{ marginBottom: '1.25rem', color: '#1c1949', fontWeight: 800 }}>2. Canonical Base URL & Google Search Console</h3>
 
           <div className="grid grid-2" style={{ gap: '1rem' }}>
             <div className="form-group">
@@ -478,9 +479,9 @@ export default function SettingsClient({ initialSettings }: { initialSettings: R
               padding: '1.25rem',
               marginTop: '0.5rem',
               marginBottom: '1rem',
-              background: 'rgba(255, 255, 255, 0.02)',
-              borderRadius: 'var(--radius-sm)',
-              border: '1px dashed var(--border-color)',
+              background: '#f8fafc',
+              borderRadius: '12px',
+              border: '1px dashed #cbd5e1',
             }}
           >
             <label className="form-label" style={{ marginBottom: '0.5rem' }}>Default Social Share Card Banner (OG Image)</label>
@@ -603,7 +604,7 @@ export default function SettingsClient({ initialSettings }: { initialSettings: R
         {/* SECTION 3: CORPORATE CHANNELS & SOCIAL LINKS */}
         {/* ================================================================== */}
         <div className="card" style={{ padding: '2rem', marginBottom: '2rem' }}>
-          <h3 style={{ marginBottom: '1.25rem', color: 'var(--accent-cyan)' }}>3. Corporate Identity & Official Channels</h3>
+          <h3 style={{ marginBottom: '1.25rem', color: '#1c1949', fontWeight: 800 }}>3. Corporate Identity & Official Channels</h3>
 
           <div className="grid grid-2" style={{ gap: '1rem' }}>
             <div className="form-group">

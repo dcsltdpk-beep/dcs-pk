@@ -595,13 +595,13 @@ export default function WysiwygEditor({
       <div className="wysiwyg-status-bar">
         <div>
           <span>{wordCount} words</span> &bull; <span>{charCount} characters</span> &bull;{' '}
-          <span style={{ color: 'var(--accent-cyan)' }}>Est. ~{estimatedReadingTime} min read</span>
+          <span style={{ color: '#3a3fb8', fontWeight: 600 }}>Est. ~{estimatedReadingTime} min read</span>
         </div>
         <div>
           {isSourceMode ? (
-            <span style={{ color: '#f59e0b', fontSize: '0.75rem' }}>Source Mode Active</span>
+            <span style={{ color: '#f59e0b', fontSize: '0.75rem', fontWeight: 600 }}>Source Mode Active</span>
           ) : (
-            <span style={{ color: '#10b981', fontSize: '0.75rem' }}>WYSIWYG Active</span>
+            <span style={{ color: '#10b981', fontSize: '0.75rem', fontWeight: 600 }}>WYSIWYG Active</span>
           )}
         </div>
       </div>
@@ -610,9 +610,9 @@ export default function WysiwygEditor({
       {linkModalOpen && (
         <div className="wysiwyg-modal-overlay">
           <div className="wysiwyg-modal-box">
-            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--accent-cyan)' }}>Insert Hyperlink</h4>
+            <h4 style={{ margin: '0 0 1rem 0', color: '#1c1949' }}>Insert Hyperlink</h4>
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: '#64748b', marginBottom: '4px' }}>
                 Display Text
               </label>
               <input
@@ -624,7 +624,7 @@ export default function WysiwygEditor({
               />
             </div>
             <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: '#64748b', marginBottom: '4px' }}>
                 Target URL *
               </label>
               <input
@@ -662,15 +662,15 @@ export default function WysiwygEditor({
       {imageModalOpen && (
         <div className="wysiwyg-modal-overlay">
           <div className="wysiwyg-modal-box" style={{ maxWidth: '520px' }}>
-            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--accent-cyan)' }}>Insert Content Image</h4>
+            <h4 style={{ margin: '0 0 1rem 0', color: '#1c1949' }}>Insert Content Image</h4>
 
             {/* Direct Upload Option */}
             <div
               style={{
                 padding: '1rem',
                 borderRadius: '8px',
-                border: '1px dashed var(--border-color)',
-                backgroundColor: 'rgba(255,255,255,0.02)',
+                border: '1.5px dashed #cbd5e1',
+                backgroundColor: '#f8fafc',
                 marginBottom: '1rem',
                 textAlign: 'center',
               }}
@@ -686,18 +686,18 @@ export default function WysiwygEditor({
                 type="button"
                 className="btn btn-outline"
                 disabled={uploadingImage}
-                style={{ padding: '6px 14px', fontSize: '0.82rem', borderColor: 'var(--accent-cyan)' }}
+                style={{ padding: '6px 14px', fontSize: '0.82rem', borderColor: '#f9ac43', color: '#1c1949', fontWeight: 600 }}
                 onClick={() => imageUploadRef.current?.click()}
               >
                 {uploadingImage ? 'Uploading Image to Cloudinary...' : '📁 Upload Local Image to Cloudinary'}
               </button>
-              <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: '6px' }}>
+              <div style={{ color: '#64748b', fontSize: '0.75rem', marginTop: '6px' }}>
                 PNG, JPG, WebP, GIF supported
               </div>
             </div>
 
             <div style={{ marginBottom: '0.75rem' }}>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: '#64748b', marginBottom: '4px' }}>
                 Or Direct Image URL *
               </label>
               <input
@@ -710,7 +710,7 @@ export default function WysiwygEditor({
             </div>
 
             <div style={{ marginBottom: '0.75rem' }}>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: '#64748b', marginBottom: '4px' }}>
                 Alt Text (for SEO & Accessibility)
               </label>
               <input
@@ -723,7 +723,7 @@ export default function WysiwygEditor({
             </div>
 
             <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: '#64748b', marginBottom: '4px' }}>
                 Image Caption (Optional display caption)
               </label>
               <input
@@ -742,9 +742,9 @@ export default function WysiwygEditor({
                   height: '120px',
                   borderRadius: '6px',
                   overflow: 'hidden',
-                  border: '1px solid var(--border-color)',
+                  border: '1px solid #e2e8f0',
                   marginBottom: '1rem',
-                  background: '#070b14',
+                  background: '#f8fafc',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -782,9 +782,9 @@ export default function WysiwygEditor({
       {videoModalOpen && (
         <div className="wysiwyg-modal-overlay">
           <div className="wysiwyg-modal-box">
-            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--accent-cyan)' }}>Embed Video</h4>
+            <h4 style={{ margin: '0 0 1rem 0', color: '#1c1949' }}>Embed Video</h4>
             <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: '#64748b', marginBottom: '4px' }}>
                 YouTube or Vimeo URL *
               </label>
               <input
@@ -795,7 +795,7 @@ export default function WysiwygEditor({
                 onChange={(e) => setVideoUrl(e.target.value)}
                 autoFocus
               />
-              <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+              <div style={{ fontSize: '0.74rem', color: '#64748b', marginTop: '4px' }}>
                 Will automatically render as a responsive 16:9 HD video container.
               </div>
             </div>
@@ -826,10 +826,10 @@ export default function WysiwygEditor({
       {tableModalOpen && (
         <div className="wysiwyg-modal-overlay">
           <div className="wysiwyg-modal-box">
-            <h4 style={{ margin: '0 0 1rem 0', color: 'var(--accent-cyan)' }}>Insert Structured Table</h4>
+            <h4 style={{ margin: '0 0 1rem 0', color: '#1c1949' }}>Insert Structured Table</h4>
             <div className="grid grid-2" style={{ gap: '1rem', marginBottom: '1.25rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', color: '#64748b', marginBottom: '4px' }}>
                   Rows (including Header)
                 </label>
                 <input
@@ -842,7 +842,7 @@ export default function WysiwygEditor({
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', color: '#64748b', marginBottom: '4px' }}>
                   Columns
                 </label>
                 <input

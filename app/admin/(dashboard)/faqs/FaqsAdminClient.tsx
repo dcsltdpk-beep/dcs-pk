@@ -65,7 +65,7 @@ export default function FaqsAdminClient({ initialFaqs }: { initialFaqs: FaqItem[
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>
           <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Knowledge Base</span>
-          <h1>Manage <span className="text-gradient">Frequently Asked Questions</span></h1>
+          <h1 style={{ color: '#1c1949', fontWeight: 800 }}>Manage Frequently Asked Questions</h1>
         </div>
         {canCreate && (
           <button onClick={() => setEditing(emptyForm)} className="btn btn-primary">
@@ -75,7 +75,7 @@ export default function FaqsAdminClient({ initialFaqs }: { initialFaqs: FaqItem[
       </div>
 
       {editing && (
-        <div className="card" style={{ padding: '2rem', marginBottom: '2.5rem', border: '1px solid var(--accent-cyan)' }}>
+        <div className="card" style={{ padding: '2rem', marginBottom: '2.5rem', border: '1.5px solid #f9ac43', boxShadow: '0 10px 30px -10px rgba(28, 25, 73, 0.08)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
             <h3 style={{ margin: 0 }}>{editing._id ? 'Edit FAQ' : 'Add FAQ Entry'}</h3>
             <button onClick={() => setEditing(null)} className="btn btn-outline" style={{ padding: '4px 10px' }}>

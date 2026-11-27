@@ -3,6 +3,9 @@ import { requireApiPermission } from '@/lib/auth';
 import { connectDB } from '@/lib/db';
 import { Setting } from '@/lib/models/Setting';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   const auth = await requireApiPermission('home-content', 'view');
   if ('error' in auth) return auth.error;

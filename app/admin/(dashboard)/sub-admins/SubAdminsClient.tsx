@@ -554,8 +554,8 @@ export default function SubAdminsClient({
           <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>
             Identity & Access Management (RBAC)
           </span>
-          <h1 style={{ margin: 0, fontSize: '2.1rem' }}>
-            Sub-Admin Accounts & <span className="text-gradient">Role Governance</span>
+          <h1 style={{ margin: 0, fontSize: '2.1rem', color: '#1c1949', fontWeight: 800 }}>
+            Sub-Admin Accounts & Role Governance
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.02rem', marginTop: '0.4rem', marginBottom: 0 }}>
             Provision sub-administrators, govern fine-grained module privileges (View, Create,
@@ -574,34 +574,34 @@ export default function SubAdminsClient({
 
       {/* Metrics Row */}
       <div className="grid grid-4" style={{ marginBottom: '2.5rem' }}>
-        <div className="card" style={{ padding: '1.5rem', background: 'var(--bg-card)' }}>
-          <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+        <div className="card" style={{ padding: '1.5rem' }}>
+          <div style={{ color: '#64748b', fontSize: '0.82rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px', marginBottom: '0.25rem' }}>
             Total Administrators
           </div>
-          <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#fff' }}>{totalCount}</div>
-          <div style={{ color: 'var(--accent-cyan)', fontSize: '0.8rem', marginTop: '0.4rem' }}>
+          <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1c1949' }}>{totalCount}</div>
+          <div style={{ color: '#3a3fb8', fontSize: '0.8rem', marginTop: '0.4rem', fontWeight: 600 }}>
             Registered administrative users
           </div>
         </div>
 
-        <div className="card" style={{ padding: '1.5rem', background: 'var(--bg-card)' }}>
-          <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+        <div className="card" style={{ padding: '1.5rem' }}>
+          <div style={{ color: '#64748b', fontSize: '0.82rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px', marginBottom: '0.25rem' }}>
             Super Administrators
           </div>
-          <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#c084fc' }}>{superCount}</div>
-          <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.4rem' }}>
+          <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#f9ac43' }}>{superCount}</div>
+          <div style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '0.4rem' }}>
             Full system-wide authority
           </div>
         </div>
 
-        <div className="card" style={{ padding: '1.5rem', background: 'var(--bg-card)' }}>
-          <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+        <div className="card" style={{ padding: '1.5rem' }}>
+          <div style={{ color: '#64748b', fontSize: '0.82rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px', marginBottom: '0.25rem' }}>
             Sub-Administrators
           </div>
-          <div style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--accent-cyan)' }}>
+          <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#3a3fb8' }}>
             {subCount}
           </div>
-          <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.4rem' }}>
+          <div style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '0.4rem' }}>
             Granular RBAC restricted
           </div>
         </div>
@@ -721,15 +721,15 @@ export default function SubAdminsClient({
                             height: '40px',
                             borderRadius: '50%',
                             backgroundColor: user.isSuperAdmin
-                              ? 'rgba(192, 132, 252, 0.15)'
-                              : 'rgba(0, 245, 255, 0.12)',
+                              ? 'rgba(251, 174, 68, 0.15)'
+                              : 'rgba(185, 221, 235, 0.12)',
                             border: `1px solid ${
-                              user.isSuperAdmin ? '#c084fc' : 'var(--accent-cyan)'
+                              user.isSuperAdmin ? '#FBAE43' : '#B9DDEB'
                             }`,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            color: user.isSuperAdmin ? '#c084fc' : 'var(--accent-cyan)',
+                            color: user.isSuperAdmin ? '#FBAE43' : '#B9DDEB',
                             fontWeight: 700,
                             fontSize: '1rem',
                             flexShrink: 0,
@@ -738,7 +738,7 @@ export default function SubAdminsClient({
                           {user.name ? user.name.charAt(0).toUpperCase() : user.username.charAt(0).toUpperCase()}
                         </div>
                         <div>
-                          <div style={{ fontWeight: 600, color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <div style={{ fontWeight: 700, color: '#1c1949', display: 'flex', alignItems: 'center', gap: '6px' }}>
                             <span>{user.name || user.username}</span>
                             {isCurrent && (
                               <span
@@ -746,7 +746,7 @@ export default function SubAdminsClient({
                                   fontSize: '0.7rem',
                                   padding: '2px 6px',
                                   borderRadius: '4px',
-                                  backgroundColor: 'rgba(0, 245, 255, 0.2)',
+                                  backgroundColor: 'rgba(251, 174, 68, 0.2)',
                                   color: 'var(--accent-cyan)',
                                   fontWeight: 600,
                                 }}
@@ -773,9 +773,9 @@ export default function SubAdminsClient({
                             borderRadius: '20px',
                             fontSize: '0.78rem',
                             fontWeight: 600,
-                            background: 'rgba(192, 132, 252, 0.12)',
-                            border: '1px solid rgba(192, 132, 252, 0.4)',
-                            color: '#e9d5ff',
+                            background: 'rgba(251, 174, 68, 0.14)',
+                            border: '1px solid rgba(251, 174, 68, 0.4)',
+                            color: '#FBAE43',
                           }}
                         >
                           <Icon name="shield-check" size={14} />
@@ -791,9 +791,9 @@ export default function SubAdminsClient({
                             borderRadius: '20px',
                             fontSize: '0.78rem',
                             fontWeight: 600,
-                            background: 'rgba(0, 245, 255, 0.08)',
-                            border: '1px solid rgba(0, 245, 255, 0.3)',
-                            color: 'var(--accent-cyan)',
+                            background: 'rgba(185, 221, 235, 0.12)',
+                            border: '1px solid rgba(185, 221, 235, 0.35)',
+                            color: '#B9DDEB',
                           }}
                         >
                           <Icon name="user" size={14} />
@@ -843,7 +843,7 @@ export default function SubAdminsClient({
                         <span
                           style={{
                             fontSize: '0.8rem',
-                            color: '#c084fc',
+                            color: '#FBAE43',
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: '4px',
@@ -869,9 +869,10 @@ export default function SubAdminsClient({
                                       fontSize: '0.75rem',
                                       padding: '3px 8px',
                                       borderRadius: '4px',
-                                      backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                                      border: '1px solid var(--border-color)',
-                                      color: 'var(--text-main)',
+                                      backgroundColor: '#f1f5f9',
+                                      border: '1px solid #e2e8f0',
+                                      color: '#1c1949',
+                                      fontWeight: 600,
                                       whiteSpace: 'nowrap',
                                     }}
                                   >
@@ -941,7 +942,7 @@ export default function SubAdminsClient({
                 <span className="badge badge-cyan" style={{ marginBottom: '0.35rem' }}>
                   {formData._id ? 'Identity Modification' : 'Staff Provisioning'}
                 </span>
-                <h2 style={{ margin: 0, fontSize: '1.45rem', color: '#fff' }}>
+                <h2 style={{ margin: 0, fontSize: '1.45rem', color: '#1c1949', fontWeight: 800 }}>
                   {formData._id ? `Edit Account: ${formData.username}` : 'Create New Sub-Admin Account'}
                 </h2>
               </div>
@@ -1011,13 +1012,13 @@ export default function SubAdminsClient({
                   style={{
                     padding: '1.5rem',
                     borderRadius: '10px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                    border: '1px solid var(--border-color)',
+                    backgroundColor: '#f8fafc',
+                    border: '1px solid #e2e8f0',
                     marginBottom: '1.75rem',
                   }}
                 >
                   <div style={{ marginBottom: '1.25rem' }}>
-                    <h3 style={{ fontSize: '1.15rem', margin: 0, color: 'var(--accent-cyan)' }}>
+                    <h3 style={{ fontSize: '1.15rem', margin: 0, color: '#1c1949', fontWeight: 800 }}>
                       1. Account Identity & Credentials
                     </h3>
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', margin: '4px 0 0 0' }}>
@@ -1319,8 +1320,8 @@ export default function SubAdminsClient({
                   style={{
                     padding: '1.5rem',
                     borderRadius: '10px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                    border: '1px solid var(--border-color)',
+                    backgroundColor: '#f8fafc',
+                    border: '1px solid #e2e8f0',
                   }}
                 >
                   <div
@@ -1334,7 +1335,7 @@ export default function SubAdminsClient({
                     }}
                   >
                     <div>
-                      <h3 style={{ fontSize: '1.15rem', margin: 0, color: 'var(--accent-cyan)' }}>
+                      <h3 style={{ fontSize: '1.15rem', margin: 0, color: '#1c1949', fontWeight: 800 }}>
                         2. Granular Module & Action Permissions
                       </h3>
                       <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', margin: '4px 0 0 0' }}>
@@ -1377,16 +1378,16 @@ export default function SubAdminsClient({
                       style={{
                         padding: '1.25rem 1.5rem',
                         borderRadius: '8px',
-                        backgroundColor: 'rgba(192, 132, 252, 0.08)',
-                        border: '1px solid rgba(192, 132, 252, 0.35)',
-                        color: '#e9d5ff',
+                        backgroundColor: 'rgba(251, 174, 68, 0.08)',
+                        border: '1px solid rgba(251, 174, 68, 0.35)',
+                        color: '#fef3c7',
                         fontSize: '0.9rem',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '12px',
                       }}
                     >
-                      <Icon name="shield-check" size={24} style={{ color: '#c084fc', flexShrink: 0 }} />
+                      <Icon name="shield-check" size={24} style={{ color: '#FBAE43', flexShrink: 0 }} />
                       <div>
                         <strong>Super Administrator Mode Enabled:</strong> This account has automatic and
                         unrestricted full privileges across all website modules, database entries, SEO
@@ -1402,11 +1403,11 @@ export default function SubAdminsClient({
                           borderRadius: '6px',
                           backgroundColor:
                             totalAssignedActions > 0
-                              ? 'rgba(0, 245, 255, 0.05)'
+                              ? 'rgba(251, 174, 68, 0.08)'
                               : 'rgba(239, 68, 68, 0.08)',
                           border: `1px solid ${
                             totalAssignedActions > 0
-                              ? 'rgba(0, 245, 255, 0.2)'
+                              ? 'rgba(251, 174, 68, 0.3)'
                               : 'rgba(239, 68, 68, 0.3)'
                           }`,
                           marginBottom: '1rem',
@@ -1454,7 +1455,7 @@ export default function SubAdminsClient({
                       <div className="table-responsive">
                         <table>
                           <thead>
-                            <tr style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)' }}>
+                            <tr style={{ backgroundColor: '#f1f5f9' }}>
                               <th style={{ padding: '0.85rem 1rem' }}>Module & Route</th>
                               <th style={{ padding: '0.85rem 0.5rem', textAlign: 'center' }}>View</th>
                               <th style={{ padding: '0.85rem 0.5rem', textAlign: 'center' }}>Create</th>
@@ -1485,7 +1486,7 @@ export default function SubAdminsClient({
                                   style={{
                                     borderBottom: '1px solid var(--border-color)',
                                     backgroundColor:
-                                      currentActions.length > 0 ? 'rgba(0, 245, 255, 0.02)' : 'transparent',
+                                      currentActions.length > 0 ? 'rgba(251, 174, 68, 0.03)' : 'transparent',
                                   }}
                                 >
                                   <td style={{ padding: '0.85rem 1rem' }}>
@@ -1495,19 +1496,19 @@ export default function SubAdminsClient({
                                           width: '32px',
                                           height: '32px',
                                           borderRadius: '6px',
-                                          backgroundColor: 'rgba(0, 245, 255, 0.08)',
-                                          border: '1px solid rgba(0, 245, 255, 0.25)',
+                                          backgroundColor: 'rgba(251, 174, 68, 0.1)',
+                                          border: '1px solid rgba(251, 174, 68, 0.3)',
                                           display: 'flex',
                                           alignItems: 'center',
                                           justifyContent: 'center',
-                                          color: 'var(--accent-cyan)',
+                                          color: '#FBAE43',
                                           flexShrink: 0,
                                         }}
                                       >
                                         <Icon name={mod.icon} size={16} />
                                       </div>
                                       <div>
-                                        <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>
+                                        <div style={{ fontWeight: 700, color: '#1c1949', fontSize: '0.88rem' }}>
                                           {mod.label}
                                         </div>
                                         <div style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>
@@ -1609,7 +1610,7 @@ export default function SubAdminsClient({
                       <span>{feedback.message}</span>
                     </span>
                   ) : formData.role === 'super_admin' ? (
-                    <span style={{ color: '#c084fc', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ color: '#FBAE43', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <Icon name="shield-check" size={15} />
                       Full Super Administrator authority enabled
                     </span>

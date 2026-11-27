@@ -38,7 +38,7 @@ export default function HomeContentClient({ initialSettings }: { initialSettings
     <div>
       <div style={{ marginBottom: '2rem' }}>
         <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Visual Page Editor</span>
-        <h1>Homepage Content <span className="text-gradient">Manager</span></h1>
+        <h1 style={{ color: '#1c1949', fontWeight: 800 }}>Homepage Content Manager</h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
           Customize every headline, hero text, stats counter, and button displayed on the public homepage.
         </p>
@@ -49,7 +49,7 @@ export default function HomeContentClient({ initialSettings }: { initialSettings
       <form onSubmit={handleSave}>
         {/* Hero Section Card */}
         <div className="card" style={{ padding: '2rem', marginBottom: '2rem' }}>
-          <h3 style={{ marginBottom: '1.25rem', color: 'var(--accent-cyan)' }}>1. Hero Banner Content</h3>
+          <h3 style={{ marginBottom: '1.25rem', color: '#1c1949', fontSize: '1.25rem', fontWeight: 800 }}>1. Hero Banner Content</h3>
 
           <div className="form-group">
             <label className="form-label">Hero Tagline Pill</label>
@@ -117,7 +117,7 @@ export default function HomeContentClient({ initialSettings }: { initialSettings
 
         {/* Stats Counters Card */}
         <div className="card" style={{ padding: '2rem', marginBottom: '2rem' }}>
-          <h3 style={{ marginBottom: '1.25rem', color: 'var(--accent-cyan)' }}>2. Live Stats Counters</h3>
+          <h3 style={{ marginBottom: '1.25rem', color: '#1c1949', fontSize: '1.25rem', fontWeight: 800 }}>2. Live Stats Counters</h3>
 
           <div className="grid grid-4" style={{ gap: '1rem' }}>
             <div className="form-group">
@@ -164,7 +164,7 @@ export default function HomeContentClient({ initialSettings }: { initialSettings
 
         {/* Video Section Card */}
         <div className="card" style={{ padding: '2rem', marginBottom: '2rem' }}>
-          <h3 style={{ marginBottom: '1.25rem', color: 'var(--accent-cyan)' }}>3. Company Presentation Video</h3>
+          <h3 style={{ marginBottom: '1.25rem', color: '#1c1949', fontSize: '1.25rem', fontWeight: 800 }}>3. Company Presentation Video</h3>
 
           <div className="form-group">
             <label className="form-label">YouTube/Vimeo Embed URL</label>

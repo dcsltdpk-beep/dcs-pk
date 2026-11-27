@@ -428,8 +428,8 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
           <span className="badge badge-cyan" style={{ marginBottom: '0.45rem' }}>
             Threat Intelligence &amp; News
           </span>
-          <h1 style={{ margin: 0, fontSize: '1.9rem' }}>
-            Production <span className="text-gradient">Blog &amp; Advisories Engine</span>
+          <h1 style={{ margin: 0, fontSize: '1.9rem', color: '#1c1949', fontWeight: 800 }}>
+            Production Blog &amp; Advisories Engine
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: '6px 0 0 0' }}>
             Create, schedule, and optimize technical threat advisories, cyber research, and company announcements with rich-text media and full Google SEO schema.
@@ -446,17 +446,17 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
 
       {/* Metrics Row */}
       <div className="grid grid-4" style={{ gap: '1rem', marginBottom: '2rem' }}>
-        <div className="card" style={{ padding: '1.25rem', borderLeft: '4px solid var(--accent-cyan)' }}>
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+        <div className="card" style={{ padding: '1.25rem', borderLeft: '4px solid #3a3fb8' }}>
+          <div style={{ fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 700 }}>
             Total Articles
           </div>
-          <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>
+          <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1c1949', marginTop: '4px' }}>
             {metrics.total}
           </div>
         </div>
 
         <div className="card" style={{ padding: '1.25rem', borderLeft: '4px solid #10b981' }}>
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          <div style={{ fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 700 }}>
             Live &amp; Published
           </div>
           <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#10b981', marginTop: '4px' }}>
@@ -465,7 +465,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
         </div>
 
         <div className="card" style={{ padding: '1.25rem', borderLeft: '4px solid #f59e0b' }}>
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          <div style={{ fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 700 }}>
             Draft Articles
           </div>
           <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#f59e0b', marginTop: '4px' }}>
@@ -473,11 +473,11 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
           </div>
         </div>
 
-        <div className="card" style={{ padding: '1.25rem', borderLeft: '4px solid #c084fc' }}>
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+        <div className="card" style={{ padding: '1.25rem', borderLeft: '4px solid #3a3fb8' }}>
+          <div style={{ fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 700 }}>
             Scheduled
           </div>
-          <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#c084fc', marginTop: '4px' }}>
+          <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#3a3fb8', marginTop: '4px' }}>
             {metrics.scheduled}
           </div>
         </div>
@@ -503,10 +503,10 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
               st === 'all'
                 ? metrics.total
                 : st === 'published'
-                ? metrics.published
-                : st === 'draft'
-                ? metrics.drafts
-                : metrics.scheduled;
+                  ? metrics.published
+                  : st === 'draft'
+                    ? metrics.drafts
+                    : metrics.scheduled;
             const isActive = statusFilter === st;
 
             return (
@@ -619,7 +619,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
 
                     {/* Title & Slug */}
                     <td style={{ padding: '0.85rem 1rem' }}>
-                      <div style={{ fontWeight: 600, fontSize: '0.98rem', color: '#fff', marginBottom: '3px' }}>
+                      <div style={{ fontWeight: 700, fontSize: '0.98rem', color: '#1c1949', marginBottom: '3px' }}>
                         {post.title}
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -703,12 +703,12 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                             borderRadius: '4px',
                             fontSize: '0.75rem',
                             fontWeight: 600,
-                            backgroundColor: 'rgba(192, 132, 252, 0.12)',
-                            color: '#c084fc',
-                            border: '1px solid rgba(192, 132, 252, 0.3)',
+                            backgroundColor: 'rgba(185, 221, 235, 0.12)',
+                            color: '#B9DDEB',
+                            border: '1px solid rgba(185, 221, 235, 0.35)',
                           }}
                         >
-                          <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#c084fc' }} />
+                          <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#B9DDEB' }} />
                           Scheduled: {formatSafeDate(post.published_at)}
                         </span>
                       ) : (
@@ -861,9 +861,9 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
               flexDirection: 'column',
               overflow: 'hidden',
               position: 'relative',
-              backgroundColor: '#0c0b24',
-              border: '1px solid rgba(0, 245, 255, 0.4)',
-              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(0, 245, 255, 0.15)',
+              backgroundColor: '#ffffff',
+              border: '1px solid #e2e8f0',
+              boxShadow: '0 25px 60px -15px rgba(28, 25, 73, 0.25)',
             }}
           >
             {/* Modal Header */}
@@ -871,8 +871,8 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
               className="admin-subadmin-modal-header"
               style={{
                 flexShrink: 0,
-                backgroundColor: '#14103c',
-                borderBottom: '1px solid rgba(63, 57, 131, 0.8)',
+                backgroundColor: '#f8fafc',
+                borderBottom: '1px solid #e2e8f0',
                 padding: '1.15rem 1.75rem',
               }}
             >
@@ -880,7 +880,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                 <span className="badge badge-cyan" style={{ marginBottom: '0.35rem' }}>
                   {editing._id ? 'Article Modification' : 'New Article Authoring'}
                 </span>
-                <h2 style={{ margin: 0, fontSize: '1.45rem', color: '#fff' }}>
+                <h2 style={{ margin: 0, fontSize: '1.45rem', color: '#1c1949', fontWeight: 800 }}>
                   {editing._id ? `Edit Article: ${editing.title}` : 'Create New Technical Article / Advisory'}
                 </h2>
               </div>
@@ -928,13 +928,13 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                         justifyContent: 'center',
                         fontSize: '0.72rem',
                         fontWeight: 700,
-                        backgroundColor: isActive ? '#00f5ff' : 'rgba(255, 255, 255, 0.08)',
-                        color: isActive ? '#060816' : '#94a3b8',
+                        backgroundColor: isActive ? '#f9ac43' : '#f8fafc',
+                        color: isActive ? '#1c1949' : '#64748b',
                       }}
                     >
                       {tab.step}
                     </span>
-                    <Icon name={tab.icon as any} size={15} style={{ color: isActive ? '#00f5ff' : '#94a3b8' }} />
+                    <Icon name={tab.icon as any} size={15} style={{ color: isActive ? '#f9ac43' : '#64748b' }} />
                     <span style={{ lineHeight: 1.2 }}>{tab.label}</span>
                   </button>
                 );
@@ -1059,7 +1059,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                             }}
                             style={{
                               borderColor: 'var(--accent-cyan)',
-                              boxShadow: '0 0 10px rgba(0, 245, 255, 0.1)',
+                              boxShadow: '0 0 10px rgba(251, 174, 68, 0.15)',
                             }}
                           />
                         </div>
@@ -1072,8 +1072,8 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                     style={{
                       padding: '1rem 1.25rem',
                       borderRadius: '10px',
-                      backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                      border: '1px solid var(--border-color)',
+                      backgroundColor: '#f8fafc',
+                      border: '1px solid #e2e8f0',
                       marginBottom: '1.25rem',
                       display: 'flex',
                       alignItems: 'center',
@@ -1109,7 +1109,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                         )}
                       </div>
                       <div>
-                        <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#fff' }}>
+                        <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1c1949' }}>
                           Blog Cover Image (Cloudinary)
                         </div>
                         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -1178,7 +1178,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                           display: 'flex',
                           alignItems: 'center',
                           backgroundColor: 'var(--bg-secondary)',
-                          border: '1px solid var(--border-color)',
+                          // border: '1px solid var(--border-color)',
                           borderRadius: '8px',
                           padding: '0 10px',
                         }}
@@ -1196,7 +1196,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                             background: 'transparent',
                             border: 'none',
                             outline: 'none',
-                            color: '#fff',
+                            color: '#1c1949',
                             padding: '10px 8px',
                             fontFamily: 'var(--font-mono, monospace)',
                             fontSize: '0.88rem',
@@ -1263,13 +1263,13 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                     style={{
                       padding: '1.5rem',
                       borderRadius: '10px',
-                      backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                      border: '1px solid var(--border-color)',
+                      backgroundColor: '#f8fafc',
+                      border: '1px solid #e2e8f0',
                       marginBottom: '1.75rem',
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                      <h3 style={{ fontSize: '1.1rem', margin: 0, color: 'var(--accent-cyan)' }}>
+                      <h3 style={{ fontSize: '1.1rem', margin: 0, color: '#1c1949', fontWeight: 800 }}>
                         Featured Cover Image (Cloudinary)
                       </h3>
                       <span className="badge badge-cyan" style={{ fontSize: '0.72rem' }}>
@@ -1377,12 +1377,12 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                     style={{
                       padding: '1.5rem',
                       borderRadius: '10px',
-                      backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                      border: '1px solid var(--border-color)',
+                      backgroundColor: '#f8fafc',
+                      border: '1px solid #e2e8f0',
                       marginBottom: '1.75rem',
                     }}
                   >
-                    <h3 style={{ fontSize: '1.1rem', margin: '0 0 4px 0', color: 'var(--accent-cyan)' }}>
+                    <h3 style={{ fontSize: '1.1rem', margin: '0 0 4px 0', color: '#1c1949', fontWeight: 800 }}>
                       Author Byline &amp; Credentials
                     </h3>
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', margin: '0 0 1.25rem 0' }}>
@@ -1477,7 +1477,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                           onChange={(e) => setEditing({ ...editing, is_featured: e.target.checked })}
                           style={{ width: '18px', height: '18px', accentColor: 'var(--accent-cyan)', cursor: 'pointer' }}
                         />
-                        <label htmlFor="is_featured_cb" style={{ color: '#fff', fontSize: '0.9rem', cursor: 'pointer' }}>
+                        <label htmlFor="is_featured_cb" style={{ color: '#1c1949', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 600 }}>
                           ⭐ Promote as Featured Advisory on Blog Home
                         </label>
                       </div>
@@ -1493,12 +1493,12 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                     style={{
                       padding: '1.5rem',
                       borderRadius: '10px',
-                      backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                      border: '1px solid var(--border-color)',
+                      backgroundColor: '#f8fafc',
+                      border: '1px solid #e2e8f0',
                       marginBottom: '1.75rem',
                     }}
                   >
-                    <h3 style={{ fontSize: '1.1rem', margin: '0 0 4px 0', color: 'var(--accent-cyan)' }}>
+                    <h3 style={{ fontSize: '1.1rem', margin: '0 0 4px 0', color: '#1c1949', fontWeight: 800 }}>
                       Publication State &amp; Scheduling
                     </h3>
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', margin: '0 0 1.25rem 0' }}>
@@ -1512,7 +1512,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                           padding: '1.25rem',
                           borderRadius: '8px',
                           border: `2px solid ${editing.status === 'published' ? '#10b981' : 'var(--border-color)'}`,
-                          backgroundColor: editing.status === 'published' ? 'rgba(16, 185, 129, 0.08)' : 'rgba(255, 255, 255, 0.01)',
+                          backgroundColor: editing.status === 'published' ? 'rgba(16, 185, 129, 0.08)' : '#ffffff',
                           cursor: 'pointer',
                           display: 'block',
                         }}
@@ -1539,7 +1539,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                           padding: '1.25rem',
                           borderRadius: '8px',
                           border: `2px solid ${editing.status === 'draft' ? '#f59e0b' : 'var(--border-color)'}`,
-                          backgroundColor: editing.status === 'draft' ? 'rgba(245, 158, 11, 0.08)' : 'rgba(255, 255, 255, 0.01)',
+                          backgroundColor: editing.status === 'draft' ? 'rgba(245, 158, 11, 0.08)' : '#ffffff',
                           cursor: 'pointer',
                           display: 'block',
                         }}
@@ -1564,9 +1564,9 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                       <label
                         style={{
                           padding: '1.25rem',
-                          borderRadius: '8px',
-                          border: `2px solid ${editing.status === 'scheduled' ? '#c084fc' : 'var(--border-color)'}`,
-                          backgroundColor: editing.status === 'scheduled' ? 'rgba(192, 132, 252, 0.08)' : 'rgba(255, 255, 255, 0.01)',
+                          borderRadius: '12px',
+                          border: `2px solid ${editing.status === 'scheduled' ? '#3a3fb8' : '#e2e8f0'}`,
+                          backgroundColor: editing.status === 'scheduled' ? 'rgba(58, 63, 184, 0.05)' : '#ffffff',
                           cursor: 'pointer',
                           display: 'block',
                         }}
@@ -1579,8 +1579,8 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                           onChange={() => setEditing({ ...editing, status: 'scheduled' })}
                           style={{ display: 'none' }}
                         />
-                        <div style={{ color: '#c084fc', fontWeight: 700, fontSize: '0.95rem', marginBottom: '4px' }}>
-                          🟣 Scheduled
+                        <div style={{ color: '#3a3fb8', fontWeight: 700, fontSize: '0.95rem', marginBottom: '4px' }}>
+                          ⏱️ Scheduled
                         </div>
                         <div style={{ color: 'var(--text-muted)', fontSize: '0.78rem', lineHeight: '1.4' }}>
                           Auto-publish at a future date and time. Remains private until the publication timestamp arrives.
@@ -1859,7 +1859,7 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                 </div>
 
                 {/* Title */}
-                <h1 style={{ fontSize: '2.4rem', fontWeight: 800, color: '#fff', lineHeight: '1.25', marginBottom: '1.5rem' }}>
+                <h1 style={{ fontSize: '2.4rem', fontWeight: 800, color: '#1c1949', lineHeight: '1.25', marginBottom: '1.5rem' }}>
                   {previewPost.title}
                 </h1>
 
@@ -1871,8 +1871,8 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                     gap: '12px',
                     padding: '8px 16px',
                     borderRadius: '99px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid var(--border-color)',
+                    backgroundColor: '#f8fafc',
+                    border: '1px solid #e2e8f0',
                     marginBottom: '2rem',
                   }}
                 >
@@ -1883,10 +1883,10 @@ export default function PostsAdminClient({ initialPosts }: { initialPosts: PostI
                     style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
                   />
                   <div>
-                    <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#fff' }}>
+                    <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1c1949' }}>
                       {previewPost.author_name || 'DCS Cyber Threat Research Team'}
                     </div>
-                    <div style={{ fontSize: '0.72rem', color: 'var(--accent-cyan)' }}>
+                    <div style={{ fontSize: '0.72rem', color: '#3a3fb8', fontWeight: 600 }}>
                       {previewPost.author_role || 'Principal Threat Intelligence Architect'}
                     </div>
                   </div>

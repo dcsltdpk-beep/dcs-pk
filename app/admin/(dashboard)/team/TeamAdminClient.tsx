@@ -198,7 +198,7 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>
           <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Company Roster</span>
-          <h1>Manage <span className="text-gradient">Team Members</span></h1>
+          <h1 style={{ color: '#1c1949', fontWeight: 800 }}>Manage Team Members</h1>
         </div>
         {canCreate && (
           <button onClick={() => { setEditing(emptyForm); setUploadError(null); }} className="btn btn-primary">
@@ -208,7 +208,7 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
       </div>
 
       {editing && (
-        <div className="card" style={{ padding: '2rem', marginBottom: '2.5rem', border: '1px solid var(--accent-cyan)' }}>
+        <div className="card" style={{ padding: '2rem', marginBottom: '2.5rem', border: '1.5px solid #f9ac43', boxShadow: '0 10px 30px -10px rgba(28, 25, 73, 0.08)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
             <h3 style={{ margin: 0 }}>{editing._id ? 'Edit Team Member' : 'Add Team Member'}</h3>
             <button onClick={() => { setEditing(null); setUploadError(null); }} className="btn btn-outline" style={{ padding: '4px 10px' }}>
@@ -222,9 +222,9 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
               style={{
                 padding: '1.25rem',
                 marginBottom: '1.5rem',
-                background: 'rgba(255, 255, 255, 0.03)',
-                borderRadius: 'var(--radius-sm)',
-                border: '1px dashed var(--border-color)',
+                background: '#f8fafc',
+                borderRadius: '12px',
+                border: '1px dashed #cbd5e1',
                 display: 'flex',
                 flexWrap: 'wrap',
                 alignItems: 'center',
@@ -593,9 +593,9 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
               overflowY: 'auto',
               padding: '1.25rem',
               borderRadius: '16px',
-              border: '1px solid var(--accent-cyan)',
-              background: '#0d1124',
-              boxShadow: '0 16px 40px rgba(0, 240, 255, 0.2)',
+              border: '1px solid #e2e8f0',
+              background: '#ffffff',
+              boxShadow: '0 20px 50px -10px rgba(28, 25, 73, 0.2)',
               position: 'relative',
               textAlign: 'center',
               margin: 'auto',
@@ -609,9 +609,9 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                 position: 'absolute',
                 top: '10px',
                 right: '10px',
-                background: 'rgba(255, 255, 255, 0.08)',
+                background: '#f1f5f9',
                 border: 'none',
-                color: '#fff',
+                color: '#1c1949',
                 width: '26px',
                 height: '26px',
                 borderRadius: '50%',
@@ -642,14 +642,14 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                   width: '46px',
                   height: '46px',
                   borderRadius: '50%',
-                  background: 'var(--bg-secondary)',
-                  border: '2px solid var(--accent-cyan)',
+                  background: '#f8fafc',
+                  border: '2px solid #f9ac43',
                   overflow: 'hidden',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   flexShrink: 0,
-                  boxShadow: '0 2px 8px rgba(0, 240, 255, 0.3)',
+                  boxShadow: '0 2px 8px rgba(249, 172, 67, 0.3)',
                 }}
               >
                 {qrMember.photo ? (
@@ -669,7 +669,8 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                   style={{
                     margin: '0 0 2px 0',
                     fontSize: '1rem',
-                    color: '#fff',
+                    color: '#1c1949',
+                    fontWeight: 700,
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
@@ -699,11 +700,11 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
             <div
               style={{
                 display: 'inline-flex',
-                background: 'rgba(255, 255, 255, 0.05)',
+                background: '#f1f5f9',
                 padding: '3px',
-                borderRadius: '6px',
+                borderRadius: '8px',
                 marginBottom: '0.65rem',
-                border: '1px solid var(--border-color)',
+                border: '1px solid #e2e8f0',
                 gap: '2px',
               }}
             >
@@ -711,13 +712,13 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                 type="button"
                 onClick={() => setQrType('portal')}
                 style={{
-                  padding: '3px 10px',
-                  borderRadius: '4px',
+                  padding: '4px 10px',
+                  borderRadius: '6px',
                   border: 'none',
-                  background: qrType === 'portal' ? 'var(--accent-cyan)' : 'transparent',
-                  color: qrType === 'portal' ? '#0a0e1a' : 'var(--text-muted)',
+                  background: qrType === 'portal' ? '#f9ac43' : 'transparent',
+                  color: qrType === 'portal' ? '#1c1949' : '#64748b',
                   fontWeight: qrType === 'portal' ? 700 : 500,
-                  fontSize: '0.72rem',
+                  fontSize: '0.75rem',
                   cursor: 'pointer',
                 }}
               >
@@ -727,13 +728,13 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                 type="button"
                 onClick={() => setQrType('vcard')}
                 style={{
-                  padding: '3px 10px',
-                  borderRadius: '4px',
+                  padding: '4px 10px',
+                  borderRadius: '6px',
                   border: 'none',
-                  background: qrType === 'vcard' ? 'var(--accent-cyan)' : 'transparent',
-                  color: qrType === 'vcard' ? '#0a0e1a' : 'var(--text-muted)',
+                  background: qrType === 'vcard' ? '#f9ac43' : 'transparent',
+                  color: qrType === 'vcard' ? '#1c1949' : '#64748b',
                   fontWeight: qrType === 'vcard' ? 700 : 500,
-                  fontSize: '0.72rem',
+                  fontSize: '0.75rem',
                   cursor: 'pointer',
                 }}
               >
@@ -744,13 +745,13 @@ export default function TeamAdminClient({ initialTeam }: { initialTeam: TeamMemb
                   type="button"
                   onClick={() => setQrType('linkedin')}
                   style={{
-                    padding: '3px 10px',
-                    borderRadius: '4px',
+                    padding: '4px 10px',
+                    borderRadius: '6px',
                     border: 'none',
-                    background: qrType === 'linkedin' ? 'var(--accent-cyan)' : 'transparent',
-                    color: qrType === 'linkedin' ? '#0a0e1a' : 'var(--text-muted)',
+                    background: qrType === 'linkedin' ? '#f9ac43' : 'transparent',
+                    color: qrType === 'linkedin' ? '#1c1949' : '#64748b',
                     fontWeight: qrType === 'linkedin' ? 700 : 500,
-                    fontSize: '0.72rem',
+                    fontSize: '0.75rem',
                     cursor: 'pointer',
                   }}
                 >

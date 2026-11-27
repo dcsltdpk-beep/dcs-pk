@@ -58,7 +58,7 @@ export default function InquiriesClient({ initialInquiries }: { initialInquiries
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>
           <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>Leads Center</span>
-          <h1>Inquiries & <span className="text-gradient">Leads Inbox</span></h1>
+          <h1 style={{ color: '#1c1949', fontWeight: 800 }}>Inquiries & Leads Inbox</h1>
         </div>
         <div>
           <a
@@ -74,11 +74,11 @@ export default function InquiriesClient({ initialInquiries }: { initialInquiries
 
       {/* Detail Modal / Drawer if selected */}
       {selected && (
-        <div className="card" style={{ padding: '2rem', marginBottom: '2rem', border: '1px solid var(--accent-cyan)' }}>
+        <div className="card" style={{ padding: '2rem', marginBottom: '2rem', border: '1.5px solid #f9ac43', boxShadow: '0 10px 30px -10px rgba(28, 25, 73, 0.08)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
             <div>
               <span className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>{selected.type}</span>
-              <h2 style={{ fontSize: '1.5rem', margin: 0 }}>{selected.name}</h2>
+              <h2 style={{ fontSize: '1.5rem', margin: 0, color: '#1c1949', fontWeight: 800 }}>{selected.name}</h2>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: '4px 0 0 0' }} suppressHydrationWarning>
                 {selected.email} {selected.phone && `• ${selected.phone}`} • Received: {new Date(selected.createdAt).toLocaleString()}
               </p>
@@ -88,11 +88,11 @@ export default function InquiriesClient({ initialInquiries }: { initialInquiries
             </button>
           </div>
 
-          <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: 'var(--radius-sm)', marginBottom: '1.5rem' }}>
-            <h4 style={{ color: 'var(--accent-cyan)', marginBottom: '0.5rem' }}>
+          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '1.5rem', borderRadius: '12px', marginBottom: '1.5rem' }}>
+            <h4 style={{ color: '#1c1949', marginBottom: '0.5rem', fontWeight: 700 }}>
               Target: {selected.target_name || selected.subject || 'General Consultation'}
             </h4>
-            <p style={{ color: 'var(--text-main)', fontSize: '1rem', whiteSpace: 'pre-line', margin: 0 }}>
+            <p style={{ color: '#334155', fontSize: '0.95rem', lineHeight: '1.6', whiteSpace: 'pre-line', margin: 0 }}>
               {selected.message}
             </p>
           </div>

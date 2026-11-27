@@ -69,17 +69,17 @@ export default function AdminLoginPage() {
       <div className="card login-card">
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div className="login-icon-badge" style={{ padding: '6px', background: 'rgba(251, 174, 68, 0.12)' }}>
+          <div className="login-icon-badge" style={{ padding: '6px', background: 'linear-gradient(135deg, rgba(249, 172, 67, 0.16), rgba(58, 63, 184, 0.08))', border: '1.5px solid #f9ac43' }}>
             <img
               src="/logo.png"
               alt="Dream Cyber Security Pakistan"
               style={{ width: '56px', height: '56px', objectFit: 'contain', borderRadius: '50%' }}
             />
           </div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.35rem', letterSpacing: '-0.5px' }}>
+          <h1 style={{ fontSize: '1.85rem', fontWeight: 800, marginBottom: '0.35rem', letterSpacing: '-0.5px', color: '#1c1949' }}>
             Control Center
           </h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>
+          <p style={{ color: '#64748b', fontSize: '0.88rem' }}>
             Dream Cyber Security Pakistan &bull; Administrative Portal
           </p>
         </div>
@@ -93,7 +93,7 @@ export default function AdminLoginPage() {
         <form onSubmit={handleLogin}>
           {/* Username */}
           <div className="form-group" style={{ marginBottom: '1.25rem' }}>
-            <label className="form-label" style={{ fontSize: '0.88rem', fontWeight: 600 }}>
+            <label className="form-label" style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1c1949' }}>
               Username or Administrator Email
             </label>
             <input
@@ -111,7 +111,7 @@ export default function AdminLoginPage() {
 
           {/* Password with Eye Toggle */}
           <div className="form-group" style={{ marginBottom: '1.25rem' }}>
-            <label className="form-label" style={{ fontSize: '0.88rem', fontWeight: 600 }}>
+            <label className="form-label" style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1c1949' }}>
               Password
             </label>
             <div style={{ position: 'relative' }}>
@@ -165,8 +165,9 @@ export default function AdminLoginPage() {
                 gap: '8px',
                 cursor: 'pointer',
                 fontSize: '0.88rem',
-                color: 'var(--text-main)',
+                color: '#1c1949',
                 userSelect: 'none',
+                fontWeight: 500,
               }}
             >
               <input
@@ -176,7 +177,7 @@ export default function AdminLoginPage() {
                 style={{
                   width: '16px',
                   height: '16px',
-                  accentColor: 'var(--accent-cyan)',
+                  accentColor: '#f9ac43',
                   cursor: 'pointer',
                 }}
               />
@@ -200,12 +201,13 @@ export default function AdminLoginPage() {
           <Link
             href="/"
             style={{
-              color: 'var(--text-muted)',
-              fontSize: '0.85rem',
+              color: '#3a3fb8',
+              fontSize: '0.88rem',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '6px',
               textDecoration: 'none',
+              fontWeight: 600,
               transition: 'var(--transition)',
             }}
           >
