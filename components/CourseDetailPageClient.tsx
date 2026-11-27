@@ -159,14 +159,14 @@ const RICH_COURSES_METADATA: Record<string, Partial<CourseData>> = {
     name: 'Enterprise Web Dev',
     title: 'Enterprise Web Dev',
     overview: 'Become a job-ready full-stack developer — from HTML, CSS and JavaScript to React, Next.js, APIs and databases, with secure coding built in.',
-    weeks: 14,
-    duration: '14 Weeks',
+    weeks: 12,
+    duration: '12 Weeks',
     level: 'Beginner → Pro',
     schedule: '3 classes / week',
     start_date: 'Next month',
     fee: 'Contact for fee',
     seats_percent: 60,
-    live_projects: 6,
+    live_projects: 2,
     video_length: '5:10',
     thumbnail_url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1400&q=80',
     learning_outcomes: [
@@ -484,25 +484,25 @@ export default function CourseDetailPageClient({
     initialCourse.learning_outcomes && initialCourse.learning_outcomes.length > 0
       ? initialCourse.learning_outcomes
       : richDefaults.learning_outcomes || [
-          'Master modern industry workflows and professional toolchains',
-          'Build practical, job-ready live capstone projects',
-          'Learn from certified senior engineers and practitioners',
-          'Earn a verified DCS Academy certification upon completion',
-        ];
+        'Master modern industry workflows and professional toolchains',
+        'Build practical, job-ready live capstone projects',
+        'Learn from certified senior engineers and practitioners',
+        'Earn a verified DCS Academy certification upon completion',
+      ];
 
   // Modules
   const modules =
     initialCourse.modules && initialCourse.modules.length > 0
       ? initialCourse.modules
       : richDefaults.modules || [
-          {
-            week: '1–2',
-            title: 'Core Fundamentals & Theory',
-            subtitle: 'Toolchains, environment & setup',
-            topics: ['Core industry foundations', 'Environment setup & tooling', 'Practical workflows', 'Best practices'],
-            project: 'Mini project: Foundation showcase',
-          },
-        ];
+        {
+          week: '1–2',
+          title: 'Core Fundamentals & Theory',
+          subtitle: 'Toolchains, environment & setup',
+          topics: ['Core industry foundations', 'Environment setup & tooling', 'Practical workflows', 'Best practices'],
+          project: 'Mini project: Foundation showcase',
+        },
+      ];
 
   // Tools
   const tools = initialCourse.tools || richDefaults.tools || ['Visual Studio Code', 'Git', 'Figma', 'Terminal', 'Cloud Tools'];
@@ -875,116 +875,116 @@ export default function CourseDetailPageClient({
           =================================================================== */}
       <section className="dcs-hero-section dcs-section-hero">
         <div className="hero-shell">
-        <canvas ref={particlesRef} id="particles" />
+          <canvas ref={particlesRef} id="particles" />
 
-        {/* Breadcrumb navigation */}
-        <div className="crumbs">
-          <Link href="/">Home</Link> / <Link href="/courses">Academy</Link> / <span>{courseName}</span>
-        </div>
-
-        <div className="hero">
-          {/* Hero text column */}
-          <div className="hero-left-content">
-            <div className="tags">
-              <span className="tag">
-                <i /> {category}
-              </span>
-              <span className="tag badge-hot">{badge}</span>
-            </div>
-
-            <h1 className="hero-heading">
-              <span>{typedTitle}</span>
-              {!isTypingDone && <span className="typewriter-cursor">|</span>}
-            </h1>
-
-            <p className="lead">{overview}</p>
-
-            <div className="actions">
-              <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-                <FaWhatsapp size={17} style={{ color: '#25D366' }} />
-                <span>Inquire via WhatsApp</span>
-                <ArrowUpRight size={16} />
-              </a>
-              <Link href={admissionLink} className="btn btn-blue">
-                <span>Submit Admission Inquiry</span>
-                <ArrowUpRight size={16} />
-              </Link>
-            </div>
-
-            {/* 3 Stats: Weeks, Modules, Live Projects */}
-            <div className="stats">
-              <div className="stat">
-                <b>
-                  {weeksCount}
-                  <em></em>
-                </b>
-                <span>Weeks</span>
-              </div>
-              <div className="stat">
-                <b>
-                  {modulesCount}
-                  <em></em>
-                </b>
-                <span>Modules</span>
-              </div>
-              <div className="stat">
-                <b>
-                  {projectsCount}
-                  <em>+</em>
-                </b>
-                <span>Live Projects</span>
-              </div>
-            </div>
+          {/* Breadcrumb navigation */}
+          <div className="crumbs">
+            <Link href="/">Home</Link> / <Link href="/courses">Academy</Link> / <span>{courseName}</span>
           </div>
 
-          {/* Visual Video Card */}
-          <div
-            className="visual video"
-            id="video"
-            onClick={() => {
-              if (youtubeId || initialCourse.intro_video_url) {
-                setIsPlayingVideo(true);
-              } else {
-                alert(`Direct preview video for ${courseName} is available upon counselor consultation or WhatsApp demo.`);
-              }
-            }}
-          >
-            <canvas ref={netRef} id="net" />
+          <div className="hero">
+            {/* Hero text column */}
+            <div className="hero-left-content">
+              <div className="tags">
+                <span className="tag">
+                  <i /> {category}
+                </span>
+                <span className="tag badge-hot">{badge}</span>
+              </div>
 
-            <div className="thumb">
-              {isPlayingVideo ? (
-                <iframe
-                  src={
-                    youtubeId
-                      ? `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`
-                      : initialCourse.intro_video_url || 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1'
-                  }
-                  title={`${courseName} Preview`}
-                  allow="autoplay; encrypted-media; fullscreen"
-                  allowFullScreen
-                />
-              ) : (
-                <img src={thumbnailUrl} alt={courseName} />
+              <h1 className="hero-heading">
+                <span>{typedTitle}</span>
+                {!isTypingDone && <span className="typewriter-cursor">|</span>}
+              </h1>
+
+              <p className="lead">{overview}</p>
+
+              <div className="actions">
+                <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                  <FaWhatsapp size={17} style={{ color: '#25D366' }} />
+                  <span>Inquire via WhatsApp</span>
+                  <ArrowUpRight size={16} />
+                </a>
+                <Link href={admissionLink} className="btn btn-blue">
+                  <span>Submit Admission Inquiry</span>
+                  <ArrowUpRight size={16} />
+                </Link>
+              </div>
+
+              {/* 3 Stats: Weeks, Modules, Live Projects */}
+              <div className="stats">
+                <div className="stat">
+                  <b>
+                    {weeksCount}
+                    <em></em>
+                  </b>
+                  <span>Weeks</span>
+                </div>
+                <div className="stat">
+                  <b>
+                    {modulesCount}
+                    <em></em>
+                  </b>
+                  <span>Modules</span>
+                </div>
+                <div className="stat">
+                  <b>
+                    {projectsCount}
+                    <em>+</em>
+                  </b>
+                  <span>Live Projects</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Visual Video Card */}
+            <div
+              className="visual video"
+              id="video"
+              onClick={() => {
+                if (youtubeId || initialCourse.intro_video_url) {
+                  setIsPlayingVideo(true);
+                } else {
+                  alert(`Direct preview video for ${courseName} is available upon counselor consultation or WhatsApp demo.`);
+                }
+              }}
+            >
+              <canvas ref={netRef} id="net" />
+
+              <div className="thumb">
+                {isPlayingVideo ? (
+                  <iframe
+                    src={
+                      youtubeId
+                        ? `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`
+                        : initialCourse.intro_video_url || 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1'
+                    }
+                    title={`${courseName} Preview`}
+                    allow="autoplay; encrypted-media; fullscreen"
+                    allowFullScreen
+                  />
+                ) : (
+                  <img src={thumbnailUrl} alt={courseName} />
+                )}
+              </div>
+
+              {!isPlayingVideo && (
+                <div className="play">
+                  <Play size={34} fill="currentColor" />
+                </div>
               )}
-            </div>
 
-            {!isPlayingVideo && (
-              <div className="play">
-                <Play size={34} fill="currentColor" />
+              <div className="chip c1">
+                <Play size={15} style={{ color: 'var(--blue)' }} />
+                <span>Intro Video · {videoLength}</span>
               </div>
-            )}
 
-            <div className="chip c1">
-              <Play size={15} style={{ color: 'var(--blue)' }} />
-              <span>Intro Video · {videoLength}</span>
-            </div>
-
-            <div className="chip c2">
-              <Award size={15} style={{ color: '#e08a12' }} />
-              <span>Online &amp; Offline Batches</span>
+              <div className="chip c2">
+                <Award size={15} style={{ color: '#e08a12' }} />
+                <span>Online &amp; Offline Batches</span>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </section>
 
@@ -1026,200 +1026,200 @@ export default function CourseDetailPageClient({
           <div className="course-main-content">
             {/* Outcomes: What you'll learn */}
             <section className="block">
-            <span className="eyebrow">Outcomes</span>
-            <h2 className="sec-title">What you’ll learn</h2>
-            <div className="learn-grid">
-              {learningOutcomes.map((item, idx) => (
-                <div key={idx} className="learn">
-                  <i>
-                    <Check size={16} strokeWidth={3} />
-                  </i>
-                  <p>{item}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Curriculum: Week-by-week roadmap */}
-          <section className="block">
-            <span className="eyebrow">Curriculum</span>
-            <h2 className="sec-title">Week-by-week roadmap</h2>
-            <div className="modules-list">
-              {modules.map((mod, idx) => (
-                <details key={idx} className="module" open={idx === 0}>
-                  <summary>
-                    <span className="wk">
-                      Week<b>{mod.week}</b>
-                    </span>
-                    <h4>
-                      Module {idx + 1}: {mod.title}
-                      <span>{mod.subtitle}</span>
-                    </h4>
-                    <i>+</i>
-                  </summary>
-                  <ul>
-                    {mod.topics.map((t, tidx) => (
-                      <li key={tidx}>{t}</li>
-                    ))}
-                  </ul>
-                  <div className="proj">🛠 {mod.project}</div>
-                </details>
-              ))}
-            </div>
-          </section>
-
-          {/* Tool stack: Tools you'll master */}
-          <section className="block">
-            <span className="eyebrow">Tool stack</span>
-            <h2 className="sec-title">Tools you’ll master</h2>
-            <div className="tools-grid">
-              {tools.map((t, idx) => (
-                <div key={idx} className="tool">
-                  {t}
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Who it's for: Target audience */}
-          <section className="block">
-            <span className="eyebrow">Who it’s for</span>
-            <h2 className="sec-title">Is this course right for you?</h2>
-            <div className="for-grid">
-              {targetAudience.map((aud, idx) => (
-                <div key={idx} className="for">
-                  <i>{aud.icon}</i>
-                  <b>{aud.title}</b>
-                  <span>{aud.desc}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Learn & Earn Guarantee */}
-          <section className="block">
-            <div className="guarantee">
-              <div>
-                <span className="eyebrow">DCS Skill Academy</span>
-                <h3>
-                  Learn &amp; <span>Earn</span> Guarantee
-                </h3>
-                <p>
-                  Hands-on corporate labs, certified professional mentors, a verified industry diploma, and direct internship access
-                  with Dream Cyber Security Pakistan.
-                </p>
+              <span className="eyebrow">Outcomes</span>
+              <h2 className="sec-title">What you’ll learn</h2>
+              <div className="learn-grid">
+                {learningOutcomes.map((item, idx) => (
+                  <div key={idx} className="learn">
+                    <i>
+                      <Check size={16} strokeWidth={3} />
+                    </i>
+                    <p>{item}</p>
+                  </div>
+                ))}
               </div>
-              <ul className="g-list">
-                <li>
-                  <i>⚡</i> Corporate lab environments
-                </li>
-                <li>
-                  <i>👨‍🏫</i> Certified professional mentors
-                </li>
-                <li>
-                  <i>🎓</i> Verified DCS diploma
-                </li>
-                <li>
-                  <i>💼</i> Direct internship access
-                </li>
-              </ul>
-            </div>
-          </section>
+            </section>
 
-          {/* Your mentor */}
-          <section className="block">
-            <span className="eyebrow">Your mentor</span>
-            <h2 className="sec-title">Learn from a practitioner</h2>
-            <div className="instructor">
-              <div className="avatar">{mentorInitials}</div>
-              <div>
-                <b>{mentor.name}</b>
-                <em>{mentor.designation}</em>
-                <p>{mentor.bio}</p>
+            {/* Curriculum: Week-by-week roadmap */}
+            <section className="block">
+              <span className="eyebrow">Curriculum</span>
+              <h2 className="sec-title">Week-by-week roadmap</h2>
+              <div className="modules-list">
+                {modules.map((mod, idx) => (
+                  <details key={idx} className="module" open={idx === 0}>
+                    <summary>
+                      <span className="wk">
+                        Week<b>{mod.week}</b>
+                      </span>
+                      <h4>
+                        Module {idx + 1}: {mod.title}
+                        <span>{mod.subtitle}</span>
+                      </h4>
+                      <i>+</i>
+                    </summary>
+                    <ul>
+                      {mod.topics.map((t, tidx) => (
+                        <li key={tidx}>{t}</li>
+                      ))}
+                    </ul>
+                    <div className="proj">🛠 {mod.project}</div>
+                  </details>
+                ))}
               </div>
-            </div>
-          </section>
+            </section>
 
-          {/* FAQ: Common questions */}
-          <section className="block">
-            <span className="eyebrow">FAQ</span>
-            <h2 className="sec-title">Common questions</h2>
-            <div className="faq-list">
-              {faqs.map((faq, idx) => (
-                <details key={idx} className="faq" open={idx === 0}>
-                  <summary>
-                    {faq.question}
-                    <i>+</i>
-                  </summary>
-                  <p>{faq.answer}</p>
-                </details>
-              ))}
-            </div>
-          </section>
-        </div>
+            {/* Tool stack: Tools you'll master */}
+            <section className="block">
+              <span className="eyebrow">Tool stack</span>
+              <h2 className="sec-title">Tools you’ll master</h2>
+              <div className="tools-grid">
+                {tools.map((t, idx) => (
+                  <div key={idx} className="tool">
+                    {t}
+                  </div>
+                ))}
+              </div>
+            </section>
 
-        {/* ===================================================================
+            {/* Who it's for: Target audience */}
+            <section className="block">
+              <span className="eyebrow">Who it’s for</span>
+              <h2 className="sec-title">Is this course right for you?</h2>
+              <div className="for-grid">
+                {targetAudience.map((aud, idx) => (
+                  <div key={idx} className="for">
+                    <i>{aud.icon}</i>
+                    <b>{aud.title}</b>
+                    <span>{aud.desc}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Learn & Earn Guarantee */}
+            <section className="block">
+              <div className="guarantee">
+                <div>
+                  <span className="eyebrow">DCS Skill Academy</span>
+                  <h3>
+                    Learn &amp; <span>Earn</span> Guarantee
+                  </h3>
+                  <p>
+                    Hands-on corporate labs, certified professional mentors, a verified industry diploma, and direct internship access
+                    with Dream Cyber Security Pakistan.
+                  </p>
+                </div>
+                <ul className="g-list">
+                  <li>
+                    <i>⚡</i> Corporate lab environments
+                  </li>
+                  <li>
+                    <i>👨‍🏫</i> Certified professional mentors
+                  </li>
+                  <li>
+                    <i>🎓</i> Verified DCS diploma
+                  </li>
+                  <li>
+                    <i>💼</i> Direct internship access
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            {/* Your mentor */}
+            <section className="block">
+              <span className="eyebrow">Your mentor</span>
+              <h2 className="sec-title">Learn from a practitioner</h2>
+              <div className="instructor">
+                <div className="avatar">{mentorInitials}</div>
+                <div>
+                  <b>{mentor.name}</b>
+                  <em>{mentor.designation}</em>
+                  <p>{mentor.bio}</p>
+                </div>
+              </div>
+            </section>
+
+            {/* FAQ: Common questions */}
+            <section className="block">
+              <span className="eyebrow">FAQ</span>
+              <h2 className="sec-title">Common questions</h2>
+              <div className="faq-list">
+                {faqs.map((faq, idx) => (
+                  <details key={idx} className="faq" open={idx === 0}>
+                    <summary>
+                      {faq.question}
+                      <i>+</i>
+                    </summary>
+                    <p>{faq.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          {/* ===================================================================
             SIDEBAR (STICKY)
             =================================================================== */}
-        <aside className="side" id="enroll-sidebar">
-          {/* Enroll card */}
-          <div className="enroll">
-            <span className="eyebrow">Next Batch</span>
-            <h3>Inquire about next batch</h3>
-            <p>Get batch dates, online/offline options, fees, and enrollment prerequisites.</p>
+          <aside className="side" id="enroll-sidebar">
+            {/* Enroll card */}
+            <div className="enroll">
+              <span className="eyebrow">Next Batch</span>
+              <h3>Inquire about next batch</h3>
+              <p>Get batch dates, online/offline options, fees, and enrollment prerequisites.</p>
 
-            <div className="seats">
-              <div>
-                <i style={{ width: `${animatedSeats}%` }} />
+              <div className="seats">
+                <div>
+                  <i style={{ width: `${animatedSeats}%` }} />
+                </div>
+                <span>
+                  <span>Seats filled</span>
+                  <b>{animatedSeats}%</b>
+                </span>
               </div>
-              <span>
-                <span>Seats filled</span>
-                <b>{animatedSeats}%</b>
-              </span>
+
+              <dl>
+                <div>
+                  <dt>Starts</dt>
+                  <dd>{startDate}</dd>
+                </div>
+                <div>
+                  <dt>Mode</dt>
+                  <dd>Online &amp; Offline</dd>
+                </div>
+                <div>
+                  <dt>Campus</dt>
+                  <dd>Lahore</dd>
+                </div>
+                <div>
+                  <dt>Fee</dt>
+                  <dd>{fee}</dd>
+                </div>
+              </dl>
+
+              <Link href={admissionLink} className="btn btn-gold">
+                <span>Submit Admission Inquiry</span>
+                <ArrowUpRight size={16} />
+              </Link>
+
+              <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-wa">
+                <FaWhatsapp size={17} />
+                <span>Inquire via WhatsApp</span>
+                <ArrowUpRight size={16} />
+              </a>
             </div>
 
-            <dl>
-              <div>
-                <dt>Starts</dt>
-                <dd>{startDate}</dd>
-              </div>
-              <div>
-                <dt>Mode</dt>
-                <dd>Online &amp; Offline</dd>
-              </div>
-              <div>
-                <dt>Campus</dt>
-                <dd>Lahore</dd>
-              </div>
-              <div>
-                <dt>Fee</dt>
-                <dd>{fee}</dd>
-              </div>
-            </dl>
-
-            <Link href={admissionLink} className="btn btn-gold">
-              <span>Submit Admission Inquiry</span>
-              <ArrowUpRight size={16} />
-            </Link>
-
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-wa">
-              <FaWhatsapp size={17} />
-              <span>Inquire via WhatsApp</span>
-              <ArrowUpRight size={16} />
-            </a>
-          </div>
-
-          {/* Includes card */}
-          <div className="incl">
-            <h4>This course includes</h4>
-            <ul>
-              {includesList.map((inc, idx) => (
-                <li key={idx}>{inc}</li>
-              ))}
-            </ul>
-          </div>
-        </aside>
-      </div>
+            {/* Includes card */}
+            <div className="incl">
+              <h4>This course includes</h4>
+              <ul>
+                {includesList.map((inc, idx) => (
+                  <li key={idx}>{inc}</li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </div>
       </section>
 
       {/* ===================================================================
@@ -1227,24 +1227,24 @@ export default function CourseDetailPageClient({
           =================================================================== */}
       <section className="section dcs-stacked-section" id="course-related">
         <div className="block">
-        <div className="head">
-          <span className="eyebrow">Keep learning</span>
-          <h2>
-            Explore other <span className="u">programs</span>
-          </h2>
-        </div>
-        <div className="related">
-          {relatedPrograms.map(([key, item]) => (
-            <Link key={key} href={`/courses/${key}`} className="rel">
-              <i>{key === 'web-development' ? '</>' : key === 'video-editing-graphic-design' ? '🎬' : '🎓'}</i>
-              <b>{item.name}</b>
-              <span>
-                {item.title} · {item.weeks} Weeks
-              </span>
-              <em>View course →</em>
-            </Link>
-          ))}
-        </div>
+          <div className="head">
+            <span className="eyebrow">Keep learning</span>
+            <h2>
+              Explore other <span className="u">programs</span>
+            </h2>
+          </div>
+          <div className="related">
+            {relatedPrograms.map(([key, item]) => (
+              <Link key={key} href={`/courses/${key}`} className="rel">
+                <i>{key === 'web-development' ? '</>' : key === 'video-editing-graphic-design' ? '🎬' : '🎓'}</i>
+                <b>{item.name}</b>
+                <span>
+                  {item.title} · {item.weeks} Weeks
+                </span>
+                <em>View course →</em>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1253,24 +1253,24 @@ export default function CourseDetailPageClient({
           =================================================================== */}
       <section className="section dcs-stacked-section" id="course-cta">
         <div className="block">
-        <div className="cta-band">
-          <canvas ref={ctaParticlesRef} id="cta-particles" />
-          <div>
-            <h2>{courseName} — next batch enrolling now</h2>
-            <p>Reserve your seat today — limited seats per batch for personalized mentorship.</p>
+          <div className="cta-band">
+            <canvas ref={ctaParticlesRef} id="cta-particles" />
+            <div>
+              <h2>{courseName} — next batch enrolling now</h2>
+              <p>Reserve your seat today — limited seats per batch for personalized mentorship.</p>
+            </div>
+            <div className="cta-actions">
+              <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                <FaWhatsapp size={18} style={{ color: '#25D366' }} />
+                <span>WhatsApp Us</span>
+                <ArrowUpRight size={16} />
+              </a>
+              <Link href={admissionLink} className="btn btn-blue">
+                <span>Submit Admission Inquiry</span>
+                <ArrowUpRight size={16} />
+              </Link>
+            </div>
           </div>
-          <div className="cta-actions">
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-              <FaWhatsapp size={18} style={{ color: '#25D366' }} />
-              <span>WhatsApp Us</span>
-              <ArrowUpRight size={16} />
-            </a>
-            <Link href={admissionLink} className="btn btn-blue">
-              <span>Submit Admission Inquiry</span>
-              <ArrowUpRight size={16} />
-            </Link>
-          </div>
-        </div>
         </div>
       </section>
     </div>
