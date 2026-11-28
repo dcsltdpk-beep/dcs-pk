@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FaWhatsapp, FaEnvelope } from 'react-icons/fa6';
 import { ArrowUpRight, Lock, Code2, GraduationCap, Users2, ShieldCheck } from 'lucide-react';
 
@@ -110,6 +111,8 @@ export default function TeamPageClient({
   whatsappNumber = '923165478855',
   whatsappMessage = 'Hello Dream Cyber Security Pakistan, I would like to consult with your leadership and specialist team.',
 }: TeamPageClientProps) {
+  const router = useRouter();
+
   // Canvas refs
   const heroParticlesRef = useRef<HTMLCanvasElement>(null);
   const netCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -603,7 +606,21 @@ export default function TeamPageClient({
 
           <div className="team-grid">
             {leadershipMembers.map((member) => (
-              <article key={member.slug || member.name} className="member leadership-card">
+              <article
+                key={member.slug || member.name}
+                className="member leadership-card"
+                onClick={(e) => {
+                  const target = e.target as HTMLElement;
+                  if (target.closest('.m-social')) return;
+                  router.push(`/team/${member.slug}`);
+                }}
+              >
+                <Link
+                  href={`/team/${member.slug}`}
+                  className="member-card-link-overlay"
+                  aria-label={`View profile of ${member.name}`}
+                  tabIndex={-1}
+                />
                 <div className="photo">
                   <span className="dept">{member.department || 'Leadership'}</span>
                   {member.photo ? (
@@ -652,7 +669,21 @@ export default function TeamPageClient({
 
           <div className="team-grid">
             {teamMembers.map((member) => (
-              <article key={member.slug || member.name} className="member">
+              <article
+                key={member.slug || member.name}
+                className="member"
+                onClick={(e) => {
+                  const target = e.target as HTMLElement;
+                  if (target.closest('.m-social')) return;
+                  router.push(`/team/${member.slug}`);
+                }}
+              >
+                <Link
+                  href={`/team/${member.slug}`}
+                  className="member-card-link-overlay"
+                  aria-label={`View profile of ${member.name}`}
+                  tabIndex={-1}
+                />
                 <div className="photo">
                   <span className="dept">{member.department || 'Specialist'}</span>
                   {member.photo ? (
@@ -686,7 +717,21 @@ export default function TeamPageClient({
             ))}
 
             {/* Hiring Callout Card */}
-            <article className="member hiring-card">
+            <article
+              className="member hiring-card"
+              onClick={(e) => {
+                const target = e.target as HTMLElement;
+                if (target.closest('.m-social')) return;
+                const el = document.getElementById('careers');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              <a
+                href="#careers"
+                className="member-card-link-overlay"
+                aria-label="View career opportunities"
+                tabIndex={-1}
+              />
               <div className="photo">
                 <div className="ini">+</div>
               </div>

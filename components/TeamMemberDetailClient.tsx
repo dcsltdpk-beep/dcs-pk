@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FaWhatsapp, FaEnvelope, FaGithub, FaXTwitter } from 'react-icons/fa6';
 import { ArrowUpRight, Lock, Code2, GraduationCap, Users2, ShieldCheck, Cpu, Terminal, Compass, Briefcase } from 'lucide-react';
 
@@ -72,6 +73,8 @@ export default function TeamMemberDetailClient({
   allTeam = [],
   whatsappNumber = '923165478855',
 }: TeamMemberDetailClientProps) {
+  const router = useRouter();
+
   // Canvas & Interaction refs
   const heroParticlesRef = useRef<HTMLCanvasElement>(null);
   const netCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -696,7 +699,21 @@ export default function TeamMemberDetailClient({
 
             <div className="team-grid">
               {colleagues.map((c) => (
-                <article key={c.slug} className="member">
+                <article
+                  key={c.slug}
+                  className="member"
+                  onClick={(e) => {
+                    const target = e.target as HTMLElement;
+                    if (target.closest('.m-social')) return;
+                    router.push(`/team/${c.slug}`);
+                  }}
+                >
+                  <Link
+                    href={`/team/${c.slug}`}
+                    className="member-card-link-overlay"
+                    aria-label={`View profile of ${c.name}`}
+                    tabIndex={-1}
+                  />
                   <div className="photo">
                     <span className="dept">{c.department || 'Specialist'}</span>
                     {c.photo ? (

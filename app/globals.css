@@ -10746,6 +10746,7 @@ footer.site-footer {
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .dcs-team-page-deck .member:hover {
@@ -10753,9 +10754,19 @@ footer.site-footer {
   box-shadow: 0 34px 60px -30px rgba(240, 154, 42, 0.6);
 }
 
+/* Clickable card overlay link */
+.dcs-team-page-deck .member-card-link-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 28px;
+  text-decoration: none;
+}
+
 .dcs-team-page-deck .photo {
   position: relative;
-  aspect-ratio: 1 / 1.05;
+  aspect-ratio: 1 / 1;
+  width: 100%;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -10769,6 +10780,7 @@ footer.site-footer {
   height: 100%;
   object-fit: cover;
   object-position: center top !important;
+  transform-origin: center top;
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -10777,12 +10789,12 @@ footer.site-footer {
 }
 
 .dcs-team-page-deck .photo .ini {
-  width: 130px;
-  height: 130px;
-  border-radius: 36px;
+  width: 110px;
+  height: 110px;
+  border-radius: 28px;
   display: grid;
   place-items: center;
-  font-size: 46px;
+  font-size: 38px;
   font-weight: 800;
   color: var(--gold);
   background: linear-gradient(135deg, var(--navy-600), var(--navy-900));
@@ -10797,18 +10809,20 @@ footer.site-footer {
 
 .dcs-team-page-deck .photo .dept {
   position: absolute;
-  top: 18px;
-  left: 18px;
-  padding: 6px 12px;
+  top: 16px;
+  left: 16px;
+  padding: 5px 12px;
   border-radius: 99px;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
   color: var(--navy-700);
   z-index: 2;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
 }
 
 .dcs-team-page-deck .m-body {
@@ -10847,6 +10861,8 @@ footer.site-footer {
   padding-top: 18px;
   align-items: center;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
 }
 
 .dcs-team-page-deck .m-social a {
@@ -10859,6 +10875,8 @@ footer.site-footer {
   color: var(--navy-700);
   transition: all 0.25s;
   text-decoration: none;
+  position: relative;
+  z-index: 2;
 }
 
 .dcs-team-page-deck .m-social a:hover {
@@ -11274,7 +11292,7 @@ footer.site-footer {
   position: relative;
   width: 100%;
   max-width: 380px;
-  aspect-ratio: 1 / 1.15;
+  aspect-ratio: 1 / 1;
   border-radius: 28px;
   overflow: hidden;
   border: 3px solid rgba(249, 172, 67, 0.45);
