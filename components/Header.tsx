@@ -530,7 +530,7 @@ export default function Header({
                       </b>
                       <span>Full-stack React, Next.js &amp; APIs</span>
                       <span>
-                        <em className="tag-wk">14 WEEKS</em>
+                        <em className="tag-wk">12 WEEKS</em>
                       </span>
                     </div>
                     <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
@@ -544,6 +544,31 @@ export default function Header({
                   <h6>Creative &amp; Foundations</h6>
                   <Link
                     className="dcs-item"
+                    href="/courses/graphic-designing-with-ai"
+                    style={itemStyle('/courses/graphic-designing-with-ai')}
+                  >
+                    <span className="dcs-ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <rect x="2" y="6" width="14" height="12" rx="2" />
+                        <path d="m16 10 6-3v10l-6-3" />
+                      </svg>
+                    </span>
+                    <div>
+                      <b>Graphic Designing with AI</b>
+                      <span>Photoshop, Illustrator, Figma &amp; Canva</span>
+                      <span>
+                        <em className="tag-wk">3 MONTHS</em>
+                      </span>
+                    </div>
+                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </Link>
+
+
+
+                  <Link
+                    className="dcs-item"
                     href="/courses/video-editing-graphic-design"
                     style={itemStyle('/courses/video-editing-graphic-design')}
                   >
@@ -554,16 +579,18 @@ export default function Header({
                       </svg>
                     </span>
                     <div>
-                      <b>Video Editing &amp; Design</b>
-                      <span>Premiere Pro, After Effects &amp; 3D</span>
+                      <b>Video Editing with AI</b>
+                      <span>Premiere Pro, After Effects &amp; DaVinci Resolve</span>
                       <span>
-                        <em className="tag-wk">8 WEEKS</em>
+                        <em className="tag-wk">3 MONTHS</em>
                       </span>
                     </div>
                     <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                       <path d="M5 12h14M13 6l6 6-6 6" />
                     </svg>
                   </Link>
+
+
 
                   <Link
                     className="dcs-item"
