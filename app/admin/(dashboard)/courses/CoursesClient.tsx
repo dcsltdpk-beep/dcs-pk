@@ -219,6 +219,31 @@ export default function CoursesClient({ initialCourses }: { initialCourses: Cour
               </div>
             </div>
 
+            <div className="grid grid-2" style={{ gap: '1rem' }}>
+              <div className="form-group">
+                <label className="form-label">Status (Publish State) *</label>
+                <select
+                  className="form-control"
+                  value={editing.status || 'active'}
+                  onChange={(e) => setEditing({ ...editing, status: e.target.value as 'active' | 'inactive' })}
+                >
+                  <option value="active">Active (Published on Public Website)</option>
+                  <option value="inactive">Inactive (Unpublished / Draft)</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">URL Slug (e.g. web-development)</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Auto-generated from title if blank"
+                  value={editing.slug || ''}
+                  onChange={(e) => setEditing({ ...editing, slug: e.target.value })}
+                />
+              </div>
+            </div>
+
             <div className="form-group">
               <label className="form-label">Intro Video Embed URL</label>
               <input
@@ -258,8 +283,15 @@ export default function CoursesClient({ initialCourses }: { initialCourses: Cour
                 <td>{c.duration}</td>
                 <td>{c.instructor_name}</td>
                 <td>
-                  <span className={`badge ${c.status === 'active' ? 'badge-cyan' : ''}`}>
-                    {c.status}
+                  <span
+                    className="badge"
+                    style={{
+                      background: c.status === 'active' ? 'rgba(58, 63, 184, 0.12)' : 'rgba(239, 68, 68, 0.12)',
+                      color: c.status === 'active' ? '#3a3fb8' : '#ef4444',
+                      fontWeight: 700,
+                    }}
+                  >
+                    {c.status === 'active' ? '● Published' : '○ Unpublished'}
                   </span>
                 </td>
                 <td style={{ display: 'flex', gap: '8px' }}>

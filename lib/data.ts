@@ -84,7 +84,9 @@ const COURSE_ALIASES: Record<string, string> = {
   'ai-automation-agents': 'ai-automation',
   'video-editing': 'video-editing-graphic-design',
   'video-design': 'video-editing-graphic-design',
-  'graphic-design': 'video-editing-graphic-design',
+  'graphic-design': 'graphic-designing-with-ai',
+  'graphic-design-ai': 'graphic-designing-with-ai',
+  'graphic-designing': 'graphic-designing-with-ai',
   'web-dev': 'web-development',
   'web': 'web-development',
   'enterprise-web-dev': 'web-development',
@@ -119,7 +121,7 @@ export async function getCourses(): Promise<any[]> {
   } catch (err) {
     console.warn('Using fallback courses');
   }
-  return toPlain(seedData.courses);
+  return toPlain(seedData.courses.filter((c: any) => c.status === 'active'));
 }
 
 export async function getCourseBySlug(slug: string): Promise<any | null> {
@@ -129,14 +131,18 @@ export async function getCourseBySlug(slug: string): Promise<any | null> {
     if (conn) {
       const item = await Course.findOne({
         $or: [{ slug: resolvedSlug }, { slug }],
-        status: 'active',
       }).lean();
-      if (item) return toPlain(item);
+      if (item) {
+        if (item.status === 'inactive') return null; // Explicitly unpublished
+        return toPlain(item);
+      }
     }
   } catch (err) {
     console.warn(`Using fallback course for slug: ${slug}`);
   }
-  const fallback = seedData.courses.find((c) => c.slug === resolvedSlug || c.slug === slug) || null;
+  const fallback = seedData.courses.find(
+    (c: any) => (c.slug === resolvedSlug || c.slug === slug) && c.status === 'active'
+  ) || null;
   return toPlain(fallback);
 }
 

@@ -13,6 +13,7 @@ interface FooterProps {
   companyPhone?: string;
   companyAddress?: string;
   services?: Array<{ title: string; slug: string }>;
+  courses?: Array<{ title: string; slug: string }>;
 }
 
 export default function Footer({
@@ -21,6 +22,8 @@ export default function Footer({
   companyEmail = 'info@dreamcybersecurity.pk',
   companyPhone = '+92 316 5478855',
   companyAddress = 'Lahore, Pakistan',
+  services,
+  courses,
 }: FooterProps) {
   // Newsletter subscription state
   const [email, setEmail] = useState('');
@@ -232,26 +235,46 @@ export default function Footer({
             <div className="footer-col">
               <h4 className="footer-heading">Training Academy</h4>
               <ul className="footer-link-list">
-                <li>
-                  <Link href="/courses/ai-automation" className="footer-nav-link">
-                    AI Automation
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/courses/web-development" className="footer-nav-link">
-                    Web Engineering
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/courses/video-editing-graphic-design" className="footer-nav-link">
-                    Video &amp; Design
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/courses/computer-basics" className="footer-nav-link">
-                    Computer Basics
-                  </Link>
-                </li>
+                {Array.isArray(courses) && courses.length > 0 ? (
+                  courses.map((c) => {
+                    const slug = (c.slug || '').replace(/^\/courses\/?/, '');
+                    return (
+                      <li key={slug || c.title}>
+                        <Link href={`/courses/${slug}`} className="footer-nav-link">
+                          {c.title}
+                        </Link>
+                      </li>
+                    );
+                  })
+                ) : (
+                  <>
+                    <li>
+                      <Link href="/courses/ai-automation" className="footer-nav-link">
+                        AI Automation &amp; Agents
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/courses/web-development" className="footer-nav-link">
+                        Enterprise Web Dev
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/courses/graphic-designing-with-ai" className="footer-nav-link">
+                        Graphic Designing with AI
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/courses/video-editing-graphic-design" className="footer-nav-link">
+                        Video Editing with AI
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/courses/computer-basics" className="footer-nav-link">
+                        Computer Basics &amp; Office
+                      </Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
 

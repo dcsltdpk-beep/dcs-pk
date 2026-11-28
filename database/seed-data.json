@@ -241,6 +241,21 @@
       "status": "active"
     },
     {
+      "title": "Graphic Designing with AI",
+      "slug": "graphic-designing-with-ai",
+      "duration": "12 Weeks (Applied Graphic Design & AI)",
+      "target_audience": "Graphic designers, creative freelancers, marketing professionals, and aspiring visual artists aiming to master modern design with AI tools.",
+      "overview": "Master industry-standard creative tools including Adobe Photoshop, Illustrator, Figma, and Canva, supercharged with AI-assisted creative workflows and prompt engineering.",
+      "syllabus": "Module 1: Design Fundamentals, Typography & Color Harmony\nModule 2: Advanced Adobe Photoshop & Image Manipulation with Generative Fill\nModule 3: Vector Graphics & Brand Identity in Adobe Illustrator\nModule 4: UI/UX Wireframing & Prototyping in Figma\nModule 5: Rapid Content Creation & Marketing Assets in Canva\nModule 6: AI-Enhanced Visual Pipelines (Midjourney, DALL-E, Firefly)\nModule 7: Client Project Portfolio & International Freelance Standards",
+      "what_you_will_learn": "Industry-standard graphic design & branding\nUI/UX interface prototyping in Figma\nAI-powered generative asset creation\nHigh-conversion social media and ad collateral\nComprehensive client-ready design portfolio",
+      "instructor_name": "Hamza Ali",
+      "instructor_designation": "Creative Director & Lead Visual Designer",
+      "instructor_bio": "Award-winning creative director with 9+ years of experience crafting visual brands and digital design systems.",
+      "intro_video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "order_num": 4,
+      "status": "active"
+    },
+    {
       "title": "Computer Basics",
       "slug": "computer-basics",
       "duration": "6 Weeks (Foundational IT Skills)",
@@ -252,7 +267,7 @@
       "instructor_designation": "IT Education Specialist & Technical Trainer",
       "instructor_bio": "Passionate computing educator with 7+ years of experience training corporate employees and students in essential computing literacy.",
       "intro_video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      "order_num": 4,
+      "order_num": 5,
       "status": "active"
     }
   ],

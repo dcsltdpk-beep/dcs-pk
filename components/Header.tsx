@@ -4,15 +4,58 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FaWhatsapp } from 'react-icons/fa6';
+import { Home, Shield, GraduationCap, Phone, LayoutGrid, X } from 'lucide-react';
 
 interface HeaderProps {
   siteName?: string;
   whatsappNumber?: string;
+  courses?: any[];
 }
+
+const FALLBACK_NAV_COURSES = [
+  {
+    title: 'AI Automation & Agents',
+    slug: 'ai-automation',
+    duration: '10 Weeks',
+    overview: 'LLM workflows, agents & n8n',
+    status: 'active',
+    badge: 'HOT',
+  },
+  {
+    title: 'Enterprise Web Dev',
+    slug: 'web-development',
+    duration: '14 Weeks',
+    overview: 'Full-stack React, Next.js & APIs',
+    status: 'active',
+    badge: 'CAREER',
+  },
+  {
+    title: 'Graphic Designing with AI',
+    slug: 'graphic-designing-with-ai',
+    duration: '3 Months',
+    overview: 'Photoshop, Illustrator, Figma & Canva',
+    status: 'active',
+  },
+  {
+    title: 'Video Editing with AI',
+    slug: 'video-editing-graphic-design',
+    duration: '3 Months',
+    overview: 'Premiere Pro, After Effects & DaVinci Resolve',
+    status: 'active',
+  },
+  {
+    title: 'Computer Basics & Office',
+    slug: 'computer-basics',
+    duration: '6 Weeks',
+    overview: 'Digital literacy & cyber hygiene',
+    status: 'active',
+  },
+];
 
 export default function Header({
   siteName = 'Dream Cyber Security Pakistan',
   whatsappNumber = '923165478855',
+  courses: initialCourses,
 }: HeaderProps) {
   const rawPathname = usePathname();
   const pathname = rawPathname || '';
@@ -21,8 +64,27 @@ export default function Header({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDetails, setOpenDetails] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [coursesList, setCoursesList] = useState<any[]>(
+    Array.isArray(initialCourses) && initialCourses.length > 0 ? initialCourses : FALLBACK_NAV_COURSES
+  );
+
+  useEffect(() => {
+    if (Array.isArray(initialCourses) && initialCourses.length > 0) {
+      setCoursesList(initialCourses.filter((c: any) => c.status !== 'inactive'));
+    } else {
+      fetch('/api/courses')
+        .then((res) => res.json())
+        .then((data) => {
+          if (Array.isArray(data) && data.length > 0) {
+            setCoursesList(data.filter((c: any) => c.status !== 'inactive'));
+          }
+        })
+        .catch(() => {});
+    }
+  }, [initialCourses]);
 
   const headerRef = useRef<HTMLElement | null>(null);
+  const bottomNavRef = useRef<HTMLElement | null>(null);
   const barRef = useRef<HTMLDivElement | null>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -69,7 +131,12 @@ export default function Header({
   // Click outside and Escape key handler
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (
+        headerRef.current &&
+        !headerRef.current.contains(target) &&
+        (!bottomNavRef.current || !bottomNavRef.current.contains(target))
+      ) {
         setActiveMenu(null);
         setMobileOpen(false);
       }
@@ -87,6 +154,21 @@ export default function Header({
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
+
+  // Prevent background scrolling when mobile drawer is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [mobileOpen]);
 
   // Helper to move sliding pill indicator
   const movePill = (el: HTMLElement | null) => {
@@ -179,14 +261,109 @@ export default function Header({
     return isExactItem(href) ? { background: '#fff7e8' } : undefined;
   };
 
+  // Dynamic courses partitioning for desktop mega menu and mobile drawer
+  const activeNavCourses = coursesList.length > 0 ? coursesList : FALLBACK_NAV_COURSES;
+  const midPoint = Math.ceil(activeNavCourses.length / 2);
+  const col1Courses = activeNavCourses.slice(0, midPoint);
+  const col2Courses = activeNavCourses.slice(midPoint);
+
+  const getCourseNavIcon = (slug: string) => {
+    const s = slug.toLowerCase();
+    if (s.includes('ai') || s.includes('bot') || s.includes('agent')) {
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <rect x="4" y="8" width="16" height="12" rx="3" />
+          <path d="M12 8V4M9 13v1M15 13v1M2 14h2M20 14h2" />
+        </svg>
+      );
+    }
+    if (s.includes('web') || s.includes('dev') || s.includes('code') || s.includes('software')) {
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <path d="m8 9-4 3 4 3M16 9l4 3-4 3M13 6l-2 12" />
+        </svg>
+      );
+    }
+    if (s.includes('design') || s.includes('graphic') || s.includes('video') || s.includes('motion')) {
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <rect x="2" y="6" width="14" height="12" rx="2" />
+          <path d="m16 10 6-3v10l-6-3" />
+        </svg>
+      );
+    }
+    if (s.includes('basic') || s.includes('office') || s.includes('computer')) {
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <path d="M22 10 12 5 2 10l10 5 10-5z" />
+          <path d="M6 12v5c3 2 9 2 12 0v-5" />
+        </svg>
+      );
+    }
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M22 10 12 5 2 10l10 5 10-5z" />
+        <path d="M6 12v5c3 2 9 2 12 0v-5" />
+      </svg>
+    );
+  };
+
+  const renderCourseNavItem = (c: any, isMobile = false) => {
+    const slug = (c.slug || '').replace(/^\/courses\/?/, '');
+    const href = `/courses/${slug}`;
+    const durationText = (c.duration || '10 Weeks').split('(')[0].trim().toUpperCase();
+
+    let badgeEl = null;
+    if (c.badge === 'HOT' || slug.includes('ai')) {
+      badgeEl = <em className="tag-hot">HOT</em>;
+    } else if (c.badge === 'CAREER' || slug.includes('web')) {
+      badgeEl = <em className="tag-career">CAREER</em>;
+    } else if (c.badge) {
+      badgeEl = <em className="tag-hot">{c.badge}</em>;
+    }
+
+    let subtitle = c.overview || '';
+    if (subtitle.length > 50) {
+      subtitle = subtitle.slice(0, 48) + '...';
+    }
+
+    return (
+      <Link
+        key={slug || c._id || c.title}
+        className="dcs-item"
+        href={href}
+        style={itemStyle(href)}
+        onClick={() => {
+          setActiveMenu(null);
+          if (isMobile) setMobileOpen(false);
+        }}
+      >
+        <span className="dcs-ic">{getCourseNavIcon(slug)}</span>
+        <div>
+          <b>
+            {c.title} {badgeEl}
+          </b>
+          {subtitle && <span>{subtitle}</span>}
+          <span>
+            <em className="tag-wk">{durationText}</em>
+          </span>
+        </div>
+        <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </Link>
+    );
+  };
+
   const waHref = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '') || '923165478855'}`;
 
   return (
-    <header
-      ref={headerRef}
-      className={`dcs-header ${scrolled ? 'scrolled' : ''} ${mobileOpen ? 'menu-open' : ''}`}
-      id="dcsHeader"
-    >
+    <>
+      <header
+        ref={headerRef}
+        className={`dcs-header ${scrolled ? 'scrolled' : ''} ${mobileOpen ? 'menu-open' : ''}`}
+        id="dcsHeader"
+      >
       <div ref={barRef} className="dcs-bar" onMouseLeave={handleBarMouseLeave}>
         {/* Sliding hover pill indicator */}
         <span
@@ -489,131 +666,13 @@ export default function Header({
                 {/* Col 1 */}
                 <div className="dcs-col">
                   <h6>Specialized Engineering</h6>
-                  <Link
-                    className="dcs-item"
-                    href="/courses/ai-automation"
-                    style={itemStyle('/courses/ai-automation')}
-                  >
-                    <span className="dcs-ic">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                        <rect x="4" y="8" width="16" height="12" rx="3" />
-                        <path d="M12 8V4M9 13v1M15 13v1M2 14h2M20 14h2" />
-                      </svg>
-                    </span>
-                    <div>
-                      <b>
-                        AI Automation &amp; Agents <em className="tag-hot">HOT</em>
-                      </b>
-                      <span>LLM workflows, agents &amp; n8n</span>
-                      <span>
-                        <em className="tag-wk">10 WEEKS</em>
-                      </span>
-                    </div>
-                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                  </Link>
-
-                  <Link
-                    className="dcs-item"
-                    href="/courses/web-development"
-                    style={itemStyle('/courses/web-development')}
-                  >
-                    <span className="dcs-ic">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                        <path d="m8 9-4 3 4 3M16 9l4 3-4 3M13 6l-2 12" />
-                      </svg>
-                    </span>
-                    <div>
-                      <b>
-                        Enterprise Web Dev <em className="tag-career">CAREER</em>
-                      </b>
-                      <span>Full-stack React, Next.js &amp; APIs</span>
-                      <span>
-                        <em className="tag-wk">12 WEEKS</em>
-                      </span>
-                    </div>
-                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                  </Link>
+                  {col1Courses.map((c) => renderCourseNavItem(c))}
                 </div>
 
                 {/* Col 2 */}
                 <div className="dcs-col">
                   <h6>Creative &amp; Foundations</h6>
-                  <Link
-                    className="dcs-item"
-                    href="/courses/graphic-designing-with-ai"
-                    style={itemStyle('/courses/graphic-designing-with-ai')}
-                  >
-                    <span className="dcs-ic">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                        <rect x="2" y="6" width="14" height="12" rx="2" />
-                        <path d="m16 10 6-3v10l-6-3" />
-                      </svg>
-                    </span>
-                    <div>
-                      <b>Graphic Designing with AI</b>
-                      <span>Photoshop, Illustrator, Figma &amp; Canva</span>
-                      <span>
-                        <em className="tag-wk">3 MONTHS</em>
-                      </span>
-                    </div>
-                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                  </Link>
-
-
-
-                  <Link
-                    className="dcs-item"
-                    href="/courses/video-editing-graphic-design"
-                    style={itemStyle('/courses/video-editing-graphic-design')}
-                  >
-                    <span className="dcs-ic">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                        <rect x="2" y="6" width="14" height="12" rx="2" />
-                        <path d="m16 10 6-3v10l-6-3" />
-                      </svg>
-                    </span>
-                    <div>
-                      <b>Video Editing with AI</b>
-                      <span>Premiere Pro, After Effects &amp; DaVinci Resolve</span>
-                      <span>
-                        <em className="tag-wk">3 MONTHS</em>
-                      </span>
-                    </div>
-                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                  </Link>
-
-
-
-                  <Link
-                    className="dcs-item"
-                    href="/courses/computer-basics"
-                    style={itemStyle('/courses/computer-basics')}
-                  >
-                    <span className="dcs-ic">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                        <path d="M22 10 12 5 2 10l10 5 10-5z" />
-                        <path d="M6 12v5c3 2 9 2 12 0v-5" />
-                      </svg>
-                    </span>
-                    <div>
-                      <b>Computer Basics &amp; Office</b>
-                      <span>Digital literacy &amp; cyber hygiene</span>
-                      <span>
-                        <em className="tag-wk">6 WEEKS</em>
-                      </span>
-                    </div>
-                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                  </Link>
+                  {col2Courses.map((c) => renderCourseNavItem(c))}
                 </div>
 
                 {/* Promo Card */}
@@ -900,15 +959,13 @@ export default function Header({
           </Link>
 
           {/* Mobile Services */}
-          <details
-            open={openDetails === 'services'}
-            onToggle={(e) => {
-              const isOpen = (e.currentTarget as HTMLDetailsElement).open;
-              if (isOpen) setOpenDetails('services');
-              else if (openDetails === 'services') setOpenDetails(null);
-            }}
-          >
-            <summary>
+          <details open={openDetails === 'services'}>
+            <summary
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenDetails((prev) => (prev === 'services' ? null : 'services'));
+              }}
+            >
               Services
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                 <path d="m6 9 6 6 6-6" />
@@ -1096,119 +1153,20 @@ export default function Header({
           </details>
 
           {/* Mobile Academy */}
-          <details
-            open={openDetails === 'academy'}
-            onToggle={(e) => {
-              const isOpen = (e.currentTarget as HTMLDetailsElement).open;
-              if (isOpen) setOpenDetails('academy');
-              else if (openDetails === 'academy') setOpenDetails(null);
-            }}
-          >
-            <summary>
+          <details open={openDetails === 'academy'}>
+            <summary
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenDetails((prev) => (prev === 'academy' ? null : 'academy'));
+              }}
+            >
               Academy
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                 <path d="m6 9 6 6 6-6" />
               </svg>
             </summary>
             <div className="sub">
-              <Link
-                className="dcs-item"
-                href="/courses/ai-automation"
-                onClick={() => setMobileOpen(false)}
-                style={itemStyle('/courses/ai-automation')}
-              >
-                <span className="dcs-ic">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <rect x="4" y="8" width="16" height="12" rx="3" />
-                    <path d="M12 8V4M9 13v1M15 13v1M2 14h2M20 14h2" />
-                  </svg>
-                </span>
-                <div>
-                  <b>
-                    AI Automation &amp; Agents <em className="tag-hot">HOT</em>
-                  </b>
-                  <span>LLM workflows, agents &amp; n8n</span>
-                  <span>
-                    <em className="tag-wk">10 WEEKS</em>
-                  </span>
-                </div>
-                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                  <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
-              </Link>
-
-              <Link
-                className="dcs-item"
-                href="/courses/web-development"
-                onClick={() => setMobileOpen(false)}
-                style={itemStyle('/courses/web-development')}
-              >
-                <span className="dcs-ic">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <path d="m8 9-4 3 4 3M16 9l4 3-4 3M13 6l-2 12" />
-                  </svg>
-                </span>
-                <div>
-                  <b>
-                    Enterprise Web Dev <em className="tag-career">CAREER</em>
-                  </b>
-                  <span>Full-stack React, Next.js &amp; APIs</span>
-                  <span>
-                    <em className="tag-wk">14 WEEKS</em>
-                  </span>
-                </div>
-                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                  <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
-              </Link>
-
-              <Link
-                className="dcs-item"
-                href="/courses/video-editing-graphic-design"
-                onClick={() => setMobileOpen(false)}
-                style={itemStyle('/courses/video-editing-graphic-design')}
-              >
-                <span className="dcs-ic">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <rect x="2" y="6" width="14" height="12" rx="2" />
-                    <path d="m16 10 6-3v10l-6-3" />
-                  </svg>
-                </span>
-                <div>
-                  <b>Video Editing &amp; Design</b>
-                  <span>Premiere Pro, After Effects &amp; 3D</span>
-                  <span>
-                    <em className="tag-wk">8 WEEKS</em>
-                  </span>
-                </div>
-                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                  <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
-              </Link>
-
-              <Link
-                className="dcs-item"
-                href="/courses/computer-basics"
-                onClick={() => setMobileOpen(false)}
-                style={itemStyle('/courses/computer-basics')}
-              >
-                <span className="dcs-ic">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <path d="M22 10 12 5 2 10l10 5 10-5z" />
-                    <path d="M6 12v5c3 2 9 2 12 0v-5" />
-                  </svg>
-                </span>
-                <div>
-                  <b>Computer Basics &amp; Office</b>
-                  <span>Digital literacy &amp; cyber hygiene</span>
-                  <span>
-                    <em className="tag-wk">6 WEEKS</em>
-                  </span>
-                </div>
-                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                  <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
-              </Link>
+              {activeNavCourses.map((c) => renderCourseNavItem(c, true))}
 
               <Link
                 className="dcs-btn dcs-btn-main"
@@ -1222,15 +1180,13 @@ export default function Header({
           </details>
 
           {/* Mobile Company */}
-          <details
-            open={openDetails === 'company'}
-            onToggle={(e) => {
-              const isOpen = (e.currentTarget as HTMLDetailsElement).open;
-              if (isOpen) setOpenDetails('company');
-              else if (openDetails === 'company') setOpenDetails(null);
-            }}
-          >
-            <summary>
+          <details open={openDetails === 'company'}>
+            <summary
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenDetails((prev) => (prev === 'company' ? null : 'company'));
+              }}
+            >
               Company
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                 <path d="m6 9 6 6 6-6" />
@@ -1302,15 +1258,13 @@ export default function Header({
           </details>
 
           {/* Mobile Insights */}
-          <details
-            open={openDetails === 'insights'}
-            onToggle={(e) => {
-              const isOpen = (e.currentTarget as HTMLDetailsElement).open;
-              if (isOpen) setOpenDetails('insights');
-              else if (openDetails === 'insights') setOpenDetails(null);
-            }}
-          >
-            <summary>
+          <details open={openDetails === 'insights'}>
+            <summary
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenDetails((prev) => (prev === 'insights' ? null : 'insights'));
+              }}
+            >
               Insights
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                 <path d="m6 9 6 6 6-6" />
@@ -1407,32 +1361,111 @@ export default function Header({
             href="/contact"
             className="top"
             onClick={() => setMobileOpen(false)}
+            style={itemStyle('/contact')}
           >
-            Contact
+            <span>Contact Us</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" style={{ width: '18px', height: '18px' }}>
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
           </Link>
 
           {/* Quick Action CTAs */}
-          <div className="cta">
+          <div className="dcs-drawer-actions">
             <a
-              className="dcs-btn dcs-wa"
+              className="dcs-drawer-btn dcs-drawer-btn-wa"
               href={waHref}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaWhatsapp size={17} style={{ marginRight: '6px' }} />
-              <span>WhatsApp</span>
+              <FaWhatsapp size={18} />
+              <span>Inquire on WhatsApp</span>
             </a>
             <Link
-              className="dcs-btn dcs-btn-main"
+              className="dcs-drawer-btn dcs-drawer-btn-primary"
               href="/contact"
               onClick={() => setMobileOpen(false)}
             >
               <span className="dot" />
-              Consult Security
+              <span>Consult Security Team</span>
             </Link>
           </div>
         </nav>
       </div>
     </header>
-  );
+
+    {/* Modern App-Style Mobile Bottom Navigation Bar */}
+    <nav ref={bottomNavRef} className="mobile-bottom-nav" aria-label="Mobile Navigation">
+      <div className="mobile-bottom-nav-inner">
+        <Link
+          href="/"
+          className={`bottom-nav-item ${pathname === '/' && !mobileOpen ? 'active' : ''}`}
+          onClick={() => setMobileOpen(false)}
+        >
+          <span className="bottom-nav-icon">
+            <Home size={20} />
+          </span>
+          <span className="bottom-nav-label">Home</span>
+          {pathname === '/' && !mobileOpen && <span className="bottom-nav-indicator" />}
+        </Link>
+
+        <Link
+          href="/services"
+          className={`bottom-nav-item ${(pathname === '/services' || pathname.startsWith('/services/')) && !mobileOpen ? 'active' : ''}`}
+          onClick={() => setMobileOpen(false)}
+        >
+          <span className="bottom-nav-icon">
+            <Shield size={20} />
+          </span>
+          <span className="bottom-nav-label">Services</span>
+          {(pathname === '/services' || pathname.startsWith('/services/')) && !mobileOpen && (
+            <span className="bottom-nav-indicator" />
+          )}
+        </Link>
+
+        <Link
+          href="/courses"
+          className={`bottom-nav-item ${(pathname === '/courses' || pathname.startsWith('/courses/')) && !mobileOpen ? 'active' : ''}`}
+          onClick={() => setMobileOpen(false)}
+        >
+          <span className="bottom-nav-icon">
+            <GraduationCap size={20} />
+          </span>
+          <span className="bottom-nav-label">Academy</span>
+          {(pathname === '/courses' || pathname.startsWith('/courses/')) && !mobileOpen && (
+            <span className="bottom-nav-indicator" />
+          )}
+        </Link>
+
+        <Link
+          href="/contact"
+          className={`bottom-nav-item ${pathname === '/contact' && !mobileOpen ? 'active' : ''}`}
+          onClick={() => setMobileOpen(false)}
+        >
+          <span className="bottom-nav-icon">
+            <Phone size={20} />
+          </span>
+          <span className="bottom-nav-label">Contact</span>
+          {pathname === '/contact' && !mobileOpen && <span className="bottom-nav-indicator" />}
+        </Link>
+
+        <button
+          type="button"
+          className={`bottom-nav-item bottom-nav-menu-btn ${mobileOpen ? 'active' : ''}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setMobileOpen((prev) => !prev);
+          }}
+          aria-label={mobileOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
+          aria-expanded={mobileOpen}
+        >
+          <span className="bottom-nav-icon">
+            {mobileOpen ? <X size={20} /> : <LayoutGrid size={20} />}
+          </span>
+          <span className="bottom-nav-label">{mobileOpen ? 'Close' : 'Menu'}</span>
+          {mobileOpen && <span className="bottom-nav-indicator" />}
+        </button>
+      </div>
+    </nav>
+  </>
+);
 }

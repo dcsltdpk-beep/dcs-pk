@@ -20,6 +20,7 @@ const KNOWN_ACADEMY_SLUGS: Record<string, string> = {
   'video-design': 'Video Editing & Graphic Design',
   'video-editing': 'Video Editing & Graphic Design',
   'video-editing-graphic-design': 'Video Editing & Graphic Design',
+  'graphic-designing-with-ai': 'Graphic Designing with AI',
   'computer-basics': 'Computer Basics & Office',
   'computer-basics-office': 'Computer Basics & Office',
 };
@@ -57,11 +58,11 @@ export default async function CourseDetailPage({ params }: Props) {
     getSettings(),
   ]);
 
-  if (!course && !KNOWN_ACADEMY_SLUGS[params.slug]) {
+  if (!course) {
     notFound();
   }
 
-  const effectiveTitle = course?.title || KNOWN_ACADEMY_SLUGS[params.slug] || 'Academy Course';
+  const effectiveTitle = course.title || KNOWN_ACADEMY_SLUGS[params.slug] || 'Academy Course';
   const whatsappNum = settings.whatsapp_number || '923165478855';
 
   const learningOutcomes = course?.what_you_will_learn

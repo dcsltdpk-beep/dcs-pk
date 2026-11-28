@@ -3314,8 +3314,8 @@ details.faq-item[open] {
   }
 }
 
-/* Tablet & Mobile Screens (<= 1024px) */
-@media (max-width: 1024px) {
+/* Tablet & Mobile Screens (<= 1080px) */
+@media (max-width: 1080px) {
 
   /* Ensure page content never gets cut off under fixed bottom bar */
   body {
@@ -3326,6 +3326,7 @@ details.faq-item[open] {
   .mobile-bottom-nav {
     display: block !important;
     position: fixed !important;
+    top: auto !important;
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
@@ -3339,6 +3340,7 @@ details.faq-item[open] {
     border-top: 1px solid rgba(251, 174, 67, 0.3) !important;
     box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.65) !important;
     padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+    margin: 0 !important;
   }
 
   .mobile-bottom-nav-inner {
@@ -4954,7 +4956,7 @@ footer.site-footer {
   margin-top: 2px;
 }
 
-.cta,
+.services-dial-stage .cta,
 .services-dial-cta-btn {
   display: inline-flex;
   align-items: center;
@@ -4972,7 +4974,7 @@ footer.site-footer {
   transition: all 0.25s ease;
 }
 
-.cta:hover,
+.services-dial-stage .cta:hover,
 .services-dial-cta-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 7px 24px rgba(249, 172, 67, 0.6);
@@ -16542,9 +16544,11 @@ footer.site-footer {
     left: 0;
     right: 0;
     top: calc(100% + 8px);
-    max-height: min(calc(100vh - 85px), 720px);
+    max-height: calc(100dvh - 72px - 72px - env(safe-area-inset-bottom, 0px));
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
     padding: 12px 14px 20px;
     border-radius: 20px;
     background: #ffffff;
@@ -16585,6 +16589,10 @@ footer.site-footer {
     transition: color 0.2s;
   }
 
+  .dcs-drawer>a.top {
+    border-bottom: 1px solid var(--grey-100);
+  }
+
   .dcs-drawer summary:hover,
   .dcs-drawer>a.top:hover {
     color: var(--blue) !important;
@@ -16619,15 +16627,75 @@ footer.site-footer {
     padding-bottom: 10px;
   }
 
+  /* Drawer Actions & Buttons - Clean, Professional Container */
+  .dcs-drawer-actions,
   .dcs-drawer .cta {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 16px 4px 4px;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 16px 4px calc(28px + env(safe-area-inset-bottom, 0px)) !important;
+    margin-top: 12px !important;
+    border-top: 1px solid var(--grey-100) !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  .dcs-drawer .cta a {
-    justify-content: center;
+  .dcs-drawer-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 9px !important;
+    width: 100% !important;
+    padding: 13px 18px !important;
+    border-radius: 14px !important;
+    font-family: var(--font-sora, 'Sora', sans-serif) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    box-sizing: border-box !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+  }
+
+  .dcs-drawer-btn:active {
+    transform: scale(0.98) !important;
+  }
+
+  .dcs-drawer-btn-wa {
+    background: #25D366 !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3) !important;
+  }
+
+  .dcs-drawer-btn-wa:hover {
+    background: #20bd5a !important;
+    color: #ffffff !important;
+  }
+
+  .dcs-drawer-btn-primary {
+    background: linear-gradient(135deg, #3a3fb8, #28245f 55%, #1c1949) !important;
+    color: #FBAE43 !important;
+    border: 1px solid rgba(251, 174, 67, 0.35) !important;
+    box-shadow: 0 4px 18px rgba(28, 25, 73, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  }
+
+  .dcs-drawer-btn-primary:hover {
+    color: #ffffff !important;
+    border-color: rgba(251, 174, 67, 0.6) !important;
+  }
+
+  .dcs-drawer-btn-primary .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #FBAE43;
+    box-shadow: 0 0 0 0 rgba(251, 174, 67, 0.7);
+    animation: dcsPulse 2s infinite;
+    flex-shrink: 0;
   }
 
   .dcs-wa {
@@ -16726,11 +16794,7 @@ footer.site-footer {
   }
 
   .dcs-drawer {
-    padding: 10px 12px 16px;
-  }
-
-  .dcs-drawer .cta {
-    grid-template-columns: 1fr;
+    padding: 10px 12px calc(24px + env(safe-area-inset-bottom, 0px));
   }
 }
 

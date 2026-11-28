@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { FaWhatsapp } from 'react-icons/fa6';
 import { ArrowUpRight } from 'lucide-react';
@@ -25,6 +25,132 @@ interface CourseItem {
   tags: string[];
   slug: string;
   iconType: 'bot' | 'code' | 'video' | 'computer';
+}
+
+const KNOWN_COURSE_CONFIGS: Record<string, Partial<CourseItem>> = {
+  'ai-automation': {
+    id: 'ai-automation',
+    cat: 'ai',
+    num: '01',
+    ribbon: 'Hot',
+    title: 'AI Automation & Agents',
+    desc: 'Agentic AI, n8n / Make workflows, chatbots and business process automation.',
+    duration: '10 Weeks',
+    level: 'Intermediate',
+    tags: ['Generative AI', 'AI Agents', 'n8n / Make', 'CRM Automation'],
+    slug: '/courses/ai-automation',
+    iconType: 'bot',
+  },
+  'web-development': {
+    id: 'web-dev',
+    cat: 'dev',
+    num: '02',
+    title: 'Enterprise Web Dev',
+    desc: 'Full-stack web development from HTML & CSS to React, Next.js and databases.',
+    duration: '14 Weeks',
+    level: 'Beginner → Pro',
+    tags: ['HTML / CSS', 'JavaScript', 'React & Next.js', 'MongoDB'],
+    slug: '/courses/web-development',
+    iconType: 'code',
+  },
+  'graphic-designing-with-ai': {
+    id: 'graphic-design-ai',
+    cat: 'creative',
+    num: '03',
+    ribbon: 'Hot',
+    title: 'Graphic Designing with AI',
+    desc: 'Master Adobe Photoshop, Illustrator, Figma, and Canva supercharged with AI generative workflows.',
+    duration: '12 Weeks',
+    level: 'Beginner → Pro',
+    tags: ['Photoshop', 'Illustrator', 'Figma', 'Generative AI'],
+    slug: '/courses/graphic-designing-with-ai',
+    iconType: 'video',
+  },
+  'video-editing-graphic-design': {
+    id: 'video-design',
+    cat: 'creative',
+    num: '04',
+    title: 'Video Editing & Design',
+    desc: 'Professional editing, motion graphics and brand design for social media and ads.',
+    duration: '8 Weeks',
+    level: 'Beginner',
+    tags: ['Photoshop', 'Illustrator', 'Premiere Pro', 'After Effects'],
+    slug: '/courses/video-editing-graphic-design',
+    iconType: 'video',
+  },
+  'computer-basics': {
+    id: 'computer-basics',
+    cat: 'basics',
+    num: '05',
+    title: 'Computer Basics & Office',
+    desc: 'Computer fundamentals, MS Office, internet, email and online safety.',
+    duration: '6 Weeks',
+    level: 'Absolute Beginner',
+    tags: ['Windows', 'MS Word', 'MS Excel', 'Online Safety'],
+    slug: '/courses/computer-basics',
+    iconType: 'computer',
+  },
+};
+
+function inferCourseCategory(slug: string = '', title: string = ''): FilterCategory {
+  const text = `${slug} ${title}`.toLowerCase();
+  if (/ai|agent|bot|automat|gpt|prompt|llm/.test(text)) return 'ai';
+  if (/web|dev|code|software|fullstack|react|program|backend|frontend/.test(text)) return 'dev';
+  if (/design|video|graphic|motion|media|creative|art|animat|illustrat|photoshop/.test(text)) return 'creative';
+  if (/basic|office|foundat|comput|literacy|excel|word/.test(text)) return 'basics';
+  return 'dev';
+}
+
+function inferIconType(cat: FilterCategory): CourseItem['iconType'] {
+  switch (cat) {
+    case 'ai': return 'bot';
+    case 'dev': return 'code';
+    case 'creative': return 'video';
+    case 'basics': return 'computer';
+    default: return 'code';
+  }
+}
+
+function mapDbCourseToItem(c: any, index: number): CourseItem {
+  const slug = c.slug || '';
+  const known = KNOWN_COURSE_CONFIGS[slug];
+  const cat = known?.cat || inferCourseCategory(slug, c.title);
+  const iconType = known?.iconType || inferIconType(cat);
+  const num = String(index + 1).padStart(2, '0');
+
+  let tags = known?.tags;
+  if (!tags || tags.length === 0) {
+    if (c.what_you_will_learn) {
+      tags = c.what_you_will_learn
+        .split('\n')
+        .map((s: string) => s.trim().replace(/^[-*•]\s*/, ''))
+        .filter(Boolean)
+        .slice(0, 4);
+    } else if (c.syllabus) {
+      tags = c.syllabus
+        .split('\n')
+        .map((s: string) => s.replace(/^Module\s*\d+:\s*/i, '').trim())
+        .filter(Boolean)
+        .slice(0, 4);
+    }
+    if (!tags || tags.length === 0) {
+      tags = ['Industry Certified', 'Hands-on Labs', 'Expert Mentors', 'Real Projects'];
+    }
+  }
+
+  return {
+    id: c._id ? String(c._id) : (known?.id || slug || `course-${index}`),
+    cat,
+    num,
+    ribbon: c.ribbon || known?.ribbon,
+    title: c.title || known?.title || 'Certification Course',
+    desc: c.overview || c.summary || known?.desc || 'Hands-on technical certification at DCS Training Academy.',
+    duration: c.duration ? c.duration.split('(')[0].trim() : (known?.duration || '10 Weeks'),
+    level: c.level || known?.level || 'All Levels',
+    tags,
+    slug: `/courses/${slug}`,
+    iconType,
+  };
 }
 
 const DEFAULT_COURSES: CourseItem[] = [
@@ -54,9 +180,22 @@ const DEFAULT_COURSES: CourseItem[] = [
     iconType: 'code',
   },
   {
-    id: 'video-design',
+    id: 'graphic-design-ai',
     cat: 'creative',
     num: '03',
+    ribbon: 'Hot',
+    title: 'Graphic Designing with AI',
+    desc: 'Master Adobe Photoshop, Illustrator, Figma, and Canva supercharged with AI generative workflows.',
+    duration: '12 Weeks',
+    level: 'Beginner → Pro',
+    tags: ['Photoshop', 'Illustrator', 'Figma', 'Generative AI'],
+    slug: '/courses/graphic-designing-with-ai',
+    iconType: 'video',
+  },
+  {
+    id: 'video-design',
+    cat: 'creative',
+    num: '04',
     title: 'Video Editing & Design',
     desc: 'Professional editing, motion graphics and brand design for social media and ads.',
     duration: '8 Weeks',
@@ -68,7 +207,7 @@ const DEFAULT_COURSES: CourseItem[] = [
   {
     id: 'computer-basics',
     cat: 'basics',
-    num: '04',
+    num: '05',
     title: 'Computer Basics & Office',
     desc: 'Computer fundamentals, MS Office, internet, email and online safety.',
     duration: '6 Weeks',
@@ -454,18 +593,36 @@ export default function CoursesPageClient({
   }, []);
 
   /* -------------------------------------------------------------
-     5. Counter Animation for Stats
+     5. Courses Data Source & Filtering
+  ------------------------------------------------------------- */
+  const activeCourses = useMemo<CourseItem[]>(() => {
+    const rawList = Array.isArray(dbCourses) && dbCourses.length > 0 ? dbCourses : DEFAULT_COURSES;
+    return rawList
+      .filter((c: any) => c.status !== 'inactive')
+      .map((c: any, idx: number) => ('iconType' in c && 'cat' in c ? (c as CourseItem) : mapDbCourseToItem(c, idx)));
+  }, [dbCourses]);
+
+  const filteredCourses = useMemo(() => {
+    return activeCourses.filter((course) => {
+      if (activeFilter === 'all') return true;
+      return course.cat === activeFilter;
+    });
+  }, [activeCourses, activeFilter]);
+
+  /* -------------------------------------------------------------
+     6. Counter Animation for Stats
   ------------------------------------------------------------- */
   useEffect(() => {
     const t0 = performance.now() + 350;
     let raf = 0;
+    const courseCount = activeCourses.length || 5;
 
     const tick = (now: number) => {
       const p = Math.min(1, Math.max(0, (now - t0) / 1500));
       const e = 1 - Math.pow(1 - p, 3);
-      setStatCourses(String(Math.round(4 * e)));
+      setStatCourses(String(Math.round(courseCount * e)));
       setStatLabs(String(Math.round(100 * e)));
-      setStatWhyCourses(String(Math.round(4 * e)));
+      setStatWhyCourses(String(Math.round(courseCount * e)));
       setStatWhyWeeks(String(Math.round(10 * e)));
       setStatWhyLabs(String(Math.round(100 * e)));
 
@@ -479,16 +636,11 @@ export default function CoursesPageClient({
     return () => {
       if (raf) cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [activeCourses.length]);
 
   const handleFilterClick = (cat: FilterCategory) => {
     setActiveFilter(cat);
   };
-
-  const filteredCourses = DEFAULT_COURSES.filter((course) => {
-    if (activeFilter === 'all') return true;
-    return course.cat === activeFilter;
-  });
 
   const renderIcon = (type: CourseItem['iconType']) => {
     switch (type) {
